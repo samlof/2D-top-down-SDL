@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{117C386B-39EF-4AFC-BC33-1BD2BC95E953}</ProjectGuid>
+    <RootNamespace>Medieur</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Boost\boost_1_61_0;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2-2.0.4\include;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2_image-2.0.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2-2.0.4\lib\x64;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2_image-2.0.1\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Boost\boost_1_61_0;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2-2.0.4\include;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2_image-2.0.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2-2.0.4\lib\x64;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2_image-2.0.1\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Boost\boost_1_61_0;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2-2.0.4\include;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2_image-2.0.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2-2.0.4\lib\x64;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2_image-2.0.1\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Boost\boost_1_61_0;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2-2.0.4\include;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2_image-2.0.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2-2.0.4\lib\x64;C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\SDL2_image-2.0.1\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\source\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\source\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\source\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Cronpa\Documents\Visual Studio 2015\Projects\Medieur\Medieur\source\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="source\headers\Camera.h" />
+    <ClInclude Include="source\headers\Character.h" />
+    <ClInclude Include="source\headers\CountdownCounter.h" />
+    <ClInclude Include="source\headers\Game.h" />
+    <ClInclude Include="source\headers\Graphics.h" />
+    <ClInclude Include="source\headers\GroundEntity.h" />
+    <ClInclude Include="source\headers\GroundEntityPlantModule.h" />
+    <ClInclude Include="source\headers\IGroundEntityModule.h" />
+    <ClInclude Include="source\headers\InputHandler.h" />
+    <ClInclude Include="source\headers\Item.h" />
+    <ClInclude Include="source\headers\MainLoop.h" />
+    <ClInclude Include="source\headers\PathFinder.h" />
+    <ClInclude Include="source\headers\Point.h" />
+    <ClInclude Include="source\headers\Prototypes.h" />
+    <ClInclude Include="source\headers\Rectangle.h" />
+    <ClInclude Include="source\headers\Sprite.h" />
+    <ClInclude Include="source\headers\SpriteManager.h" />
+    <ClInclude Include="source\headers\Tile.h" />
+    <ClInclude Include="source\headers\units.h" />
+    <ClInclude Include="source\headers\World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\src\Camera.cpp" />
+    <ClCompile Include="source\src\Character.cpp" />
+    <ClCompile Include="source\src\Game.cpp" />
+    <ClCompile Include="source\src\Graphics.cpp" />
+    <ClCompile Include="source\src\GroundEntity.cpp" />
+    <ClCompile Include="source\src\GroundEntityPlantModule.cpp" />
+    <ClCompile Include="source\src\InputHandler.cpp" />
+    <ClCompile Include="source\src\Item.cpp" />
+    <ClCompile Include="source\src\main.cpp" />
+    <ClCompile Include="source\src\MainLoop.cpp" />
+    <ClCompile Include="source\src\PathFinder.cpp" />
+    <ClCompile Include="source\src\Point.cpp" />
+    <ClCompile Include="source\src\Prototypes.cpp" />
+    <ClCompile Include="source\src\Rectangle.cpp" />
+    <ClCompile Include="source\src\Sprite.cpp" />
+    <ClCompile Include="source\src\SpriteManager.cpp" />
+    <ClCompile Include="source\src\Tile.cpp" />
+    <ClCompile Include="source\src\units.cpp" />
+    <ClCompile Include="source\src\World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="content\sprites\bad_door.png" />
+    <Image Include="content\sprites\grass00.png" />
+    <Image Include="content\sprites\plants.png" />
+    <Image Include="content\sprites\simple_wall.png" />
+    <Image Include="content\sprites\simple_wall_rotated.png" />
+    <Image Include="content\sprites\Ukko.png" />
+    <Image Include="content\sprites\walls1.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
