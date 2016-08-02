@@ -15,6 +15,7 @@
 #include "Prototypes.h"
 
 using namespace Prototypes;
+
 // static
 World* World::GenerateTestWorld()
 {
@@ -80,13 +81,15 @@ void World::update()
 	for (auto it : mCharacters) {
 		it->update();
 	}
-	for (auto it1 : mTiles) {
-		for (auto it2 : it1) {
-			if (it2.hasGroundEntity()) {
-				if (it2.getGroundEntity()->mModule) {
-					it2.getGroundEntity()->mModule->update();
-				}
+	for (auto it = mGroundEntities.begin(); it != mGroundEntities.end();) {
+		if (it->second.expired()) {
+			it = mGroundEntities.erase(it);
+		}
+		else {
+			if (it->first->mModule) {
+				it->first->mModule->update();
 			}
+			it++;
 		}
 	}
 }
@@ -110,4 +113,5 @@ void World::createGroundEntity(int pX, int pY, std::shared_ptr<GroundEntity> pPr
 		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(pPrototype->mModule->clone(*newGroundEntity));
 	}
 	tempTile->setGroundEntity(newGroundEntity);
+	mGroundEntities[newGroundEntity.get()] = newGroundEntity;
 }
