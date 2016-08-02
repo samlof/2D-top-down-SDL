@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <unordered_map>
 
 #include "Point.h"
 
@@ -30,4 +31,5 @@ public:
 private:
 	std::vector<std::vector<Tile> > mTiles;
 	std::vector<std::shared_ptr<Character> > mCharacters;
+	std::unordered_map<GroundEntity*, std::weak_ptr<GroundEntity> > mGroundEntities;
 };
