@@ -30,5 +30,7 @@ private:
 	bool mChangeTexture;
 	Rectangle mRectangle;
 	World* mWorld;
+	
+	void drawTile(const int x, const int y);
 };
 

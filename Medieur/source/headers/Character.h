@@ -11,7 +11,9 @@ class World;
 
 class Character {
 public:
-	Character(World* pWorld, Tile* pTile, int pX, int pY);
+	Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, int pY);
+	// For prototype
+	Character(const int pId);
 
 	void setPathTo(Tile* pGoalTile);
 	void getNextTile();
@@ -19,8 +21,10 @@ public:
 	void setJob(Job* pJob) { mCurrentJob = pJob; }
 	void clearJob() { mCurrentJob = nullptr; }
 
+	int getId() const { return mId; }
 	void update();
 private:
+	const int mId;
 	int mX, mY;
 	CountdownCounter mMoveCounter;
 	CountdownCounter mJobInterval;
