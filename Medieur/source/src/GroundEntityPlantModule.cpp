@@ -8,7 +8,7 @@
 #include "World.h"
 
 namespace {
-	const int kMaxGrowth = 6;
+	const int kMaxGrowth = 5;
 	const int kMaxHealth = 6;
 	const int kGrowthSteps = 2000;
 	const int kHealthDropSteps = 300;

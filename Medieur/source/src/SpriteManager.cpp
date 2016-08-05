@@ -17,16 +17,11 @@
 namespace SpriteManager {
 
 	namespace {
-		using TileMap = std::unordered_map<TileType, std::unique_ptr<Sprite> >;
-		TileMap tileSprites;
-		using GroundEntityMap = std::unordered_map<int, std::unique_ptr<Sprite> >;
-		GroundEntityMap groundEntitySprites;
-		using CharacterMap = std::unordered_map<int, std::unique_ptr<Sprite> >;
-		CharacterMap characterSprites;
+		using SpriteMap = std::unordered_map<int, std::unique_ptr<Sprite> >;
+		SpriteMap spriteMap;
 
-
-		using GroundEntityFunctionMap = std::unordered_map<int, std::function<Rectangle(GroundEntity*)> >;
-		GroundEntityFunctionMap groundEntityFunctions;
+		using GroundEntitySpriteFunctionMap = std::unordered_map<int, std::function<Rectangle(GroundEntity*)> >;
+		GroundEntitySpriteFunctionMap groundEntitySpriteFunctions;
 
 
 
@@ -36,51 +31,39 @@ namespace SpriteManager {
 
 	void initSprites()
 	{
-		tileSprites.insert(TileMap::value_type(TileType::GRASS, std::make_unique<Sprite>("grass00.png", kGrassSource)));
+		
+	/*	tileSprites.insert(TileMap::value_type(TileType::GRASS, std::make_unique<Sprite>("grass00.png", kGrassSource)));
 		
 		characterSprites.insert(CharacterMap::value_type(1, std::make_unique<Sprite>("Ukko.png", kCharacterSource)));
-	}
+	*/}
 
-	void createGroundEntitySprite(const int pId, Sprite* pSprite)
+	void createSprite(const int pId, Sprite* pSprite)
 	{
-		groundEntitySprites.insert(GroundEntityMap::value_type(
-			pId, std::unique_ptr<Sprite>(pSprite)));
+		spriteMap[pId] = std::unique_ptr<Sprite>(pSprite);
 	}
 
 	void setGroundEntityFunction(const int pId, std::function<Rectangle(GroundEntity*)> pFunction)
 	{
-		groundEntityFunctions[pId] = pFunction;
+		groundEntitySpriteFunctions[pId] = pFunction;
+	}
+
+	bool hasGroundEntityFunction(const int pId)
+	{
+		return groundEntitySpriteFunctions.count(pId) == 1;
 	}
 
 	std::function<Rectangle(GroundEntity*)> getEntityFunction(const int pId)
 	{
-		return groundEntityFunctions[pId];
+		return groundEntitySpriteFunctions.at(pId);
 	}
 
-	bool hasEntityFunction(const int pId)
+	Sprite * getSpriteByName(const std::string & pFurnName)
 	{
-		return groundEntityFunctions.count(pId) == 1;
+		return getSpriteById(Prototypes::getIdByName(pFurnName));
 	}
 
-
-
-	Sprite * getTileSprite(const Tile & pTile)
+	Sprite * getSpriteById(const unsigned int pId)
 	{
-		return tileSprites.at(pTile.getTileType()).get();
-	}
-
-	Sprite * getGroundEntitySpriteByName(const std::string & pFurnName)
-	{
-		return getGroundEntitySpriteById(Prototypes::getPrototypeIdByName(pFurnName));
-	}
-
-	Sprite * getGroundEntitySpriteById(const unsigned int pId)
-	{
-		return groundEntitySprites.at(pId).get();
-	}
-
-	Sprite * getCharacterSprite(std::shared_ptr<Character> pCharacter)
-	{
-		return characterSprites.at(1).get();
+		return spriteMap.at(pId).get();
 	}
 }

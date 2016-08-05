@@ -27,27 +27,27 @@ World* World::GenerateTestWorld()
 		world->mTiles.push_back(std::vector<Tile>());
 		for (int y = 0; y < units::kWorldHeight; y++)
 		{
-			world->mTiles[x].push_back(Tile(world, TileType::GRASS, x, y));
+			world->mTiles[x].push_back(Tile(world, 200, TileType::GRASS, x, y));
 		}
 	}
 
 	for (int i = 0; i < 5; i++)
 	{
-		world->createGroundEntity(5 + i, 5, getPrototypeByName("Wall"));
-		world->createGroundEntity(5, 5 + i, getPrototypeByName("Wall"));
-		world->createGroundEntity(5 + i, 9, getPrototypeByName("Wall"));
-		world->createGroundEntity(9, 5 + i, getPrototypeByName("Wall"));
+		world->createGroundEntity(5 + i, 5, getGroundEntityPrototypeByName("Wall"));
+		world->createGroundEntity(5, 5 + i, getGroundEntityPrototypeByName("Wall"));
+		world->createGroundEntity(5 + i, 9, getGroundEntityPrototypeByName("Wall"));
+		world->createGroundEntity(9, 5 + i, getGroundEntityPrototypeByName("Wall"));
 
 		/*for (int j = 0; j < 5; j++) {
 			world->createGroundEntity(5 + i, 11 + j, getPrototypeByName("Plant"));
 		}*/
 	}
-	world->createGroundEntity(5, 11, getPrototypeByName("Plant"));
-	world->createGroundEntity(6, 11, getPrototypeByName("Plant"));
+	world->createGroundEntity(5, 11, getGroundEntityPrototypeByName("Plant"));
+	world->createGroundEntity(6, 11, getGroundEntityPrototypeByName("Plant"));
 
 
 	world->getTile(7, 5)->clearGroundEntity();
-	world->createGroundEntity(7, 5, getPrototypeByName("Door"));
+	world->createGroundEntity(7, 5, getGroundEntityPrototypeByName("Door"));
 	return world;
 }
 
@@ -121,7 +121,7 @@ void World::deleteJob(Job * pJob)
 
 void World::createCharacter(int pX, int pY)
 {
-	std::shared_ptr<Character> tempChar = std::make_shared<Character>(this, getTile(pX, pY), pX, pY);
+	std::shared_ptr<Character> tempChar = std::make_shared<Character>(this, getTile(pX, pY), 100, pX, pY);
 	mCharacters.push_back(tempChar);
 
 	getTile(pX, pY)->reserveFor(tempChar);
@@ -129,11 +129,11 @@ void World::createCharacter(int pX, int pY)
 	tempChar->setPathTo(getTile(6, 8));
 }
 
-void World::createGroundEntity(int pX, int pY, std::shared_ptr<GroundEntity> pPrototype)
+void World::createGroundEntity(int pX, int pY, GroundEntity* pPrototype)
 {
 	Tile* tempTile = getTile(pX, pY);
 	if (tempTile->hasGroundEntity()) return;
-	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype.get(), tempTile);
+	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype, tempTile);
 	if (pPrototype->mModule) {
 		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(
 			pPrototype->mModule->clone(newGroundEntity.get())

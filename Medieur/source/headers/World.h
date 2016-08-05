@@ -34,7 +34,7 @@ public:
 	bool hasJobs() { return mCurrentJobs.size() > 0; }
 
 	void createCharacter(int pX, int pY);
-	void createGroundEntity(int pX, int pY, std::shared_ptr<GroundEntity> pPrototype);
+	void createGroundEntity(int pX, int pY, GroundEntity* pPrototype);
 private:
 	std::vector<std::vector<Tile> > mTiles;
 	std::vector<std::shared_ptr<Character> > mCharacters;

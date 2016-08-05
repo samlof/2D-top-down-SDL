@@ -10,10 +10,11 @@ namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
 	const int kJobInterval = 100;
 }
-Character::Character(World * pWorld, Tile * pTile, int pX, int pY)
+
+Character::Character(World * pWorld, Tile * pTile, const int pId, int pX, int pY)
 	:
 	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY), mCurrentJob(nullptr),
-	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval)
+	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval), mId(pId)
 {
 }
 

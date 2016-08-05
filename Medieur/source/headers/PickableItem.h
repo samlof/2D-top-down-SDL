@@ -6,9 +6,9 @@ enum class ItemType {
 	JOY
 };
 
-class Item {
+class PickableItem {
 public:
-	Item(const int pId) : mId(pId) {}
+	PickableItem(const int pId) : mId(pId) {}
 
 private:
 	const int mId;
