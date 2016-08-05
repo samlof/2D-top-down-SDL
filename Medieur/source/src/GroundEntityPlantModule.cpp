@@ -27,6 +27,9 @@ void GroundEntityPlantModule::update()
 
 	if (mHealthCounter.expired()) {
 		mHealth--;
+		if (mHealth < 5) {
+			mThisEntity.getTile()->getCharacter()
+		}
 		if (mHealth <= 0) {
 			rot();
 		}

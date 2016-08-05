@@ -3,9 +3,11 @@
 #include <vector>
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "Point.h"
 
+class Job;
 class Tile;
 class Character;
 class GroundEntity;
@@ -26,10 +28,15 @@ public:
 
 	void update();
 
+	void createJob(Job* pJob);
+	Job* getJob();
+	void deleteJob(Job* pJob);
+
 	void createCharacter(int pX, int pY);
 	void createGroundEntity(int pX, int pY, std::shared_ptr<GroundEntity> pPrototype);
 private:
 	std::vector<std::vector<Tile> > mTiles;
 	std::vector<std::shared_ptr<Character> > mCharacters;
 	std::unordered_map<GroundEntity*, std::weak_ptr<GroundEntity> > mGroundEntities;
+	std::unordered_set<std::unique_ptr<Job> > mCurrentJobs;
 };

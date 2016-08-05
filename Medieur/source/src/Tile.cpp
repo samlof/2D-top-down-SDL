@@ -2,12 +2,13 @@
 
 #include "GroundEntity.h"
 
-Tile::Tile(TileType pTileType, int pX, int pY)
+Tile::Tile(World& pWorld, TileType pTileType, int pX, int pY)
 	:
 	mTileType(pTileType),
 	mX(pX), mY(pY),
 	mMovementCost(1.0f),
-	mCharacterStandingOn(false)
+	mCharacterStandingOn(false),
+	mWorld(pWorld)
 {
 }
 

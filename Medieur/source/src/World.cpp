@@ -50,6 +50,7 @@ World* World::GenerateTestWorld()
 
 World::World(const unsigned int width, const unsigned int height)
 {
+	// Reserve the memory required
 	mTiles.reserve(units::kWorldWidth);
 	for (auto it : mTiles) {
 		it.reserve(units::kWorldHeight);
@@ -92,6 +93,21 @@ void World::update()
 			it++;
 		}
 	}
+}
+
+void World::createJob(Job * pJob)
+{
+	mCurrentJobs.insert(std::unique_ptr<Job>(pJob));
+}
+
+Job * World::getJob()
+{
+	return mCurrentJobs.begin()->get();
+}
+
+void World::deleteJob(Job * pJob)
+{
+	mCurrentJobs.erase(std::unique_ptr<Job>(pJob));
 }
 
 void World::createCharacter(int pX, int pY)
