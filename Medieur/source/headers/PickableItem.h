@@ -8,6 +8,8 @@ enum class ItemType {
 
 class Item {
 public:
+	Item(const int pId) : mId(pId) {}
 
 private:
+	const int mId;
 };
