@@ -14,6 +14,8 @@
 #include "Character.h"
 #include "Prototypes.h"
 #include "Job.h"
+#include "PickableItem.h"
+
 
 using namespace Prototypes;
 
@@ -142,4 +144,15 @@ void World::createGroundEntity(int pX, int pY, GroundEntity* pPrototype)
 	}
 	tempTile->setGroundEntity(newGroundEntity);
 	mGroundEntities[newGroundEntity.get()] = newGroundEntity;
+}
+
+void World::createTile(int pX, int pY, Tile * pPrototype)
+{
+	// TODO:
+}
+
+void World::createPickableItem(int pX, int pY, PickableItem * pPrototype)
+{
+	Tile* tempTile = getTile(pX, pY);
+
 }

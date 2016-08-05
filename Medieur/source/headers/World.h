@@ -11,6 +11,7 @@ class Job;
 class Tile;
 class Character;
 class GroundEntity;
+class PickableItem;
 
 class World
 {
@@ -36,6 +37,7 @@ public:
 	void createCharacter(int pX, int pY, Character* pPrototype);
 	void createGroundEntity(int pX, int pY, GroundEntity* pPrototype);
 	void createTile(int pX, int pY, Tile* pPrototype);
+	void createPickableItem(int pX, int pY, PickableItem* pPrototype);
 private:
 	std::vector<std::vector<Tile> > mTiles;
 	std::vector<std::shared_ptr<Character> > mCharacters;

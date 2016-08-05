@@ -1,11 +1,13 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include "Character.h"
 #include "Point.h"
 
 class GroundEntity;
+class PickableItem;
 
 enum class TileType {
 	GRASS,
@@ -43,6 +45,9 @@ public:
 	World* getWorld() { return mWorld; }
 	Point getXY() const { return Point{ mX, mY }; }
 	int getId() const { return mId; }
+
+	void addItem(PickableItem* pItem) { mItems.push_back(pItem); }
+	std::vector<std::shared_ptr<PickableItem> > getItems() { return mItems; }
 private:
 	World* mWorld;
 	const int mId;
@@ -52,5 +57,7 @@ private:
 	std::shared_ptr<Character> mCharacter;
 	bool mCharacterStandingOn;
 	float mMovementCost;
+
+	std::vector<std::shared_ptr<PickableItem> > mItems;
 };
 
