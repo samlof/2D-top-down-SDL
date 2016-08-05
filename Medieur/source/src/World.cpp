@@ -38,10 +38,12 @@ World* World::GenerateTestWorld()
 		world->createGroundEntity(5 + i, 9, getPrototypeByName("Wall"));
 		world->createGroundEntity(9, 5 + i, getPrototypeByName("Wall"));
 
-		for (int j = 0; j < 5; j++) {
+		/*for (int j = 0; j < 5; j++) {
 			world->createGroundEntity(5 + i, 11 + j, getPrototypeByName("Plant"));
-		}
+		}*/
 	}
+	world->createGroundEntity(5, 11, getPrototypeByName("Plant"));
+	world->createGroundEntity(6, 11, getPrototypeByName("Plant"));
 
 
 	world->getTile(7, 5)->clearGroundEntity();
@@ -98,17 +100,23 @@ void World::update()
 
 void World::createJob(Job * pJob)
 {
-	mCurrentJobs.insert(std::unique_ptr<Job>(pJob));
+	printf("Create Job!\n");
+	mCurrentJobs.insert(pJob);
 }
 
 Job * World::getJob()
 {
-	return mCurrentJobs.begin()->get();
+	for (auto it : mCurrentJobs) {
+		return it;
+	}
+	throw "No jobs!";
+	return nullptr;
 }
 
 void World::deleteJob(Job * pJob)
 {
-	mCurrentJobs.erase(std::unique_ptr<Job>(pJob));
+	mCurrentJobs.erase(pJob);
+	delete pJob;
 }
 
 void World::createCharacter(int pX, int pY)

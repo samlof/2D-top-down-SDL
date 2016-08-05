@@ -22,8 +22,8 @@ public:
 	void update();
 private:
 	int mX, mY;
-	bool mMoving;
 	CountdownCounter mMoveCounter;
+	CountdownCounter mJobInterval;
 
 	World* mWorld;
 	Tile* mTile;
@@ -32,4 +32,5 @@ private:
 	std::stack<Tile*> mPathTiles;
 
 	void moveTowardsNextTile();
+	void getJob();
 };

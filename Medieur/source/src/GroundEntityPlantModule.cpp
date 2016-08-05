@@ -9,8 +9,8 @@
 
 namespace {
 	const int kMaxGrowth = 6;
-	const int kMaxHealth = 10;
-	const int kGrowthSteps = 200;
+	const int kMaxHealth = 6;
+	const int kGrowthSteps = 2000;
 	const int kHealthDropSteps = 300;
 }
 
@@ -29,11 +29,11 @@ void GroundEntityPlantModule::update()
 
 	if (mHealthCounter.expired()) {
 		mHealth--;
-		if (mHealth < 5) {
+		if (mHealth == 5) {
 			Job* job = new Job(mThisEntity->getTile(), JobType::INTERACT);
 			mThisEntity->getTile()->getWorld()->createJob(job);
 		}
-		if (mHealth <= 0) {
+		else if (mHealth <= 0) {
 			rot();
 		}
 		mHealthCounter.reset();
