@@ -12,7 +12,6 @@ class GroundEntity;
 class Character;
 
 namespace SpriteManager {
-	void initSprites();
 	void createSprite(const int pId, Sprite* pSprite);
 
 	void setGroundEntityFunction(const int pId, std::function<Rectangle(GroundEntity*)> pFunction);

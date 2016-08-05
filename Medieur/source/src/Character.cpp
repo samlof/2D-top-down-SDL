@@ -11,9 +11,16 @@ namespace {
 	const int kJobInterval = 100;
 }
 
-Character::Character(World * pWorld, Tile * pTile, const int pId, int pX, int pY)
+Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, int pY)
 	:
-	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY), mCurrentJob(nullptr),
+	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY),
+	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval), mId(pPrototype->mId),
+	mNextTile(nullptr), mCurrentJob(nullptr)
+{
+}
+
+Character::Character(const int pId)
+	:
 	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval), mId(pId)
 {
 }

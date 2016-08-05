@@ -27,7 +27,8 @@ World* World::GenerateTestWorld()
 		world->mTiles.push_back(std::vector<Tile>());
 		for (int y = 0; y < units::kWorldHeight; y++)
 		{
-			world->mTiles[x].push_back(Tile(world, 200, TileType::GRASS, x, y));
+			Tile tempTile(getTilePrototypeByName("GrassTile"), world, x, y);
+			world->mTiles[x].push_back(tempTile);
 		}
 	}
 
@@ -119,14 +120,14 @@ void World::deleteJob(Job * pJob)
 	delete pJob;
 }
 
-void World::createCharacter(int pX, int pY)
+void World::createCharacter(int pX, int pY, Character* pPrototype)
 {
-	std::shared_ptr<Character> tempChar = std::make_shared<Character>(this, getTile(pX, pY), 100, pX, pY);
+
+	std::shared_ptr<Character> tempChar = std::make_shared<Character>(pPrototype, this, getTile(pX, pY), pX, pY);
 	mCharacters.push_back(tempChar);
 
 	getTile(pX, pY)->reserveFor(tempChar);
 	getTile(pX, pY)->moveTo();
-	tempChar->setPathTo(getTile(6, 8));
 }
 
 void World::createGroundEntity(int pX, int pY, GroundEntity* pPrototype)

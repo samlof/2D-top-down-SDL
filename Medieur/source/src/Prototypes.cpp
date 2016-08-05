@@ -10,11 +10,13 @@
 #include "Sprite.h"
 #include "PickableItem.h"
 #include "Tile.h"
+#include "Character.h"
 
 namespace Prototypes {
 	namespace {
 		std::map<int, std::unique_ptr<GroundEntity> > groundEntityPrototypes;
 		std::map<int, std::unique_ptr<PickableItem> > pickableItemPrototypes;
+		std::map<int, std::unique_ptr<Character> > characterPrototypes;
 		std::map<int, std::unique_ptr<Tile> > tilePrototypes;
 		std::map<std::string, int> idsByName;
 
@@ -23,9 +25,12 @@ namespace Prototypes {
 		const Rectangle kWallSource(224, 384, 32, 32);
 		const Rectangle kDoorSource(0, 0, 32, 32);
 		const Rectangle kPlantSource(units::kTileSize * 6, 0, units::kTileSize, 64);
+		const Rectangle kGrassSource(0, 0, 512, 512);
+		const Rectangle kCharacterSource(0, 0, 32, 32);
 	}
 
 	bool createPrototypes() {
+		// Ground entity prototypes
 		createGroundEntityPrototype("Door", 1, new Sprite("bad_door.png", kDoorSource));
 		createGroundEntityPrototype("Wall", 0, new Sprite("walls1.png", kWallSource));
 		createGroundEntityPrototype("Plant", 1, new Sprite("plants.png", kPlantSource));
@@ -42,11 +47,15 @@ namespace Prototypes {
 			return newRect;
 		});
 
+		// Tile prototype
+		createTilePrototype("GrassTile", 1, new Sprite("grass00.png", kGrassSource));
 
-		SpriteManager::initSprites(); // FIXME: tile and character prototypes
+		// Character prototype
+		createCharacterPrototype("Guy", 1, new Sprite("Ukko.png", kCharacterSource));
 		return true;
 	}
 
+#pragma region GroundEntity
 	void createGroundEntityPrototype(
 		const std::string & pName, const float pMovSpeed, // Entity stuff
 		Sprite* pSprite)
@@ -62,11 +71,13 @@ namespace Prototypes {
 		return getGroundEntityPrototypeById(idsByName[pName]);
 	}
 
-	GroundEntity* getGroundEntityPrototypeById(const int id)
+	GroundEntity* getGroundEntityPrototypeById(const int pId)
 	{
-		return groundEntityPrototypes.at(id).get();
+		return groundEntityPrototypes.at(pId).get();
 	}
+#pragma endregion
 
+#pragma region Pickable Item
 	void createPickableItemPrototype(const std::string & pName, const float pMovSpeed, Sprite * pSprite)
 	{
 		int id = getNextId();
@@ -80,11 +91,13 @@ namespace Prototypes {
 		return getPickableItemPrototypeById(idsByName[pName]);
 	}
 
-	PickableItem * getPickableItemPrototypeById(const int id)
+	PickableItem * getPickableItemPrototypeById(const int pId)
 	{
-		return pickableItemPrototypes.at(id).get();
+		return pickableItemPrototypes.at(pId).get();
 	}
+#pragma endregion
 
+#pragma region Tile
 	void createTilePrototype(const std::string & pName, const float pMovSpeed, Sprite * pSprite)
 	{
 		int id = getNextId();
@@ -98,10 +111,31 @@ namespace Prototypes {
 		return getTilePrototypeById(idsByName[pName]);
 	}
 
-	Tile * getTilePrototypeById(const int id)
+	Tile * getTilePrototypeById(const int pId)
 	{
-		return tilePrototypes.at(id).get();
+		return tilePrototypes.at(pId).get();
 	}
+#pragma endregion
+
+#pragma region Character
+	void createCharacterPrototype(const std::string & pName, const float pMovSpeed, Sprite * pSprite)
+	{
+		int id = getNextId();
+		SpriteManager::createSprite(id, pSprite);
+		characterPrototypes[id] = std::make_unique<Character>(id);
+		idsByName[pName] = id;
+	}
+
+	Character * getCharacterPrototypeByName(const std::string & pName)
+	{
+		return characterPrototypes[getIdByName(pName)].get();
+	}
+
+	Character * getCharacterPrototypeById(const int pId)
+	{
+		return characterPrototypes[pId].get();
+	}
+#pragma endregion
 
 	int getIdByName(const std::string & pName)
 	{

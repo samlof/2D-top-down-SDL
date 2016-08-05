@@ -22,20 +22,7 @@ namespace SpriteManager {
 
 		using GroundEntitySpriteFunctionMap = std::unordered_map<int, std::function<Rectangle(GroundEntity*)> >;
 		GroundEntitySpriteFunctionMap groundEntitySpriteFunctions;
-
-
-
-		const Rectangle kGrassSource(0, 0, 512, 512);
-		const Rectangle kCharacterSource(0, 0, 32, 32);
 	}
-
-	void initSprites()
-	{
-		
-	/*	tileSprites.insert(TileMap::value_type(TileType::GRASS, std::make_unique<Sprite>("grass00.png", kGrassSource)));
-		
-		characterSprites.insert(CharacterMap::value_type(1, std::make_unique<Sprite>("Ukko.png", kCharacterSource)));
-	*/}
 
 	void createSprite(const int pId, Sprite* pSprite)
 	{

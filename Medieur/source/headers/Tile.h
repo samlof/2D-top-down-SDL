@@ -15,7 +15,7 @@ enum class TileType {
 class Tile
 {
 public:
-	Tile(World* pWorld, const int pId, TileType pTileType, int pX, int pY);
+	Tile(Tile* pPrototype, World* pWorld, int pX, int pY);
 	// For prototype
 	Tile(const int pId, TileType pTileType) : 
 		mId(pId), mTileType(pTileType), mX(-1), mY(-1) {}
