@@ -2,13 +2,18 @@
 
 #include "PathFinder.h"
 #include "Tile.h"
+#include "World.h"
+#include "job.h"
+#include "GroundEntity.h"
 
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
+	const int kJobInterval = 100;
 }
 Character::Character(World * pWorld, Tile * pTile, int pX, int pY)
 	:
-	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY), mMoveCounter(kWalkSpeed)
+	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY), mCurrentJob(nullptr),
+	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval)
 {
 }
 
@@ -20,17 +25,40 @@ void Character::setPathTo(Tile * pGoalTile)
 
 void Character::update()
 {
-	if (mNextTile == nullptr) {
-		return;
-	}
-	else if (mTile != mNextTile) {
+	// Try to get a new job if doesn't have one
+	if (mCurrentJob == nullptr) {
 		moveTowardsNextTile();
+		mJobInterval.step();
+
+		if (mJobInterval.expired()) {
+			getJob();
+		}
+	}
+	else {
+		if (mNextTile == nullptr) {
+			//At target
+			switch (mCurrentJob->getType())
+			{
+			case JobType::PICKUP:
+				mTile->getGroundEntity()->mModule->pickup();
+			case JobType::INTERACT:
+				mTile->getGroundEntity()->mModule->interact();
+			default:
+				break;
+			}
+			mWorld->deleteJob(mCurrentJob);
+			mCurrentJob = nullptr;
+			return;
+		}
+		else if (mTile != mNextTile) {
+			moveTowardsNextTile();
+		}
 	}
 }
 
 void Character::getNextTile()
 {
-	if (mPathTiles.size() == 0) mNextTile = mTile;
+	if (mPathTiles.size() == 0) mNextTile = nullptr;
 	else {
 		mNextTile = mPathTiles.top();
 		mPathTiles.pop();
@@ -39,6 +67,8 @@ void Character::getNextTile()
 
 void Character::moveTowardsNextTile()
 {
+	if (mNextTile == nullptr) return;
+	// FIXME: make nicer
 	if (mNextTile->getCharacter() == mTile->getCharacter()) {
 	}
 	else if (mNextTile->isReservableForCharacter()) {
@@ -47,7 +77,7 @@ void Character::moveTowardsNextTile()
 	else return; // If reserved by someone else
 
 	if (mMoveCounter.expired()) {
-		// Update tiles
+		// At next tile, update tiles
 		mTile->clearCharater();
 		mNextTile->moveTo();
 		mTile = mNextTile;
@@ -59,6 +89,17 @@ void Character::moveTowardsNextTile()
 		mMoveCounter.reset();
 	}
 	else {
+		// Move towards next tile
 		mMoveCounter.step();
+	}
+}
+
+void Character::getJob()
+{
+	if (mWorld->hasJobs()) {
+		mCurrentJob = mWorld->getJob();
+		mCurrentJob->reserve();
+		setPathTo(mCurrentJob->getTile());
+		mJobInterval.reset();
 	}
 }

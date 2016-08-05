@@ -15,7 +15,7 @@ enum class TileType {
 class Tile
 {
 public:
-	Tile(TileType pTileType, int pY, int pX);
+	Tile(World* pWorld, TileType pTileType, int pX, int pY);
 
 	TileType getTileType() const { return mTileType; }
 	void setTileType(TileType pTileType);
@@ -37,8 +37,10 @@ public:
 	bool isWalkable() const;
 	int getX() const { return mX; }
 	int getY() const { return mY; }
+	World* getWorld() { return mWorld; }
 	Point getXY() const { return Point{ mX, mY }; }
 private:
+	World* mWorld;
 	TileType mTileType;
 	std::shared_ptr<GroundEntity> mGroundEntity;
 	std::shared_ptr<Character> mCharacter;

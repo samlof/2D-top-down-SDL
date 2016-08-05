@@ -75,6 +75,9 @@
     <ClInclude Include="source\headers\SpriteManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\headers\job.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\src\MainLoop.cpp">

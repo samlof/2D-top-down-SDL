@@ -13,6 +13,7 @@
 #include "GroundEntity.h"
 #include "Character.h"
 #include "Prototypes.h"
+#include "job.h"
 
 using namespace Prototypes;
 
@@ -26,7 +27,7 @@ World* World::GenerateTestWorld()
 		world->mTiles.push_back(std::vector<Tile>());
 		for (int y = 0; y < units::kWorldHeight; y++)
 		{
-			world->mTiles[x].push_back(Tile(TileType::GRASS, x, y));
+			world->mTiles[x].push_back(Tile(world, TileType::GRASS, x, y));
 		}
 	}
 
@@ -37,10 +38,12 @@ World* World::GenerateTestWorld()
 		world->createGroundEntity(5 + i, 9, getPrototypeByName("Wall"));
 		world->createGroundEntity(9, 5 + i, getPrototypeByName("Wall"));
 
-		for (int j = 0; j < 5; j++) {
+		/*for (int j = 0; j < 5; j++) {
 			world->createGroundEntity(5 + i, 11 + j, getPrototypeByName("Plant"));
-		}
+		}*/
 	}
+	world->createGroundEntity(5, 11, getPrototypeByName("Plant"));
+	world->createGroundEntity(6, 11, getPrototypeByName("Plant"));
 
 
 	world->getTile(7, 5)->clearGroundEntity();
@@ -50,6 +53,7 @@ World* World::GenerateTestWorld()
 
 World::World(const unsigned int width, const unsigned int height)
 {
+	// Reserve the memory required
 	mTiles.reserve(units::kWorldWidth);
 	for (auto it : mTiles) {
 		it.reserve(units::kWorldHeight);
@@ -94,6 +98,27 @@ void World::update()
 	}
 }
 
+void World::createJob(Job * pJob)
+{
+	printf("Create Job!\n");
+	mCurrentJobs.insert(pJob);
+}
+
+Job * World::getJob()
+{
+	for (auto it : mCurrentJobs) {
+		return it;
+	}
+	throw "No jobs!";
+	return nullptr;
+}
+
+void World::deleteJob(Job * pJob)
+{
+	mCurrentJobs.erase(pJob);
+	delete pJob;
+}
+
 void World::createCharacter(int pX, int pY)
 {
 	std::shared_ptr<Character> tempChar = std::make_shared<Character>(this, getTile(pX, pY), pX, pY);
@@ -110,7 +135,9 @@ void World::createGroundEntity(int pX, int pY, std::shared_ptr<GroundEntity> pPr
 	if (tempTile->hasGroundEntity()) return;
 	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype.get(), tempTile);
 	if (pPrototype->mModule) {
-		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(pPrototype->mModule->clone(*newGroundEntity));
+		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(
+			pPrototype->mModule->clone(newGroundEntity.get())
+			);
 	}
 	tempTile->setGroundEntity(newGroundEntity);
 	mGroundEntities[newGroundEntity.get()] = newGroundEntity;
