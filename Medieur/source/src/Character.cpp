@@ -3,7 +3,7 @@
 #include "PathFinder.h"
 #include "Tile.h"
 #include "World.h"
-#include "job.h"
+#include "Job.h"
 #include "GroundEntity.h"
 
 namespace {

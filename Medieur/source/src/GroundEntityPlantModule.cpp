@@ -4,7 +4,7 @@
 
 #include "GroundEntity.h"
 #include "Tile.h"
-#include "job.h"
+#include "Job.h"
 #include "World.h"
 
 namespace {

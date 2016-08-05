@@ -151,7 +151,7 @@
     <ClInclude Include="source\headers\IGroundEntityModule.h" />
     <ClInclude Include="source\headers\InputHandler.h" />
     <ClInclude Include="source\headers\Item.h" />
-    <ClInclude Include="source\headers\job.h" />
+    <ClInclude Include="source\headers\Job.h" />
     <ClInclude Include="source\headers\MainLoop.h" />
     <ClInclude Include="source\headers\PathFinder.h" />
     <ClInclude Include="source\headers\Point.h" />

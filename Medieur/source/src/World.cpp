@@ -13,7 +13,7 @@
 #include "GroundEntity.h"
 #include "Character.h"
 #include "Prototypes.h"
-#include "job.h"
+#include "Job.h"
 
 using namespace Prototypes;
 
