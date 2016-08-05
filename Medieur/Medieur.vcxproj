@@ -150,7 +150,7 @@
     <ClInclude Include="source\headers\GroundEntityPlantModule.h" />
     <ClInclude Include="source\headers\IGroundEntityModule.h" />
     <ClInclude Include="source\headers\InputHandler.h" />
-    <ClInclude Include="source\headers\Item.h" />
+    <ClInclude Include="source\headers\PickableItem.h" />
     <ClInclude Include="source\headers\Job.h" />
     <ClInclude Include="source\headers\MainLoop.h" />
     <ClInclude Include="source\headers\PathFinder.h" />
@@ -171,7 +171,6 @@
     <ClCompile Include="source\src\GroundEntity.cpp" />
     <ClCompile Include="source\src\GroundEntityPlantModule.cpp" />
     <ClCompile Include="source\src\InputHandler.cpp" />
-    <ClCompile Include="source\src\Item.cpp" />
     <ClCompile Include="source\src\main.cpp" />
     <ClCompile Include="source\src\MainLoop.cpp" />
     <ClCompile Include="source\src\PathFinder.cpp" />
