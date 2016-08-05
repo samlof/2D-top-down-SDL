@@ -2,7 +2,7 @@
 
 #include "GroundEntity.h"
 
-Tile::Tile(World& pWorld, TileType pTileType, int pX, int pY)
+Tile::Tile(World* pWorld, TileType pTileType, int pX, int pY)
 	:
 	mTileType(pTileType),
 	mX(pX), mY(pY),

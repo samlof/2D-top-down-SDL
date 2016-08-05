@@ -27,7 +27,7 @@ namespace Prototypes {
 		createPrototype("Wall", 0, new Sprite("walls1.png", kWallSource));
 		createPrototype("Plant", 1, new Sprite("plants.png", kPlantSource));
 		getPrototypeByName("Plant")->mModule = std::make_unique<GroundEntityPlantModule>(
-			*getPrototypeByName("Plant").get()
+			getPrototypeByName("Plant").get()
 			);
 
 

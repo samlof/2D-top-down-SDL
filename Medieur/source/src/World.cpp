@@ -13,6 +13,7 @@
 #include "GroundEntity.h"
 #include "Character.h"
 #include "Prototypes.h"
+#include "job.h"
 
 using namespace Prototypes;
 
@@ -26,7 +27,7 @@ World* World::GenerateTestWorld()
 		world->mTiles.push_back(std::vector<Tile>());
 		for (int y = 0; y < units::kWorldHeight; y++)
 		{
-			world->mTiles[x].push_back(Tile(TileType::GRASS, x, y));
+			world->mTiles[x].push_back(Tile(world, TileType::GRASS, x, y));
 		}
 	}
 
@@ -126,7 +127,9 @@ void World::createGroundEntity(int pX, int pY, std::shared_ptr<GroundEntity> pPr
 	if (tempTile->hasGroundEntity()) return;
 	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype.get(), tempTile);
 	if (pPrototype->mModule) {
-		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(pPrototype->mModule->clone(*newGroundEntity));
+		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(
+			pPrototype->mModule->clone(newGroundEntity.get())
+			);
 	}
 	tempTile->setGroundEntity(newGroundEntity);
 	mGroundEntities[newGroundEntity.get()] = newGroundEntity;

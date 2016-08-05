@@ -4,6 +4,8 @@
 
 #include "GroundEntity.h"
 #include "Tile.h"
+#include "job.h"
+#include "World.h"
 
 namespace {
 	const int kMaxGrowth = 6;
@@ -12,7 +14,7 @@ namespace {
 	const int kHealthDropSteps = 300;
 }
 
-GroundEntityPlantModule::GroundEntityPlantModule(GroundEntity & pThisEntity)
+GroundEntityPlantModule::GroundEntityPlantModule(GroundEntity * pThisEntity)
 	:
 	IGroundEntityModule(pThisEntity),
 	mHealth(kMaxHealth), mGrowth(1),
@@ -28,7 +30,8 @@ void GroundEntityPlantModule::update()
 	if (mHealthCounter.expired()) {
 		mHealth--;
 		if (mHealth < 5) {
-			mThisEntity.getTile()->getCharacter()
+			Job* job = new Job(mThisEntity->getTile(), JobType::INTERACT);
+			mThisEntity->getTile()->getWorld()->createJob(job);
 		}
 		if (mHealth <= 0) {
 			rot();
@@ -37,7 +40,10 @@ void GroundEntityPlantModule::update()
 	}
 	if (mGrowthCounter.expired()) {
 		mGrowth++;
-		if (mGrowth > kMaxGrowth) {
+		if (mGrowth == kMaxGrowth) {
+			Job* job = new Job(mThisEntity->getTile(), JobType::PICKUP);
+			mThisEntity->getTile()->getWorld()->createJob(job);
+		} else if (mGrowth > kMaxGrowth + 2) {
 			rot();
 		}
 		mGrowthCounter.reset();
@@ -48,7 +54,7 @@ void GroundEntityPlantModule::update()
 void GroundEntityPlantModule::interact()
 {
 	printf("Interact: ");
-	printf("x: %i, y: %i\n", mThisEntity.getTile()->getX(), mThisEntity.getTile()->getY());
+	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
 	mHealth = kMaxHealth;
 	mHealthCounter.reset();
 }
@@ -65,5 +71,5 @@ void GroundEntityPlantModule::pickup()
 
 void GroundEntityPlantModule::rot()
 {
-	mThisEntity.erase();
+	mThisEntity->erase();
 }
