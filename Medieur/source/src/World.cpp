@@ -55,6 +55,8 @@ World* World::GenerateTestWorld()
 }
 
 World::World(const unsigned int width, const unsigned int height)
+	:
+	mJobManager(new JobManager())
 {
 	// Reserve the memory required
 	mTiles.reserve(units::kWorldWidth);

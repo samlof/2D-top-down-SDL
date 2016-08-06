@@ -3,17 +3,18 @@
 #include "Job.h"
 
 
-
 void JobManager::deleteJob(Job * pJob)
 {
 	mCurrentJobs.erase(pJob);
 	delete pJob;
 }
 
-void JobManager::createJob(Job * pJob)
+Job* JobManager::createJob(Tile* pTargetTile, Job::JobFunc pJobFunc)
 {
 	printf("Create Job!\n");
-	mCurrentJobs.insert(pJob);
+	Job* job = new Job(*this, pTargetTile, pJobFunc);
+	mCurrentJobs.insert(job);
+	return job;
 }
 
 Job * JobManager::getJob()
@@ -22,4 +23,14 @@ Job * JobManager::getJob()
 		return it;
 	}
 	return nullptr;
+}
+
+void JobManager::removeJobFromOpen(Job * pJob)
+{
+	mCurrentJobs.erase(pJob);
+}
+
+void JobManager::addJob(Job * pJob)
+{
+	mCurrentJobs.insert(pJob);
 }

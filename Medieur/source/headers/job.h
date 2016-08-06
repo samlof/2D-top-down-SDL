@@ -10,11 +10,13 @@ class Job {
 public:
 	using JobFunc = std::function<void(Character*)>;
 	Job(JobManager& pManager, Tile* pTargetTile, JobFunc pJobFunc)
-		: mTargetTile(pTargetTile), mJobFunc(pJobFunc),	mManager(pManager)
+		: mTargetTile(pTargetTile), mJobFunc(pJobFunc),	mManager(pManager),
+		mCharacter(nullptr)
 	{}
 
-	void reserve() { if (mReserved) throw "Job already reserved!"; mReserved = true; }
-	bool isReserved() const { return mReserved; }
+	void reserve(Character* pCharacter);
+	bool isReserved() const { return mCharacter != nullptr; }
+	void cancelReserve(Character* pCharacter);
 	void cancelJob();
 	Tile* getTile() { return mTargetTile; }
 	JobFunc getFunc() { return mJobFunc; }
@@ -22,5 +24,5 @@ private:
 	JobManager& mManager;
 	Tile* mTargetTile;
 	JobFunc mJobFunc;
-	bool mReserved;
+	Character* mCharacter;
 };
