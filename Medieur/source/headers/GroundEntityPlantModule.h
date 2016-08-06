@@ -25,6 +25,7 @@ private:
 	int mHealth;
 	CountdownCounter mGrowthCounter;
 	CountdownCounter mHealthCounter;
+	bool mInteractJobCreated, mPickupJobCreated;
 
 	int mDropItemId;
 	void rot();

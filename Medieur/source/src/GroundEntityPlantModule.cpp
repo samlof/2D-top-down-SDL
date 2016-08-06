@@ -41,11 +41,10 @@ void GroundEntityPlantModule::update()
 
 	if (mHealthCounter.expired()) {
 		mHealth--;
-		mHealthCounter.pause(); // Remove
-		if (mHealth == 5) {
-			printf("Come interact!\n");
+		if (mHealth == 5 && (mInteractJobCreated == false)) {
 			Job* job = new Job(mThisEntity->getTile(), JobType::INTERACT);
 			mThisEntity->getTile()->getWorld()->createJob(job);
+			mInteractJobCreated = true;
 		}
 		else if (mHealth <= 0) {
 			rot();
@@ -54,11 +53,12 @@ void GroundEntityPlantModule::update()
 	}
 	if (mGrowthCounter.expired()) {
 		mGrowth++;
-		if (mGrowth >= kMaxGrowth - 1) {
+		if (mGrowth >= kMaxGrowth - 1 && (mInteractJobCreated == false)) {
 			Job* job = new Job(mThisEntity->getTile(), JobType::PICKUP);
 			mThisEntity->getTile()->getWorld()->createJob(job);
-			mGrowthCounter.pause(); // remove
-		} else if (mGrowth > kMaxGrowth + 2) {
+			mInteractJobCreated = true;
+		}
+		else if (mGrowth > kMaxGrowth + 2) {
 			rot();
 		}
 		mGrowthCounter.reset();
@@ -72,20 +72,24 @@ void GroundEntityPlantModule::interact(Character* pCharacter)
 	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
 	mHealth = kMaxHealth;
 	mHealthCounter.reset();
+	mInteractJobCreated = false;
 }
 
 void GroundEntityPlantModule::pickup(Character* pCharacter)
 {
-	//if (mGrowth >= kMaxGrowth - 1) {
-		printf("Pickup item!\n");
-		PickableItem* item = mThisEntity->getTile()->getWorld()->createPickableItem(mDropItemId, kHarvestAmount);
-		
-		pCharacter->addItem(item);
-		mThisEntity->erase();
-	/*}
+	if (mGrowth >= kMaxGrowth - 1) {
+	printf("Pickup item: ");
+	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
+
+	PickableItem* item = mThisEntity->getTile()->getWorld()->createPickableItem(mDropItemId, kHarvestAmount);
+
+	pCharacter->addItem(item);
+	mInteractJobCreated = false;
+	mThisEntity->erase();
+	}
 	else {
 		rot();
-	}*/
+	}
 }
 
 void GroundEntityPlantModule::rot()
