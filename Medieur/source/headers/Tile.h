@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <vector>
+#include <unordered_map>
 
 #include "Character.h"
 #include "Point.h"
@@ -20,10 +20,10 @@ public:
 	Tile(Tile* pPrototype, World* pWorld, int pX, int pY);
 
 	TileType getTileType() const { return mTileType; }
-	void setTileType(TileType pTileType);
+	void setTileType(TileType pTileType) { mTileType = pTileType; }
 
 	//Ground entity functions
-	std::shared_ptr<GroundEntity> getGroundEntity();
+	std::shared_ptr<GroundEntity> getGroundEntity() { return mGroundEntity; }
 	bool hasGroundEntity() const { return static_cast<bool>(mGroundEntity); }
 	void setGroundEntity(std::shared_ptr<GroundEntity> pGroundEntity) { mGroundEntity = pGroundEntity; }
 	void clearGroundEntity() { mGroundEntity.reset(); }
@@ -43,7 +43,6 @@ public:
 	Point getXY() const { return Point{ mX, mY }; }
 	int getId() const { return mId; }
 
-	std::vector<std::shared_ptr<PickableItem> > getItems() { return mItems; }
 private:
 	World* mWorld;
 	const int mId;
@@ -54,7 +53,7 @@ private:
 	bool mCharacterStandingOn;
 	float mMovementCost;
 
-	std::vector<std::shared_ptr<PickableItem> > mItems;
+	std::unordered_multimap<int, PickableItem*> mItems;
 
 
 	// For prototype

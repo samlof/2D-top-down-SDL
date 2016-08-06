@@ -13,14 +13,6 @@ Tile::Tile(Tile* pPrototype, World* pWorld, int pX, int pY)
 }
 
 #pragma region Gets and sets
-void Tile::setTileType(TileType pTileType)
-{
-	mTileType = pTileType;
-}
-std::shared_ptr<GroundEntity> Tile::getGroundEntity()
-{
-	return mGroundEntity;
-}
 bool Tile::isWalkable() const
 {
 	bool walkable = mMovementCost > 0;
