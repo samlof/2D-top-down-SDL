@@ -61,10 +61,10 @@ void Character::update()
 			switch (mCurrentJob->getType())
 			{
 			case JobType::PICKUP:
-				mTile->getGroundEntity()->mModule->pickup();
+				mTile->getGroundEntity()->mModule->pickup(this);
 				break;
 			case JobType::INTERACT:
-				mTile->getGroundEntity()->mModule->interact();
+				mTile->getGroundEntity()->mModule->interact(this);
 				break;
 			default:
 				break;

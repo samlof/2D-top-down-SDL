@@ -11,8 +11,8 @@ public:
 
 	// Inherited via IGroundEntityModule
 	virtual void update() override;
-	virtual void interact() override;
-	virtual void pickup() override;
+	virtual void interact(Character* pCharacter) override;
+	virtual void pickup(Character* pCharacter) override;
 
 	virtual GroundEntityPlantModule* clone(IGroundEntityModule* pPrototype, GroundEntity * pThisEntity) override {
 		return new GroundEntityPlantModule(static_cast<GroundEntityPlantModule*>(pPrototype), pThisEntity);

@@ -65,7 +65,7 @@ void GroundEntityPlantModule::update()
 
 }
 
-void GroundEntityPlantModule::interact()
+void GroundEntityPlantModule::interact(Character* pCharacter)
 {
 	printf("Interact: ");
 	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
@@ -73,7 +73,7 @@ void GroundEntityPlantModule::interact()
 	mHealthCounter.reset();
 }
 
-void GroundEntityPlantModule::pickup()
+void GroundEntityPlantModule::pickup(Character* pCharacter)
 {
 	//if (mGrowth >= kMaxGrowth - 1) {
 		printf("Create item!\n");
