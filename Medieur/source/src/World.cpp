@@ -120,15 +120,15 @@ void World::deleteItem(PickableItem * pItem)
 {
 	auto iters = mItems.equal_range(pItem->getId());
 	for (auto it = iters.first; it != iters.second; it++) {
-		if (it->second == pItem) {
-			mItems.erase(it);
+		if (it->second.get() == pItem) {
 			if (it->second->mTile != nullptr) {
 				it->second->mTile->clearItem(pItem);
 			}
 			else if (it->second->mCharacter != nullptr) {
 				it->second->mCharacter->clearItem();
 			}
-			delete pItem;
+			it->second.release();
+			mItems.erase(it);
 			break;
 		}
 	}
@@ -136,7 +136,7 @@ void World::deleteItem(PickableItem * pItem)
 
 void World::addItem(PickableItem * pItem)
 {
-	mItems.insert(ItemMap::value_type(pItem->getId(), pItem));
+	mItems.insert(ItemMap::value_type(pItem->getId(), std::unique_ptr<PickableItem>(pItem)));
 }
 
 void World::deleteJob(Job * pJob)
@@ -177,5 +177,7 @@ void World::createTile(int pX, int pY, Tile * pPrototype)
 void World::createPickableItem(int pX, int pY, PickableItem * pPrototype)
 {
 	Tile* tempTile = getTile(pX, pY);
-
+	PickableItem* newItem = new PickableItem(pPrototype, 0);
+	addItem(newItem);
+	tempTile->addItem(newItem);
 }

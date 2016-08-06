@@ -62,7 +62,10 @@ void GroundEntityPlantModule::interact()
 void GroundEntityPlantModule::pickup()
 {
 	if (mGrowth == kMaxGrowth) {
-		// TODO: pickup, inventories
+		Tile* const tempTile = mThisEntity->getTile();
+		const int x = tempTile->getX();
+		const int y = tempTile->getY();
+		tempTile->getWorld()->createPickableItem(x, y, 2);
 	}
 	else {
 		rot();

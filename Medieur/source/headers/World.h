@@ -47,6 +47,6 @@ private:
 	std::unordered_map<GroundEntity*, std::weak_ptr<GroundEntity> > mGroundEntities;
 	std::unordered_set<Job*> mCurrentJobs;
 
-	using ItemMap = std::unordered_multimap<int, PickableItem*>;
+	using ItemMap = std::unordered_multimap<int, std::unique_ptr<PickableItem> >;
 	ItemMap mItems;
 };
