@@ -19,18 +19,13 @@ void PickableItem::takeAmountFrom(PickableItem * pItem, int pAmount)
 	}
 
 	// Check if can add all of it
-	if (mAmount + pAmount > mMaxAmount) {
+	if (pAmount > (mMaxAmount - mAmount)) {
 		// Add less
-		int diff = mAmount + pAmount - mMaxAmount;
-		int addDiff = pAmount - diff;
-		mAmount += addDiff;
-		pItem->mAmount -= addDiff;
+		pAmount = mMaxAmount - mAmount;
 	}
-	else {
-		// add all of it
-		mAmount += pAmount;
-		pItem->mAmount -= pAmount;
-	}
+
+	mAmount += pAmount;
+	pItem->mAmount -= pAmount;
 }
 
 void PickableItem::erase()
