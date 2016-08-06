@@ -78,6 +78,9 @@
     <ClInclude Include="source\headers\PickableItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\headers\JobManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\src\MainLoop.cpp">
@@ -132,6 +135,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\src\SpriteManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\src\PickableItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\src\JobManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\src\Job.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

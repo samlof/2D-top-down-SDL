@@ -15,6 +15,7 @@
 #include "Prototypes.h"
 #include "Job.h"
 #include "PickableItem.h"
+#include "JobManager.h"
 
 
 using namespace Prototypes;
@@ -54,17 +55,14 @@ World* World::GenerateTestWorld()
 }
 
 World::World(const unsigned int width, const unsigned int height)
+	:
+	mJobManager(new JobManager())
 {
 	// Reserve the memory required
 	mTiles.reserve(units::kWorldWidth);
 	for (auto it : mTiles) {
 		it.reserve(units::kWorldHeight);
 	}
-}
-
-
-World::~World()
-{
 }
 
 Tile* World::getTile(const int pX, const int pY)
@@ -100,20 +98,6 @@ void World::update()
 	}
 }
 
-void World::createJob(Job * pJob)
-{
-	printf("Create Job!\n");
-	mCurrentJobs.insert(pJob);
-}
-
-Job * World::getJob()
-{
-	for (auto it : mCurrentJobs) {
-		return it;
-	}
-	throw "No jobs!";
-	return nullptr;
-}
 
 void World::deleteItem(PickableItem * pItem)
 {
@@ -133,11 +117,6 @@ void World::deleteItem(PickableItem * pItem)
 	}
 }
 
-void World::deleteJob(Job * pJob)
-{
-	mCurrentJobs.erase(pJob);
-	delete pJob;
-}
 
 Character* World::createCharacter(int pX, int pY, int pId)
 {

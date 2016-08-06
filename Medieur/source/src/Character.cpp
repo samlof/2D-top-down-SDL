@@ -6,6 +6,7 @@
 #include "Job.h"
 #include "GroundEntity.h"
 #include "PickableItem.h"
+#include "JobManager.h"
 
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
@@ -16,7 +17,7 @@ Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, 
 	:
 	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY),
 	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval), mId(pPrototype->mId),
-	mNextTile(nullptr), mCurrentJob(nullptr), mItem(nullptr)
+	mNextTile(nullptr), mCurrentJob(nullptr), mItem(nullptr), mGoalTile(nullptr)
 {
 }
 
@@ -28,8 +29,16 @@ Character::Character(const int pId)
 
 void Character::setPathTo(Tile * pGoalTile)
 {
+	mGoalTile = pGoalTile;
 	mPathTiles = PathFinder::FindPath(mTile, pGoalTile);
 	getNextTile();
+}
+
+void Character::cancelPath()
+{
+	while (!mPathTiles.empty()) {
+		mPathTiles.pop();
+	}
 }
 
 void Character::addItem(PickableItem * pItem)
@@ -62,24 +71,13 @@ void Character::update()
 	}
 	else {
 		if (mNextTile == nullptr) {
-			//At target
-			switch (mCurrentJob->getType())
-			{
-			case JobType::PICKUP:
-				mTile->getGroundEntity()->mModule->pickup(this);
-				break;
-			case JobType::INTERACT:
-				mTile->getGroundEntity()->mModule->interact(this);
-				break;
-			default:
-				break;
-			}
-			mWorld->deleteJob(mCurrentJob);
+			mCurrentJob->getFunc()(this);
+			mWorld->getJobManager()->deleteJob(mCurrentJob);
 			mCurrentJob = nullptr;
-			return;
+			mGoalTile = nullptr;
 		}
 	}
-			moveTowardsNextTile();
+	moveTowardsNextTile();
 }
 
 void Character::getNextTile()
@@ -122,9 +120,9 @@ void Character::moveTowardsNextTile()
 
 void Character::getJob()
 {
-	if (mWorld->hasJobs()) {
-		mCurrentJob = mWorld->getJob();
-		mCurrentJob->reserve();
+	if (mWorld->getJobManager()->hasJobs()) {
+		mCurrentJob = mWorld->getJobManager()->getJob();
+		mCurrentJob->reserve(this);
 		setPathTo(mCurrentJob->getTile());
 		mJobInterval.reset();
 	}

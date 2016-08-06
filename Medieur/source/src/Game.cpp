@@ -7,12 +7,14 @@
 #include "Graphics.h"
 #include "InputHandler.h"
 #include "PathFinder.h"
-#include "World.h"
 #include "Prototypes.h"
 
+#include "PickableItem.h"
 #include "Tile.h"
 #include "GroundEntity.h"
 #include "IGroundEntityModule.h"
+#include "JobManager.h"
+#include "World.h"
 
 class GroundEntity;
 class PlantEntity;

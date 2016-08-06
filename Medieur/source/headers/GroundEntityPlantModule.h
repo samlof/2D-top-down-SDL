@@ -4,6 +4,7 @@
 #include "CountdownCounter.h"
 
 class GroundEntity;
+class Job;
 
 class GroundEntityPlantModule : public IGroundEntityModule {
 public:
@@ -25,7 +26,8 @@ private:
 	int mHealth;
 	CountdownCounter mGrowthCounter;
 	CountdownCounter mHealthCounter;
-	bool mInteractJobCreated, mPickupJobCreated;
+	Job* mInteractJob;
+	Job* mPickupJob;
 
 	int mDropItemId;
 	void rot();

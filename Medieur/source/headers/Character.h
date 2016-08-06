@@ -15,6 +15,7 @@ public:
 	Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, int pY);
 
 	void setPathTo(Tile* pGoalTile);
+	void cancelPath();
 
 	void setJob(Job* pJob) { mCurrentJob = pJob; }
 	void clearJob() { mCurrentJob = nullptr; }
@@ -34,6 +35,7 @@ private:
 	World* mWorld;
 	Tile* mTile;
 	Tile* mNextTile;
+	Tile* mGoalTile;
 	Job* mCurrentJob;
 	std::stack<Tile*> mPathTiles;
 	PickableItem* mItem;
