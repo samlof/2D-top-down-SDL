@@ -7,6 +7,8 @@
 #include "Job.h"
 #include "World.h"
 
+#include "Prototypes.h" // TODO: remove this
+
 namespace {
 	const int kMaxGrowth = 5;
 	const int kMaxHealth = 6;
@@ -65,7 +67,7 @@ void GroundEntityPlantModule::pickup()
 		Tile* const tempTile = mThisEntity->getTile();
 		const int x = tempTile->getX();
 		const int y = tempTile->getY();
-		tempTile->getWorld()->createPickableItem(x, y, 2);
+		tempTile->getWorld()->createPickableItem(x, y, Prototypes::getIdByName("Item_Wheat"));
 	}
 	else {
 		rot();

@@ -37,10 +37,10 @@ public:
 	void deleteItem(PickableItem* pItem);
 	void addItem(PickableItem* pItem);
 
-	void createCharacter(int pX, int pY, Character* pPrototype);
-	void createGroundEntity(int pX, int pY, GroundEntity* pPrototype);
-	void createTile(int pX, int pY, Tile* pPrototype);
-	void createPickableItem(int pX, int pY, PickableItem* pPrototype);
+	void createCharacter(int pX, int pY, int pId);
+	void createGroundEntity(int pX, int pY, int pId);
+	void createTile(int pX, int pY, int pId);
+	void createPickableItem(int pX, int pY, int pId);
 private:
 	std::vector<std::vector<Tile> > mTiles;
 	std::vector<std::shared_ptr<Character> > mCharacters;
