@@ -5,6 +5,7 @@
 #include "World.h"
 #include "Job.h"
 #include "GroundEntity.h"
+#include "PickableItem.h"
 
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
@@ -29,6 +30,18 @@ void Character::setPathTo(Tile * pGoalTile)
 {
 	mPathTiles = PathFinder::FindPath(mTile, pGoalTile);
 	getNextTile();
+}
+
+void Character::setItem(PickableItem * pItem)
+{
+	pItem->mCharacter = this;
+	mItem = pItem;
+}
+
+void Character::clearItem()
+{
+	mItem->mCharacter = nullptr;
+	mItem = nullptr;
 }
 
 void Character::update()

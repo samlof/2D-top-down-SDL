@@ -8,17 +8,21 @@
 class Job;
 class Tile;
 class World;
+class PickableItem;
 
 class Character {
 public:
 	Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, int pY);
 
 	void setPathTo(Tile* pGoalTile);
-	void getNextTile();
 
 	void setJob(Job* pJob) { mCurrentJob = pJob; }
 	void clearJob() { mCurrentJob = nullptr; }
 
+	void setItem(PickableItem* pItem);
+	void clearItem();
+
+	World* getWorld() { return mWorld; }
 	int getId() const { return mId; }
 	void update();
 private:
@@ -32,7 +36,9 @@ private:
 	Tile* mNextTile;
 	Job* mCurrentJob;
 	std::stack<Tile*> mPathTiles;
+	PickableItem* mItem;
 
+	void getNextTile();
 	void moveTowardsNextTile();
 	void getJob();
 

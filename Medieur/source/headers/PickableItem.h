@@ -6,10 +6,14 @@ enum class ItemType {
 	JOY
 };
 
+class Character;
+class Tile;
+
 class PickableItem {
 public:
 	PickableItem(PickableItem* pPrototype, const int pAmount)
-		: mId(pPrototype->mId), mMaxAmount(pPrototype->mMaxAmount), mAmount(pAmount) {}
+		: mId(pPrototype->mId), mMaxAmount(pPrototype->mMaxAmount), mAmount(pAmount),
+		mCharacter(nullptr), mTile(nullptr) {}
 	PickableItem(PickableItem* pPrototype) : PickableItem(pPrototype, 0) {}
 
 	void takeAmountFrom(PickableItem* pItem, int pAmount);
@@ -24,6 +28,10 @@ public:
 	bool isOfType(const int pId) const { return mId == pId; }
 	bool isSameType(const PickableItem* pItem) const { return pItem->mId == mId; }
 	int getId() const { return mId; }
+	void erase();
+
+	Character* mCharacter;
+	Tile* mTile;
 private:
 	const int mId;
 	const int mMaxAmount;

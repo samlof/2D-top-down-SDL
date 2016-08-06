@@ -116,6 +116,29 @@ Job * World::getJob()
 	return nullptr;
 }
 
+void World::deleteItem(PickableItem * pItem)
+{
+	auto iters = mItems.equal_range(pItem->getId());
+	for (auto it = iters.first; it != iters.second; it++) {
+		if (it->second == pItem) {
+			mItems.erase(it);
+			if (it->second->mTile != nullptr) {
+				it->second->mTile->clearItem(pItem);
+			}
+			else if (it->second->mCharacter != nullptr) {
+				it->second->mCharacter->clearItem();
+			}
+			delete pItem;
+			break;
+		}
+	}
+}
+
+void World::addItem(PickableItem * pItem)
+{
+	mItems.insert(ItemMap::value_type(pItem->getId(), pItem));
+}
+
 void World::deleteJob(Job * pJob)
 {
 	mCurrentJobs.erase(pJob);

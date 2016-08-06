@@ -34,6 +34,9 @@ public:
 	Job* getJob();
 	bool hasJobs() { return mCurrentJobs.size() > 0; }
 
+	void deleteItem(PickableItem* pItem);
+	void addItem(PickableItem* pItem);
+
 	void createCharacter(int pX, int pY, Character* pPrototype);
 	void createGroundEntity(int pX, int pY, GroundEntity* pPrototype);
 	void createTile(int pX, int pY, Tile* pPrototype);
@@ -43,4 +46,7 @@ private:
 	std::vector<std::shared_ptr<Character> > mCharacters;
 	std::unordered_map<GroundEntity*, std::weak_ptr<GroundEntity> > mGroundEntities;
 	std::unordered_set<Job*> mCurrentJobs;
+
+	using ItemMap = std::unordered_multimap<int, PickableItem*>;
+	ItemMap mItems;
 };

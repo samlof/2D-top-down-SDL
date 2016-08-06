@@ -2,6 +2,10 @@
 
 #include <stdexcept>
 
+#include "Tile.h"
+#include "World.h"
+#include "Character.h"
+
 void PickableItem::takeAmountFrom(PickableItem * pItem, int pAmount)
 {
 	if (isSameType(pItem) == false) {
@@ -26,5 +30,15 @@ void PickableItem::takeAmountFrom(PickableItem * pItem, int pAmount)
 		// add all of it
 		mAmount += pAmount;
 		pItem->mAmount -= pAmount;
+	}
+}
+
+void PickableItem::erase()
+{
+	if (mTile != nullptr) {
+		mTile->getWorld()->deleteItem(this);
+	}
+	else if (mCharacter != nullptr) {
+		mCharacter->getWorld()->deleteItem(this);
 	}
 }

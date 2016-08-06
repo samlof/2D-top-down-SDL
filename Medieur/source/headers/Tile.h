@@ -20,7 +20,6 @@ public:
 	Tile(Tile* pPrototype, World* pWorld, int pX, int pY);
 
 	TileType getTileType() const { return mTileType; }
-	void setTileType(TileType pTileType) { mTileType = pTileType; }
 
 	//Ground entity functions
 	std::shared_ptr<GroundEntity> getGroundEntity() { return mGroundEntity; }
@@ -36,12 +35,18 @@ public:
 	bool isCharacterOn() const { return mCharacterStandingOn; }
 	void clearCharater() { mCharacter.reset(); mCharacterStandingOn = false; }
 
+	// Tile gets and sets
 	bool isWalkable() const;
 	int getX() const { return mX; }
 	int getY() const { return mY; }
 	World* getWorld() { return mWorld; }
 	Point getXY() const { return Point{ mX, mY }; }
 	int getId() const { return mId; }
+
+	// Pickable Item stuff
+	void addItem(PickableItem* pItem);
+	void clearItem(PickableItem* pItem);
+	PickableItem * getItemOfId(const int pId);
 
 private:
 	World* mWorld;
@@ -53,7 +58,8 @@ private:
 	bool mCharacterStandingOn;
 	float mMovementCost;
 
-	std::unordered_multimap<int, PickableItem*> mItems;
+	using ItemMap = std::unordered_multimap<int, PickableItem*>;
+	ItemMap mItems;
 
 
 	// For prototype
