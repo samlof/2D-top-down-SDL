@@ -25,7 +25,7 @@ namespace Prototypes {
 		const Rectangle kWallSource(224, 384, 32, 32);
 		const Rectangle kDoorSource(0, 0, 32, 32);
 		const Rectangle kPlantSource(units::kTileSize * 6, 0, units::kTileSize, 64);
-		const Rectangle kPlantItemSource(units::kTileSize * 6, 4 * 64, units::kTileSize, 64);
+		const Rectangle kPlantItemSource(units::kTileSize * 6, 5 * 64, units::kTileSize, 64);
 		const Rectangle kGrassSource(0, 0, 512, 512);
 		const Rectangle kCharacterSource(0, 0, 32, 32);
 	}

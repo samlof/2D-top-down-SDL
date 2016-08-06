@@ -47,7 +47,7 @@ World* World::GenerateTestWorld()
 	}
 	world->createGroundEntity(5, 11, getIdByName("Plant"));
 	world->createGroundEntity(6, 11, getIdByName("Plant"));
-
+	world->getTile(6, 11)->getGroundEntity()->mModule->pickup();
 
 	world->getTile(7, 5)->clearGroundEntity();
 	world->createGroundEntity(7, 5, getIdByName("Door"));

@@ -46,6 +46,10 @@ namespace PathFinder {
 			printf("Bad end tile!\n");
 			return std::stack<Tile*>();
 		}
+		if (pStartTile == pEndTile) {
+			printf("Start and endtile are same!\n");
+			return std::stack<Tile*>();
+		}
 		// Init arrays
 		using opensetTuple = std::tuple<Tile*, int>;
 		auto cmp = [](opensetTuple lhs, opensetTuple rhs) {return std::get<1>(lhs) > std::get<1>(rhs); };

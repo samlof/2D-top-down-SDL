@@ -11,8 +11,8 @@
 
 namespace {
 	const int kMaxGrowth = 5;
-	const int kMaxHealth = 6;
-	const int kGrowthSteps = 2000;
+	const int kMaxHealth = 10;
+	const int kGrowthSteps = 100;
 	const int kHealthDropSteps = 300;
 }
 
@@ -31,7 +31,9 @@ void GroundEntityPlantModule::update()
 
 	if (mHealthCounter.expired()) {
 		mHealth--;
+		mHealthCounter.pause(); // Remove
 		if (mHealth == 5) {
+			printf("Come interact!\n");
 			Job* job = new Job(mThisEntity->getTile(), JobType::INTERACT);
 			mThisEntity->getTile()->getWorld()->createJob(job);
 		}
@@ -42,9 +44,11 @@ void GroundEntityPlantModule::update()
 	}
 	if (mGrowthCounter.expired()) {
 		mGrowth++;
-		if (mGrowth == kMaxGrowth) {
+		if (mGrowth >= kMaxGrowth - 1) {
+			printf("Come pickup!\n");
 			Job* job = new Job(mThisEntity->getTile(), JobType::PICKUP);
 			mThisEntity->getTile()->getWorld()->createJob(job);
+			mGrowthCounter.pause(); // remove
 		} else if (mGrowth > kMaxGrowth + 2) {
 			rot();
 		}
@@ -63,15 +67,17 @@ void GroundEntityPlantModule::interact()
 
 void GroundEntityPlantModule::pickup()
 {
-	if (mGrowth == kMaxGrowth) {
+	//if (mGrowth >= kMaxGrowth - 1) {
+		printf("Create item!\n");
 		Tile* const tempTile = mThisEntity->getTile();
 		const int x = tempTile->getX();
 		const int y = tempTile->getY();
 		tempTile->getWorld()->createPickableItem(x, y, Prototypes::getIdByName("Item_Wheat"));
-	}
+		mThisEntity->erase();
+	/*}
 	else {
 		rot();
-	}
+	}*/
 }
 
 void GroundEntityPlantModule::rot()
