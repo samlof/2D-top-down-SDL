@@ -7,11 +7,11 @@
 
 #include "Point.h"
 
-class Job;
 class Tile;
 class Character;
 class GroundEntity;
 class PickableItem;
+class JobManager;
 
 class World
 {
@@ -20,7 +20,6 @@ public:
 	static World* GenerateTestWorld();
 
 	World(const unsigned int width, const unsigned int height);
-	~World();
 
 	Tile* getTile(const int pX, const int pY);
 
@@ -28,24 +27,21 @@ public:
 	size_t getHeight() const;
 
 	void update();
-
-	void createJob(Job* pJob);
-	void deleteJob(Job* pJob);
-	Job* getJob();
-	bool hasJobs() { return mCurrentJobs.size() > 0; }
-
+	
 	void deleteItem(PickableItem* pItem);
 
 	Character* createCharacter(int pX, int pY, int pId);
 	GroundEntity* createGroundEntity(int pX, int pY, int pId);
 	Tile* createTile(int pX, int pY, int pId);
 	PickableItem* createPickableItem(int pId, const int pAmount);
+
+	JobManager* getJobManager() { return mJobManager.get(); }
 private:
 	std::vector<std::vector<Tile> > mTiles;
 	std::vector<std::shared_ptr<Character> > mCharacters;
 	std::unordered_map<GroundEntity*, std::weak_ptr<GroundEntity> > mGroundEntities;
-	std::unordered_set<Job*> mCurrentJobs;
 
+	std::unique_ptr<JobManager> mJobManager;
 	using ItemMap = std::unordered_multimap<int, std::unique_ptr<PickableItem> >;
 	ItemMap mItems;
 };

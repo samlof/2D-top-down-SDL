@@ -1,24 +1,26 @@
 #pragma once
 
-enum class JobType
-{
-	PICKUP,
-	INTERACT
-};
+#include <functional>
 
 class Tile;
+class Character;
+class JobManager;
 
 class Job {
 public:
-	Job(Tile* pTargetTile, JobType pJobType) : mTargetTile(pTargetTile), mJobType(pJobType)
+	using JobFunc = std::function<void(Character*)>;
+	Job(JobManager& pManager, Tile* pTargetTile, JobFunc pJobFunc)
+		: mTargetTile(pTargetTile), mJobFunc(pJobFunc),	mManager(pManager)
 	{}
 
 	void reserve() { if (mReserved) throw "Job already reserved!"; mReserved = true; }
 	bool isReserved() const { return mReserved; }
+	void cancelJob();
 	Tile* getTile() { return mTargetTile; }
-	JobType getType() { return mJobType; }
+	JobFunc getFunc() { return mJobFunc; }
 private:
+	JobManager& mManager;
 	Tile* mTargetTile;
-	JobType mJobType;
+	JobFunc mJobFunc;
 	bool mReserved;
 };

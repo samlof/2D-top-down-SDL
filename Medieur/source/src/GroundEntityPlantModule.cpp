@@ -6,8 +6,7 @@
 #include "Tile.h"
 #include "Job.h"
 #include "World.h"
-
-#include "Prototypes.h" // TODO: remove this
+#include "JobManager.h"
 
 namespace {
 	const int kMaxGrowth = 5;
@@ -23,7 +22,8 @@ GroundEntityPlantModule::GroundEntityPlantModule(
 	:
 	IGroundEntityModule(pThisEntity),
 	mHealth(pPrototype->mHealth), mGrowth(pPrototype->mGrowth), mDropItemId(pPrototype->mDropItemId),
-	mHealthCounter(kHealthDropSteps), mGrowthCounter(kGrowthSteps)
+	mHealthCounter(kHealthDropSteps), mGrowthCounter(kGrowthSteps),
+	mInteractJob(nullptr), mPickupJob(nullptr)
 {
 }
 
@@ -41,10 +41,11 @@ void GroundEntityPlantModule::update()
 
 	if (mHealthCounter.expired()) {
 		mHealth--;
-		if (mHealth == 5 && (mInteractJobCreated == false)) {
-			Job* job = new Job(mThisEntity->getTile(), JobType::INTERACT);
-			mThisEntity->getTile()->getWorld()->createJob(job);
-			mInteractJobCreated = true;
+		if (mHealth == 5 && (mInteractJob == nullptr)) {
+			Job::JobFunc func = std::bind(&GroundEntityPlantModule::interact, this, std::placeholders::_1);
+			Job* job = new Job(mThisEntity->getTile(), func);
+			mThisEntity->getTile()->getWorld()->getJobManager()->createJob(job);
+			mInteractJob = job;
 		}
 		else if (mHealth <= 0) {
 			rot();
@@ -53,10 +54,11 @@ void GroundEntityPlantModule::update()
 	}
 	if (mGrowthCounter.expired()) {
 		mGrowth++;
-		if (mGrowth >= kMaxGrowth - 1 && (mInteractJobCreated == false)) {
-			Job* job = new Job(mThisEntity->getTile(), JobType::PICKUP);
-			mThisEntity->getTile()->getWorld()->createJob(job);
-			mInteractJobCreated = true;
+		if (mGrowth >= kMaxGrowth - 1 && (mPickupJob == nullptr)) {
+			Job::JobFunc func = std::bind(&GroundEntityPlantModule::pickup, this, std::placeholders::_1);
+			Job* job = new Job(mThisEntity->getTile(), func);
+			mThisEntity->getTile()->getWorld()->getJobManager()->createJob(job);
+			mPickupJob = job;
 		}
 		else if (mGrowth > kMaxGrowth + 2) {
 			rot();
@@ -72,7 +74,7 @@ void GroundEntityPlantModule::interact(Character* pCharacter)
 	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
 	mHealth = kMaxHealth;
 	mHealthCounter.reset();
-	mInteractJobCreated = false;
+	mInteractJob = nullptr;
 }
 
 void GroundEntityPlantModule::pickup(Character* pCharacter)
@@ -84,7 +86,7 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 	PickableItem* item = mThisEntity->getTile()->getWorld()->createPickableItem(mDropItemId, kHarvestAmount);
 
 	pCharacter->addItem(item);
-	mInteractJobCreated = false;
+	mPickupJob = nullptr;
 	mThisEntity->erase();
 	}
 	else {

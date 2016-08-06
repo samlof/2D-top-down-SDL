@@ -150,6 +150,7 @@
     <ClInclude Include="source\headers\GroundEntityPlantModule.h" />
     <ClInclude Include="source\headers\IGroundEntityModule.h" />
     <ClInclude Include="source\headers\InputHandler.h" />
+    <ClInclude Include="source\headers\JobManager.h" />
     <ClInclude Include="source\headers\PickableItem.h" />
     <ClInclude Include="source\headers\Job.h" />
     <ClInclude Include="source\headers\MainLoop.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="source\headers\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\src\Job.cpp" />
     <ClCompile Include="source\src\Camera.cpp" />
     <ClCompile Include="source\src\Character.cpp" />
     <ClCompile Include="source\src\Game.cpp" />
@@ -171,6 +173,7 @@
     <ClCompile Include="source\src\GroundEntity.cpp" />
     <ClCompile Include="source\src\GroundEntityPlantModule.cpp" />
     <ClCompile Include="source\src\InputHandler.cpp" />
+    <ClCompile Include="source\src\JobManager.cpp" />
     <ClCompile Include="source\src\main.cpp" />
     <ClCompile Include="source\src\MainLoop.cpp" />
     <ClCompile Include="source\src\PathFinder.cpp" />

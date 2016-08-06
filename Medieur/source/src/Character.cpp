@@ -6,6 +6,7 @@
 #include "Job.h"
 #include "GroundEntity.h"
 #include "PickableItem.h"
+#include "JobManager.h"
 
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
@@ -62,24 +63,13 @@ void Character::update()
 	}
 	else {
 		if (mNextTile == nullptr) {
-			//At target
-			switch (mCurrentJob->getType())
-			{
-			case JobType::PICKUP:
-				mTile->getGroundEntity()->mModule->pickup(this);
-				break;
-			case JobType::INTERACT:
-				mTile->getGroundEntity()->mModule->interact(this);
-				break;
-			default:
-				break;
-			}
-			mWorld->deleteJob(mCurrentJob);
+			mCurrentJob->getFunc()(this);
+			mWorld->getJobManager()->deleteJob(mCurrentJob);
 			mCurrentJob = nullptr;
 			return;
 		}
 	}
-			moveTowardsNextTile();
+	moveTowardsNextTile();
 }
 
 void Character::getNextTile()
@@ -122,8 +112,8 @@ void Character::moveTowardsNextTile()
 
 void Character::getJob()
 {
-	if (mWorld->hasJobs()) {
-		mCurrentJob = mWorld->getJob();
+	if (mWorld->getJobManager()->hasJobs()) {
+		mCurrentJob = mWorld->getJobManager()->getJob();
 		mCurrentJob->reserve();
 		setPathTo(mCurrentJob->getTile());
 		mJobInterval.reset();
