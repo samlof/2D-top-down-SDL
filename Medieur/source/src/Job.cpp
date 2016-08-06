@@ -1,7 +1,7 @@
 #include "Job.h"
 
 #include "JobManager.h"
-
+#include "Character.h"
 
 void Job::reserve(Character * pCharacter)
 {
@@ -10,12 +10,18 @@ void Job::reserve(Character * pCharacter)
 	mManager.removeJobFromOpen(this);
 }
 
-void Job::cancelReserve(Character * pCharacter)
+void Job::clearCharacter()
 {
-	if (mCharacter == pCharacter) {
-		mCharacter = nullptr;
-		mManager.addJob(this);
-	}
+	if (mCharacter == nullptr) return;
+	mCharacter->cancelPath();
+	mCharacter->clearJob();
+	mCharacter = nullptr;
+}
+
+void Job::cancelReserve()
+{
+	mCharacter = nullptr;
+	mManager.addJob(this);
 }
 
 void Job::cancelJob()

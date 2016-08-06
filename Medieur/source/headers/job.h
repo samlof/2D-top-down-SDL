@@ -16,7 +16,8 @@ public:
 
 	void reserve(Character* pCharacter);
 	bool isReserved() const { return mCharacter != nullptr; }
-	void cancelReserve(Character* pCharacter);
+	void clearCharacter();
+	void cancelReserve();
 	void cancelJob();
 	Tile* getTile() { return mTargetTile; }
 	JobFunc getFunc() { return mJobFunc; }

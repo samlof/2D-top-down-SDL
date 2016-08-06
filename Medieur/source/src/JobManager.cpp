@@ -1,10 +1,11 @@
 #include "JobManager.h"
 
 #include "Job.h"
-
+#include "Character.h"
 
 void JobManager::deleteJob(Job * pJob)
 {
+	pJob->clearCharacter();
 	mCurrentJobs.erase(pJob);
 	delete pJob;
 }

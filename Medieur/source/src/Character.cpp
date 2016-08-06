@@ -17,7 +17,7 @@ Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, 
 	:
 	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY),
 	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval), mId(pPrototype->mId),
-	mNextTile(nullptr), mCurrentJob(nullptr), mItem(nullptr)
+	mNextTile(nullptr), mCurrentJob(nullptr), mItem(nullptr), mGoalTile(nullptr)
 {
 }
 
@@ -31,6 +31,13 @@ void Character::setPathTo(Tile * pGoalTile)
 {
 	mPathTiles = PathFinder::FindPath(mTile, pGoalTile);
 	getNextTile();
+}
+
+void Character::cancelPath()
+{
+	while (!mPathTiles.empty()) {
+		mPathTiles.pop();
+	}
 }
 
 void Character::addItem(PickableItem * pItem)
@@ -114,7 +121,7 @@ void Character::getJob()
 {
 	if (mWorld->getJobManager()->hasJobs()) {
 		mCurrentJob = mWorld->getJobManager()->getJob();
-		mCurrentJob->reserve();
+		mCurrentJob->reserve(this);
 		setPathTo(mCurrentJob->getTile());
 		mJobInterval.reset();
 	}
