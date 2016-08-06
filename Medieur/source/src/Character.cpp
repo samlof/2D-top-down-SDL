@@ -29,6 +29,7 @@ Character::Character(const int pId)
 
 void Character::setPathTo(Tile * pGoalTile)
 {
+	mGoalTile = pGoalTile;
 	mPathTiles = PathFinder::FindPath(mTile, pGoalTile);
 	getNextTile();
 }
@@ -73,7 +74,7 @@ void Character::update()
 			mCurrentJob->getFunc()(this);
 			mWorld->getJobManager()->deleteJob(mCurrentJob);
 			mCurrentJob = nullptr;
-			return;
+			mGoalTile = nullptr;
 		}
 	}
 	moveTowardsNextTile();
