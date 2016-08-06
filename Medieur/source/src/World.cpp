@@ -14,6 +14,8 @@
 #include "Character.h"
 #include "Prototypes.h"
 #include "Job.h"
+#include "PickableItem.h"
+
 
 using namespace Prototypes;
 
@@ -27,27 +29,27 @@ World* World::GenerateTestWorld()
 		world->mTiles.push_back(std::vector<Tile>());
 		for (int y = 0; y < units::kWorldHeight; y++)
 		{
-			world->mTiles[x].push_back(Tile(world, TileType::GRASS, x, y));
+			Tile tempTile(getTilePrototypeByName("GrassTile"), world, x, y);
+			world->mTiles[x].push_back(tempTile);
 		}
 	}
 
 	for (int i = 0; i < 5; i++)
 	{
-		world->createGroundEntity(5 + i, 5, getPrototypeByName("Wall"));
-		world->createGroundEntity(5, 5 + i, getPrototypeByName("Wall"));
-		world->createGroundEntity(5 + i, 9, getPrototypeByName("Wall"));
-		world->createGroundEntity(9, 5 + i, getPrototypeByName("Wall"));
+		world->createGroundEntity(5 + i, 5, getIdByName("Wall"));
+		world->createGroundEntity(5, 5 + i, getIdByName("Wall"));
+		world->createGroundEntity(5 + i, 9, getIdByName("Wall"));
+		world->createGroundEntity(9, 5 + i, getIdByName("Wall"));
 
 		/*for (int j = 0; j < 5; j++) {
 			world->createGroundEntity(5 + i, 11 + j, getPrototypeByName("Plant"));
 		}*/
 	}
-	world->createGroundEntity(5, 11, getPrototypeByName("Plant"));
-	world->createGroundEntity(6, 11, getPrototypeByName("Plant"));
-
+	world->createGroundEntity(5, 11, getIdByName("Plant"));
+	world->createGroundEntity(6, 11, getIdByName("Plant"));
 
 	world->getTile(7, 5)->clearGroundEntity();
-	world->createGroundEntity(7, 5, getPrototypeByName("Door"));
+	world->createGroundEntity(7, 5, getIdByName("Door"));
 	return world;
 }
 
@@ -113,32 +115,72 @@ Job * World::getJob()
 	return nullptr;
 }
 
+void World::deleteItem(PickableItem * pItem)
+{
+	auto iters = mItems.equal_range(pItem->getId());
+	for (auto it = iters.first; it != iters.second; it++) {
+		if (it->second.get() == pItem) {
+			if (it->second->mTile != nullptr) {
+				it->second->mTile->clearItem(pItem);
+			}
+			else if (it->second->mCharacter != nullptr) {
+				it->second->mCharacter->clearItem();
+			}
+			it->second.release();
+			mItems.erase(it);
+			break;
+		}
+	}
+}
+
 void World::deleteJob(Job * pJob)
 {
 	mCurrentJobs.erase(pJob);
 	delete pJob;
 }
 
-void World::createCharacter(int pX, int pY)
-{
-	std::shared_ptr<Character> tempChar = std::make_shared<Character>(this, getTile(pX, pY), pX, pY);
-	mCharacters.push_back(tempChar);
-
-	getTile(pX, pY)->reserveFor(tempChar);
-	getTile(pX, pY)->moveTo();
-	tempChar->setPathTo(getTile(6, 8));
-}
-
-void World::createGroundEntity(int pX, int pY, std::shared_ptr<GroundEntity> pPrototype)
+Character* World::createCharacter(int pX, int pY, int pId)
 {
 	Tile* tempTile = getTile(pX, pY);
-	if (tempTile->hasGroundEntity()) return;
-	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype.get(), tempTile);
+	if (tempTile->isReservableForCharacter() == false) {
+		throw std::invalid_argument("Tile already reserved by something!");
+		return nullptr;
+	}
+	Character* pPrototype = Prototypes::getCharacterPrototypeById(pId);
+	std::shared_ptr<Character> tempChar = std::make_shared<Character>(pPrototype, this, tempTile, pX, pY);
+	mCharacters.push_back(tempChar);
+
+	tempTile->reserveFor(tempChar);
+	tempTile->moveTo();
+	return tempChar.get();
+}
+
+GroundEntity* World::createGroundEntity(int pX, int pY, int pId)
+{
+	GroundEntity* pPrototype = Prototypes::getGroundEntityPrototypeById(pId);
+	Tile* tempTile = getTile(pX, pY);
+	if (tempTile->hasGroundEntity()) return nullptr;
+	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype, tempTile);
 	if (pPrototype->mModule) {
 		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(
-			pPrototype->mModule->clone(newGroundEntity.get())
+			pPrototype->mModule->clone(pPrototype->mModule.get(), newGroundEntity.get())
 			);
 	}
 	tempTile->setGroundEntity(newGroundEntity);
 	mGroundEntities[newGroundEntity.get()] = newGroundEntity;
+	return newGroundEntity.get();
+}
+
+Tile* World::createTile(int pX, int pY, int pId)
+{
+	// TODO:
+	return getTile(1, 1);
+}
+
+PickableItem* World::createPickableItem(int pId, const int pAmount)
+{
+	PickableItem* pPrototype = Prototypes::getPickableItemPrototypeById(pId);
+	PickableItem* newItem = new PickableItem(pPrototype, pAmount);
+	mItems.insert(ItemMap::value_type(newItem->getId(), std::unique_ptr<PickableItem>(newItem)));
+	return newItem;
 }

@@ -109,38 +109,54 @@ void Camera::draw()
 	{
 		for (int y = startTileY; y < endTileY; y++)
 		{
-			Tile* tempTile = mWorld->getTile(x, y);
-			// Draw tile
-			if (tempTile->getTileType() != TileType::EMPTY) {
-				const int drawX = x * units::kTileSize - mRectangle.getX();
-				const int drawY = y * 32 - mRectangle.getY();
-				SpriteManager::getTileSprite(*tempTile)->draw(
-					drawX, drawY
-				);
-				// Draw Ground entity
-				if (tempTile->hasGroundEntity()) {
-					const int id = tempTile->getGroundEntity()->getId();
-					if (SpriteManager::hasEntityFunction(id)) {
-						SpriteManager::getGroundEntitySpriteById(id)->draw(
-							drawX, drawY, SpriteManager::getEntityFunction(id)(tempTile->getGroundEntity().get())
-						);
-					}
-					else {
-						SpriteManager::getGroundEntitySpriteById(id)->draw(
-							drawX, drawY
-						);
-					}
-				}
-
-				// Draw character
-				if (tempTile->isCharacterOn()) {
-					SpriteManager::getCharacterSprite(tempTile->getCharacter())->draw(
-						drawX, drawY
-					);
-				}
-			}
+			drawTile(x, y);
 		}
 	}
 
 	Graphics::resetTarget();
+}
+
+void Camera::drawTile(const int x, const int y)
+{
+	Tile* tempTile = mWorld->getTile(x, y);
+	// Draw tile
+	if (tempTile->getTileType() != TileType::EMPTY) {
+		const int drawX = x * units::kTileSize - mRectangle.getX();
+		const int drawY = y * 32 - mRectangle.getY();
+		SpriteManager::getSpriteById(tempTile->getId())->draw(
+			drawX, drawY
+		);
+		// Draw Ground entity
+		if (tempTile->hasGroundEntity()) {
+			const int id = tempTile->getGroundEntity()->getId();
+
+			if (SpriteManager::hasGroundEntityFunction(id)) {
+				SpriteManager::getSpriteById(id)->draw(
+					drawX, drawY,
+					SpriteManager::getEntityFunction(id)(
+						tempTile->getGroundEntity().get()
+						)
+				);
+			}
+			else {
+				SpriteManager::getSpriteById(id)->draw(
+					drawX, drawY
+				);
+			}
+		}
+
+		// Draw Character
+		if (tempTile->isCharacterOn()) {
+			SpriteManager::getSpriteById(tempTile->getCharacter()->getId())->draw(
+				drawX, drawY
+			);
+		}
+
+		// Draw Item
+		if (tempTile->hasItems()) {
+			SpriteManager::getSpriteById(tempTile->getItemId())->draw(
+				drawX, drawY
+			);
+		}
+	}
 }

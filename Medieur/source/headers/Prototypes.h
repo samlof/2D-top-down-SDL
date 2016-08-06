@@ -4,14 +4,31 @@
 #include <string>
 
 class GroundEntity;
+class PickableItem;
 class Sprite;
+class Tile;
+class Character;
 
 namespace Prototypes {
 	bool createPrototypes();
-	void createPrototype(const std::string & pName, const float pMovSpeed, Sprite* pSprite);
 
-	std::shared_ptr<GroundEntity> getPrototypeByName(const std::string& pName);
-	int getPrototypeIdByName(const std::string& pName);
-	std::shared_ptr<GroundEntity> getPrototypeById(const int id);
+	void createGroundEntityPrototype(const std::string & pName, const float pMovSpeed, Sprite* pSprite);
+	GroundEntity* getGroundEntityPrototypeByName(const std::string& pName);
+	GroundEntity* getGroundEntityPrototypeById(const int pId);
+
+	void createPickableItemPrototype(const std::string & pName, const int pMovSpeed, Sprite* pSprite);
+	PickableItem* getPickableItemPrototypeByName(const std::string& pName);
+	PickableItem* getPickableItemPrototypeById(const int pId);
+
+	void createTilePrototype(const std::string & pName, const float pMovSpeed, Sprite* pSprite);
+	Tile* getTilePrototypeByName(const std::string& pName);
+	Tile* getTilePrototypeById(const int pId);
+
+	void createCharacterPrototype(const std::string & pName, const float pMovSpeed, Sprite* pSprite);
+	Character* getCharacterPrototypeByName(const std::string& pName);
+	Character* getCharacterPrototypeById(const int pId);
+
+
+	int getIdByName(const std::string& pName);
 	int getNextId();
 }

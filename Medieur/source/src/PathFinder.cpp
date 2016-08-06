@@ -28,8 +28,11 @@ namespace PathFinder {
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
 					const int tX = x + i, tY = y + j;
-					if ((i == 0 && j == 0) || (tX < 0) || (tY < 0) || (tX > worldPtr->getWidth()-1) || (tY > worldPtr->getHeight()-1)) continue;
-					neighbours.push_back(worldPtr->getTile(x + i, y + j));
+					if ((i == 0 && j == 0) || (tX < 0) || (tY < 0) ||
+						(tX > worldPtr->getWidth()-1) ||
+						(tY > worldPtr->getHeight()-1)
+						) continue;
+					neighbours.push_back(worldPtr->getTile(tX, tY));
 				}
 			}
 			return neighbours;
@@ -44,6 +47,10 @@ namespace PathFinder {
 	{
 		if (pEndTile->isWalkable() == false) {
 			printf("Bad end tile!\n");
+			return std::stack<Tile*>();
+		}
+		if (pStartTile == pEndTile) {
+			printf("Start and endtile are same!\n");
 			return std::stack<Tile*>();
 		}
 		// Init arrays

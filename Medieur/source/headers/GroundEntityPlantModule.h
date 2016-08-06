@@ -7,17 +7,18 @@ class GroundEntity;
 
 class GroundEntityPlantModule : public IGroundEntityModule {
 public:
-	GroundEntityPlantModule(GroundEntity * pThisEntity);
+	GroundEntityPlantModule(GroundEntityPlantModule* pPrototype, GroundEntity * pThisEntity);
 
 	// Inherited via IGroundEntityModule
 	virtual void update() override;
-	virtual void interact() override;
-	virtual void pickup() override;
+	virtual void interact(Character* pCharacter) override;
+	virtual void pickup(Character* pCharacter) override;
 
-	virtual GroundEntityPlantModule* clone(GroundEntity * pThisEntity) override {
-		return new GroundEntityPlantModule(pThisEntity);
+	virtual GroundEntityPlantModule* clone(IGroundEntityModule* pPrototype, GroundEntity * pThisEntity) override {
+		return new GroundEntityPlantModule(static_cast<GroundEntityPlantModule*>(pPrototype), pThisEntity);
 	}
 	int getGrowth() const { return mGrowth; }
+
 
 private:
 	int mGrowth;
@@ -25,5 +26,12 @@ private:
 	CountdownCounter mGrowthCounter;
 	CountdownCounter mHealthCounter;
 
+	int mDropItemId;
 	void rot();
+
+	GroundEntityPlantModule(const int pDropItemId);
+public:
+	static GroundEntityPlantModule* createPrototype(const int pDropItemId) {
+		return new GroundEntityPlantModule(pDropItemId);
+	}
 };

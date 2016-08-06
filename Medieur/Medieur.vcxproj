@@ -174,6 +174,7 @@
     <ClCompile Include="source\src\main.cpp" />
     <ClCompile Include="source\src\MainLoop.cpp" />
     <ClCompile Include="source\src\PathFinder.cpp" />
+    <ClCompile Include="source\src\PickableItem.cpp" />
     <ClCompile Include="source\src\Point.cpp" />
     <ClCompile Include="source\src\Prototypes.cpp" />
     <ClCompile Include="source\src\Rectangle.cpp" />

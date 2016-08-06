@@ -5,15 +5,24 @@
 #include "World.h"
 #include "Job.h"
 #include "GroundEntity.h"
+#include "PickableItem.h"
 
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
 	const int kJobInterval = 100;
 }
-Character::Character(World * pWorld, Tile * pTile, int pX, int pY)
+
+Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, int pY)
 	:
-	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY), mCurrentJob(nullptr),
-	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval)
+	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY),
+	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval), mId(pPrototype->mId),
+	mNextTile(nullptr), mCurrentJob(nullptr), mItem(nullptr)
+{
+}
+
+Character::Character(const int pId)
+	:
+	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval), mId(pId)
 {
 }
 
@@ -23,11 +32,28 @@ void Character::setPathTo(Tile * pGoalTile)
 	getNextTile();
 }
 
+void Character::addItem(PickableItem * pItem)
+{
+	if (mItem != nullptr) {
+		mItem->takeFrom(pItem);
+	}
+	else {
+		pItem->mTile = nullptr;
+		pItem->mCharacter = this;
+		mItem = pItem;
+	}
+}
+
+void Character::clearItem()
+{
+	mItem->mCharacter = nullptr;
+	mItem = nullptr;
+}
+
 void Character::update()
 {
 	// Try to get a new job if doesn't have one
 	if (mCurrentJob == nullptr) {
-		moveTowardsNextTile();
 		mJobInterval.step();
 
 		if (mJobInterval.expired()) {
@@ -40,9 +66,11 @@ void Character::update()
 			switch (mCurrentJob->getType())
 			{
 			case JobType::PICKUP:
-				mTile->getGroundEntity()->mModule->pickup();
+				mTile->getGroundEntity()->mModule->pickup(this);
+				break;
 			case JobType::INTERACT:
-				mTile->getGroundEntity()->mModule->interact();
+				mTile->getGroundEntity()->mModule->interact(this);
+				break;
 			default:
 				break;
 			}
@@ -50,10 +78,8 @@ void Character::update()
 			mCurrentJob = nullptr;
 			return;
 		}
-		else if (mTile != mNextTile) {
-			moveTowardsNextTile();
-		}
 	}
+			moveTowardsNextTile();
 }
 
 void Character::getNextTile()
