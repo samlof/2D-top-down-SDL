@@ -16,13 +16,21 @@ namespace {
 	const int kHealthDropSteps = 300;
 }
 
-GroundEntityPlantModule::GroundEntityPlantModule(GroundEntity * pThisEntity)
+GroundEntityPlantModule::GroundEntityPlantModule(
+	GroundEntityPlantModule * pPrototype, GroundEntity * pThisEntity)
 	:
 	IGroundEntityModule(pThisEntity),
-	mHealth(kMaxHealth), mGrowth(1),
+	mHealth(pPrototype->mHealth), mGrowth(pPrototype->mGrowth), mDropItemId(pPrototype->mDropItemId),
 	mHealthCounter(kHealthDropSteps), mGrowthCounter(kGrowthSteps)
 {
 }
+
+GroundEntityPlantModule::GroundEntityPlantModule(const int pDropItemId)
+	:
+	IGroundEntityModule(nullptr),
+	mHealth(kMaxHealth), mGrowth(1), mDropItemId(pDropItemId),
+	mHealthCounter(kHealthDropSteps), mGrowthCounter(kGrowthSteps)
+{}
 
 void GroundEntityPlantModule::update()
 {

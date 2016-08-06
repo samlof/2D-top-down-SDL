@@ -12,7 +12,7 @@ public:
 	virtual ~IGroundEntityModule() {}
 	GroundEntity* getEntity() { return mThisEntity; }
 
-	virtual IGroundEntityModule* clone(GroundEntity * pThisEntity) = 0;
+	virtual IGroundEntityModule* clone(IGroundEntityModule* pPrototype, GroundEntity * pThisEntity) = 0;
 protected:
 	GroundEntity * mThisEntity;
 };

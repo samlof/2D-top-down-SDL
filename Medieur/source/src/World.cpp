@@ -163,7 +163,7 @@ void World::createGroundEntity(int pX, int pY, int pId)
 	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype, tempTile);
 	if (pPrototype->mModule) {
 		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(
-			pPrototype->mModule->clone(newGroundEntity.get())
+			pPrototype->mModule->clone(pPrototype->mModule.get(), newGroundEntity.get())
 			);
 	}
 	tempTile->setGroundEntity(newGroundEntity);

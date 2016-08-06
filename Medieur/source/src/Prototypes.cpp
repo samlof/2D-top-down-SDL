@@ -35,18 +35,6 @@ namespace Prototypes {
 		createGroundEntityPrototype("Door", 1, new Sprite("bad_door.png", kDoorSource));
 		createGroundEntityPrototype("Wall", 0, new Sprite("walls1.png", kWallSource));
 		createGroundEntityPrototype("Plant", 1, new Sprite("plants.png", kPlantSource));
-		getGroundEntityPrototypeByName("Plant")->mModule = std::make_unique<GroundEntityPlantModule>(
-			getGroundEntityPrototypeByName("Plant")
-			);
-
-
-		SpriteManager::setGroundEntityFunction(getIdByName("Plant"),
-			[](GroundEntity* pGrEntity) {
-			int growth = static_cast<GroundEntityPlantModule*>(pGrEntity->mModule.get())->getGrowth();
-			Rectangle newRect = kPlantSource;
-			newRect.addY((growth - 1) * 64);
-			return newRect;
-		});
 
 		// Tile prototype
 		createTilePrototype("GrassTile", 1, new Sprite("grass00.png", kGrassSource));
@@ -56,6 +44,20 @@ namespace Prototypes {
 
 		// Pickable item prototypes
 		createPickableItemPrototype("Item_Wheat", 1, new Sprite("plants.png", kPlantItemSource));
+
+		// Ground entity modules and functions
+
+		getGroundEntityPrototypeByName("Plant")->mModule = std::unique_ptr<GroundEntityPlantModule>(
+			GroundEntityPlantModule::createPrototype(getIdByName("Item_Wheat"))
+			);
+
+		SpriteManager::setGroundEntityFunction(getIdByName("Plant"),
+			[](GroundEntity* pGrEntity) {
+			int growth = static_cast<GroundEntityPlantModule*>(pGrEntity->mModule.get())->getGrowth();
+			Rectangle newRect = kPlantSource;
+			newRect.addY((growth - 1) * 64);
+			return newRect;
+		});
 		return true;
 	}
 
