@@ -3,11 +3,12 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Character.h"
 #include "Point.h"
 
 class GroundEntity;
 class PickableItem;
+class Character;
+class World;
 
 enum class TileType {
 	GRASS,

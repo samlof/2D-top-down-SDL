@@ -33,9 +33,7 @@ private:
 	CountdownCounter mJobInterval;
 
 	World* mWorld;
-	Tile* mTile;
-	Tile* mNextTile;
-	Tile* mGoalTile;
+	Tile* mTile, *mNextTile, *mGoalTile;
 	Job* mCurrentJob;
 	std::stack<Tile*> mPathTiles;
 	PickableItem* mItem;

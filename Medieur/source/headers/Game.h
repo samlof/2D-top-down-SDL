@@ -2,7 +2,8 @@
 
 #include <memory>
 
-#include "Camera.h"
+class Camera;
+class World;
 
 class Game
 {
@@ -19,5 +20,5 @@ private:
 	bool init;
 	bool mQuitting;
 	std::unique_ptr<World> mWorld;
-	Camera mCamera;
+	std::unique_ptr<Camera> mCamera;
 };

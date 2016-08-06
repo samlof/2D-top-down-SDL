@@ -7,6 +7,7 @@
 #include "Job.h"
 #include "World.h"
 #include "JobManager.h"
+#include "Character.h"
 
 namespace {
 	const int kMaxGrowth = 5;

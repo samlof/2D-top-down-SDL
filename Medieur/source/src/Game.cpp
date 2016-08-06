@@ -3,21 +3,17 @@
 #include <SDL_timer.h>
 #include <SDL_scancode.h>
 
-#include "units.h"
+#include "World.h"
 #include "Graphics.h"
-#include "InputHandler.h"
 #include "PathFinder.h"
 #include "Prototypes.h"
+#include "InputHandler.h"
+#include "Camera.h"
 
+// Smart pointers need these?
+#include "JobManager.h"
 #include "PickableItem.h"
 #include "Tile.h"
-#include "GroundEntity.h"
-#include "IGroundEntityModule.h"
-#include "JobManager.h"
-#include "World.h"
-
-class GroundEntity;
-class PlantEntity;
 
 namespace {
 
@@ -29,7 +25,7 @@ Game::Game()
 	mQuitting(false),
 	init(Prototypes::createPrototypes()),
 	mWorld(World::GenerateTestWorld()),
-	mCamera(mWorld.get())
+	mCamera(new Camera(mWorld.get()))
 {
 	PathFinder::setWorld(mWorld.get());
 }
@@ -49,22 +45,22 @@ void Game::update()
 		if (inputhandler.shouldQuit() || inputhandler.getKeyPressed(SDL_SCANCODE_ESCAPE)) mQuitting = true;
 
 		if (inputhandler.getKeyPressed(SDL_SCANCODE_UP)) {
-			mCamera.moveUp();
+			mCamera->moveUp();
 		}
 		if (inputhandler.getKeyPressed(SDL_SCANCODE_DOWN)) {
-			mCamera.moveDown();
+			mCamera->moveDown();
 		}
 		if (inputhandler.getKeyPressed(SDL_SCANCODE_LEFT)) {
-			mCamera.moveLeft();
+			mCamera->moveLeft();
 		}
 		if (inputhandler.getKeyPressed(SDL_SCANCODE_RIGHT)) {
-			mCamera.moveRight();
+			mCamera->moveRight();
 		}
 		if (inputhandler.getKeyPressed(SDL_SCANCODE_A)) {
-			mCamera.moveHigher();
+			mCamera->moveHigher();
 		}
 		if (inputhandler.getKeyPressed(SDL_SCANCODE_S)) {
-			mCamera.moveLower();
+			mCamera->moveLower();
 		}
 		mWorld->update();
 		draw();
@@ -77,7 +73,7 @@ void Game::draw()
 {
 	Graphics::clear();
 
-	mCamera.draw();
+	mCamera->draw();
 
 	Graphics::renderPresent();
 }
