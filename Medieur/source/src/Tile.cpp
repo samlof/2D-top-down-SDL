@@ -48,5 +48,12 @@ PickableItem * Tile::getItemOfId(const int pId)
 	}
 	return nullptr;
 }
+int Tile::getItemId()
+{
+	for (auto it : mItems) {
+		return it.first;
+	}
+	throw "No items!";
+}
 #pragma endregion
 

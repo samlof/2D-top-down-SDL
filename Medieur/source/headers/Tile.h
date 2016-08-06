@@ -47,6 +47,8 @@ public:
 	void addItem(PickableItem* pItem);
 	void clearItem(PickableItem* pItem);
 	PickableItem * getItemOfId(const int pId);
+	bool hasItems() { return mItems.size() > 0; }
+	int getItemId();
 
 private:
 	World* mWorld;

@@ -145,9 +145,16 @@ void Camera::drawTile(const int x, const int y)
 			}
 		}
 
-		// Draw character
+		// Draw Character
 		if (tempTile->isCharacterOn()) {
 			SpriteManager::getSpriteById(tempTile->getCharacter()->getId())->draw(
+				drawX, drawY
+			);
+		}
+
+		// Draw Item
+		if (tempTile->hasItems()) {
+			SpriteManager::getSpriteById(tempTile->getItemId())->draw(
 				drawX, drawY
 			);
 		}
