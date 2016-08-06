@@ -14,7 +14,6 @@ public:
 	PickableItem(PickableItem* pPrototype, const int pAmount)
 		: mId(pPrototype->mId), mMaxAmount(pPrototype->mMaxAmount), mAmount(pAmount),
 		mCharacter(nullptr), mTile(nullptr) {}
-	PickableItem(PickableItem* pPrototype) : PickableItem(pPrototype, 0) {}
 
 	void takeAmountFrom(PickableItem* pItem, int pAmount);
 
@@ -27,14 +26,19 @@ public:
 	bool isEmpty() const { return mAmount == 0; }
 	bool isOfType(const int pId) const { return mId == pId; }
 	bool isSameType(const PickableItem* pItem) const { return pItem->mId == mId; }
+
 	int getId() const { return mId; }
+	int getAmount() const { return mAmount; }
+	int getMaxAmount() const { return mMaxAmount; }
+
+	void changeMax(const int pMaxAmount) { mMaxAmount = pMaxAmount; }
 	void erase();
 
 	Character* mCharacter;
 	Tile* mTile;
 private:
 	const int mId;
-	const int mMaxAmount;
+	int mMaxAmount;
 	int mAmount;
 
 	// Prototype

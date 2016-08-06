@@ -133,32 +133,33 @@ void World::deleteItem(PickableItem * pItem)
 	}
 }
 
-void World::addItem(PickableItem * pItem)
-{
-	mItems.insert(ItemMap::value_type(pItem->getId(), std::unique_ptr<PickableItem>(pItem)));
-}
-
 void World::deleteJob(Job * pJob)
 {
 	mCurrentJobs.erase(pJob);
 	delete pJob;
 }
 
-void World::createCharacter(int pX, int pY, int pId)
+Character* World::createCharacter(int pX, int pY, int pId)
 {
+	Tile* tempTile = getTile(pX, pY);
+	if (tempTile->isReservableForCharacter() == false) {
+		throw std::invalid_argument("Tile already reserved by something!");
+		return nullptr;
+	}
 	Character* pPrototype = Prototypes::getCharacterPrototypeById(pId);
-	std::shared_ptr<Character> tempChar = std::make_shared<Character>(pPrototype, this, getTile(pX, pY), pX, pY);
+	std::shared_ptr<Character> tempChar = std::make_shared<Character>(pPrototype, this, tempTile, pX, pY);
 	mCharacters.push_back(tempChar);
 
-	getTile(pX, pY)->reserveFor(tempChar);
-	getTile(pX, pY)->moveTo();
+	tempTile->reserveFor(tempChar);
+	tempTile->moveTo();
+	return tempChar.get();
 }
 
-void World::createGroundEntity(int pX, int pY, int pId)
+GroundEntity* World::createGroundEntity(int pX, int pY, int pId)
 {
 	GroundEntity* pPrototype = Prototypes::getGroundEntityPrototypeById(pId);
 	Tile* tempTile = getTile(pX, pY);
-	if (tempTile->hasGroundEntity()) return;
+	if (tempTile->hasGroundEntity()) return nullptr;
 	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype, tempTile);
 	if (pPrototype->mModule) {
 		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(
@@ -167,18 +168,19 @@ void World::createGroundEntity(int pX, int pY, int pId)
 	}
 	tempTile->setGroundEntity(newGroundEntity);
 	mGroundEntities[newGroundEntity.get()] = newGroundEntity;
+	return newGroundEntity.get();
 }
 
-void World::createTile(int pX, int pY, int pId)
+Tile* World::createTile(int pX, int pY, int pId)
 {
 	// TODO:
+	return getTile(1, 1);
 }
 
-void World::createPickableItem(int pX, int pY, int pId)
+PickableItem* World::createPickableItem(int pId, const int pAmount)
 {
 	PickableItem* pPrototype = Prototypes::getPickableItemPrototypeById(pId);
-	Tile* tempTile = getTile(pX, pY);
-	PickableItem* newItem = new PickableItem(pPrototype, 0);
-	addItem(newItem);
-	tempTile->addItem(newItem);
+	PickableItem* newItem = new PickableItem(pPrototype, pAmount);
+	mItems.insert(ItemMap::value_type(newItem->getId(), std::unique_ptr<PickableItem>(newItem)));
+	return newItem;
 }

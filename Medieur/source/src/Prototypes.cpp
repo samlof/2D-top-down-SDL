@@ -43,7 +43,7 @@ namespace Prototypes {
 		createCharacterPrototype("Guy", 1, new Sprite("Ukko.png", kCharacterSource));
 
 		// Pickable item prototypes
-		createPickableItemPrototype("Item_Wheat", 1, new Sprite("plants.png", kPlantItemSource));
+		createPickableItemPrototype("Item_Wheat", 20, new Sprite("plants.png", kPlantItemSource));
 
 		// Ground entity modules and functions
 

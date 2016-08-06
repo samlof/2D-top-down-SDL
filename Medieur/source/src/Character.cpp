@@ -16,7 +16,7 @@ Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, 
 	:
 	mWorld(pWorld), mTile(pTile), mX(pX), mY(pY),
 	mMoveCounter(kWalkSpeed), mJobInterval(kJobInterval), mId(pPrototype->mId),
-	mNextTile(nullptr), mCurrentJob(nullptr)
+	mNextTile(nullptr), mCurrentJob(nullptr), mItem(nullptr)
 {
 }
 
@@ -32,10 +32,16 @@ void Character::setPathTo(Tile * pGoalTile)
 	getNextTile();
 }
 
-void Character::setItem(PickableItem * pItem)
+void Character::addItem(PickableItem * pItem)
 {
-	pItem->mCharacter = this;
-	mItem = pItem;
+	if (mItem != nullptr) {
+		mItem->takeFrom(pItem);
+	}
+	else {
+		pItem->mTile = nullptr;
+		pItem->mCharacter = this;
+		mItem = pItem;
+	}
 }
 
 void Character::clearItem()
@@ -48,7 +54,6 @@ void Character::update()
 {
 	// Try to get a new job if doesn't have one
 	if (mCurrentJob == nullptr) {
-		moveTowardsNextTile();
 		mJobInterval.step();
 
 		if (mJobInterval.expired()) {
@@ -73,10 +78,8 @@ void Character::update()
 			mCurrentJob = nullptr;
 			return;
 		}
-		else if (mTile != mNextTile) {
-			moveTowardsNextTile();
-		}
 	}
+			moveTowardsNextTile();
 }
 
 void Character::getNextTile()

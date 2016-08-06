@@ -19,7 +19,7 @@ public:
 	void setJob(Job* pJob) { mCurrentJob = pJob; }
 	void clearJob() { mCurrentJob = nullptr; }
 
-	void setItem(PickableItem* pItem);
+	void addItem(PickableItem* pItem);
 	void clearItem();
 
 	World* getWorld() { return mWorld; }

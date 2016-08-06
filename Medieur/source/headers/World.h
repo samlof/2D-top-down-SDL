@@ -35,12 +35,11 @@ public:
 	bool hasJobs() { return mCurrentJobs.size() > 0; }
 
 	void deleteItem(PickableItem* pItem);
-	void addItem(PickableItem* pItem);
 
-	void createCharacter(int pX, int pY, int pId);
-	void createGroundEntity(int pX, int pY, int pId);
-	void createTile(int pX, int pY, int pId);
-	void createPickableItem(int pX, int pY, int pId);
+	Character* createCharacter(int pX, int pY, int pId);
+	GroundEntity* createGroundEntity(int pX, int pY, int pId);
+	Tile* createTile(int pX, int pY, int pId);
+	PickableItem* createPickableItem(int pId, const int pAmount);
 private:
 	std::vector<std::vector<Tile> > mTiles;
 	std::vector<std::shared_ptr<Character> > mCharacters;
