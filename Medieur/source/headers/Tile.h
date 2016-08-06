@@ -18,9 +18,6 @@ class Tile
 {
 public:
 	Tile(Tile* pPrototype, World* pWorld, int pX, int pY);
-	// For prototype
-	Tile(const int pId, TileType pTileType) : 
-		mId(pId), mTileType(pTileType), mX(-1), mY(-1) {}
 
 	TileType getTileType() const { return mTileType; }
 	void setTileType(TileType pTileType);
@@ -46,7 +43,6 @@ public:
 	Point getXY() const { return Point{ mX, mY }; }
 	int getId() const { return mId; }
 
-	void addItem(PickableItem* pItem) { mItems.push_back(pItem); }
 	std::vector<std::shared_ptr<PickableItem> > getItems() { return mItems; }
 private:
 	World* mWorld;
@@ -59,5 +55,14 @@ private:
 	float mMovementCost;
 
 	std::vector<std::shared_ptr<PickableItem> > mItems;
+
+
+	// For prototype
+	Tile(const int pId, TileType pTileType) :
+		mId(pId), mTileType(pTileType), mX(-1), mY(-1) {}
+public:
+	static Tile* createPrototype(const int pId, const TileType pTileType) {
+		return new Tile(pId, pTileType);
+	}
 };
 

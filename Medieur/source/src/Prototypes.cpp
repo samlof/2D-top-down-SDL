@@ -66,7 +66,9 @@ namespace Prototypes {
 	{
 		int id = getNextId();
 		SpriteManager::createSprite(id, pSprite);
-		groundEntityPrototypes[id] = std::make_unique<GroundEntity>(id, pMovSpeed);
+		groundEntityPrototypes[id] = std::unique_ptr<GroundEntity>(
+			GroundEntity::createPrototype(id, pMovSpeed)
+			);
 		idsByName[pName] = id;
 	}
 
@@ -82,11 +84,13 @@ namespace Prototypes {
 #pragma endregion
 
 #pragma region Pickable Item
-	void createPickableItemPrototype(const std::string & pName, const float pMovSpeed, Sprite * pSprite)
+	void createPickableItemPrototype(const std::string & pName, const int pMaxAmount, Sprite * pSprite)
 	{
 		int id = getNextId();
 		SpriteManager::createSprite(id, pSprite);
-		pickableItemPrototypes[id] = std::make_unique<PickableItem>(id);
+		pickableItemPrototypes[id] = std::unique_ptr<PickableItem>(
+			PickableItem::createPrototype(id, pMaxAmount)
+			);
 		idsByName[pName] = id;
 	}
 
@@ -106,7 +110,9 @@ namespace Prototypes {
 	{
 		int id = getNextId();
 		SpriteManager::createSprite(id, pSprite);
-		tilePrototypes[id] = std::make_unique<Tile>(id,TileType::GRASS);
+		tilePrototypes[id] = std::unique_ptr<Tile>(
+			Tile::createPrototype(id, TileType::GRASS)
+			);
 		idsByName[pName] = id;
 	}
 
@@ -126,7 +132,9 @@ namespace Prototypes {
 	{
 		int id = getNextId();
 		SpriteManager::createSprite(id, pSprite);
-		characterPrototypes[id] = std::make_unique<Character>(id);
+		characterPrototypes[id] = std::unique_ptr<Character>(
+			Character::createPrototype(id)
+			);
 		idsByName[pName] = id;
 	}
 

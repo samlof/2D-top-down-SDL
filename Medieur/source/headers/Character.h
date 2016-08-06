@@ -12,8 +12,6 @@ class World;
 class Character {
 public:
 	Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, int pY);
-	// For prototype
-	Character(const int pId);
 
 	void setPathTo(Tile* pGoalTile);
 	void getNextTile();
@@ -37,4 +35,12 @@ private:
 
 	void moveTowardsNextTile();
 	void getJob();
+
+
+	// For prototype
+	Character(const int pId);
+public:
+	static Character* createPrototype(const int pId) {
+		return new Character(pId);
+	}
 };

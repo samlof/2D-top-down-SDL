@@ -16,7 +16,7 @@ namespace Prototypes {
 	GroundEntity* getGroundEntityPrototypeByName(const std::string& pName);
 	GroundEntity* getGroundEntityPrototypeById(const int pId);
 
-	void createPickableItemPrototype(const std::string & pName, const float pMovSpeed, Sprite* pSprite);
+	void createPickableItemPrototype(const std::string & pName, const int pMovSpeed, Sprite* pSprite);
 	PickableItem* getPickableItemPrototypeByName(const std::string& pName);
 	PickableItem* getPickableItemPrototypeById(const int pId);
 
