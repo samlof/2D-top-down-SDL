@@ -40,7 +40,7 @@ void Game::update()
 {
 	InputHandler inputhandler;
 
-	mWorld->createCharacter(2, 2, Prototypes::getCharacterPrototypeByName("Guy"));
+	mWorld->createCharacter(2, 2, Prototypes::getIdByName("Guy"));
 
 	while (!mQuitting) {
 		inputhandler.checkInput();
