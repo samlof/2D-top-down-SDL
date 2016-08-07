@@ -12,6 +12,7 @@
 #include "JobManager.h"
 #include "GroundEntity.h"
 #include "PickableItem.h"
+#include "IGroundEntityModule.h"
 
 
 using namespace Prototypes;

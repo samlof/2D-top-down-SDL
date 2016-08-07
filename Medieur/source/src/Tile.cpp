@@ -3,6 +3,7 @@
 #include "GroundEntity.h"
 #include "PickableItem.h"
 #include "World.h"
+#include "IGroundEntityModule.h"
 
 Tile::Tile(Tile* pPrototype, World* pWorld, int pX, int pY)
 	:
@@ -13,6 +14,7 @@ Tile::Tile(Tile* pPrototype, World* pWorld, int pX, int pY)
 	mWorld(pWorld), mId(pPrototype->mId)
 {
 }
+Tile::~Tile() = default;
 
 #pragma region Gets and sets
 bool Tile::isWalkable() const

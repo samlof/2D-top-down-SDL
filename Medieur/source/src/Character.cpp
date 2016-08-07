@@ -4,7 +4,6 @@
 #include "Tile.h"
 #include "World.h"
 #include "Job.h"
-#include "GroundEntity.h"
 #include "PickableItem.h"
 #include "JobManager.h"
 
@@ -20,6 +19,8 @@ Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, 
 	mNextTile(nullptr), mCurrentJob(nullptr), mItem(nullptr), mGoalTile(nullptr)
 {
 }
+
+Character::~Character() = default;
 
 Character::Character(const int pId)
 	:
