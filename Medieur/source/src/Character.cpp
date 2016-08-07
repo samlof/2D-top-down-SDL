@@ -20,7 +20,9 @@ Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, 
 {
 }
 
-Character::~Character() = default;
+Character::~Character() {
+	printf("Character::destructor\n");
+}
 
 Character::Character(const int pId)
 	:
