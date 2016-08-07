@@ -10,6 +10,7 @@
 #include "Character.h"
 
 #define CREATEFUNC(x) std::bind(&GroundEntityPlantModule::##x, this, std::placeholders::_1)
+
 namespace {
 	const int kMaxGrowth = 5;
 	const int kMaxHealth = 10;
@@ -29,17 +30,7 @@ GroundEntityPlantModule::GroundEntityPlantModule(
 {
 }
 
-GroundEntityPlantModule::~GroundEntityPlantModule()
-{
-	if (mInteractJob != nullptr) {
-		mInteractJob->cancelJob();
-		mInteractJob = nullptr;
-	}
-	if (mPickupJob != nullptr) {
-		mPickupJob->cancelJob();
-		mPickupJob = nullptr;
-	}
-}
+GroundEntityPlantModule::~GroundEntityPlantModule() = default;
 
 GroundEntityPlantModule::GroundEntityPlantModule(const int pDropItemId)
 	:
@@ -84,15 +75,21 @@ void GroundEntityPlantModule::update()
 
 void GroundEntityPlantModule::interact(Character* pCharacter)
 {
+	mInteractJob = nullptr;
+	if (pCharacter == nullptr) return;
+
 	printf("Interact: ");
 	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
 	mHealth = kMaxHealth;
 	mHealthCounter.reset();
-	mInteractJob = nullptr;
 }
 
 void GroundEntityPlantModule::pickup(Character* pCharacter)
 {
+	mPickupJob->cancelJob();
+	mPickupJob = nullptr;
+	if (pCharacter == nullptr) return;
+
 	if (mGrowth >= kMaxGrowth - 1) {
 	printf("Pickup item: ");
 	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
@@ -100,17 +97,30 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 	PickableItem* item = mThisEntity->getTile()->getWorld()->createPickableItem(mDropItemId, kHarvestAmount);
 
 	pCharacter->addItem(item);
-	mPickupJob = nullptr;
-	mThisEntity->erase();
+
+	rot();
 	}
 	else {
 		rot();
 	}
 }
 
+void GroundEntityPlantModule::cleanJobs()
+{
+	if (mInteractJob != nullptr) {
+		mInteractJob->cancelJob();
+		mInteractJob = nullptr;
+	}
+	if (mPickupJob != nullptr) {
+		mPickupJob->cancelJob();
+		mPickupJob = nullptr;
+	}
+}
+
 void GroundEntityPlantModule::rot()
 {
+	cleanJobs();
 	mThisEntity->erase();
 }
 
-#undef CREATEFUNC
+#undef CREATEFUNC // Undef the helper macro

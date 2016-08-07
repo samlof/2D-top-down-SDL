@@ -42,7 +42,7 @@ private:
 	void getNextTile();
 	void moveTowardsNextTile();
 	void getJob();
-
+	void doJob();
 
 	// For prototype
 	Character(const int pId);

@@ -62,9 +62,7 @@ World::World(const unsigned int width, const unsigned int height)
 	}
 }
 
-World::~World() {
-	printf("chars size: %i\n", mCharacters.size());
-}
+World::~World() = default;
 
 Tile* World::getTile(const int pX, const int pY)
 {

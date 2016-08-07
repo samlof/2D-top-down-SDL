@@ -1,31 +1,40 @@
 #include "JobManager.h"
 
+#include <stdexcept>
+
 #include "Job.h"
 #include "Character.h"
 
 void JobManager::deleteJob(Job * pJob)
 {
-	mCurrentJobs.erase(pJob);
+	if (pJob == nullptr) {
+		throw std::invalid_argument("Trying to delete a null job!");
+	}
+
+	mAllJobs.erase(pJob);
+	mOpenJobs.erase(pJob);
 	delete pJob;
 }
 
 JobManager::~JobManager()
 {
-	for (auto it : mCurrentJobs) {
+	for (auto it : mAllJobs) {
 		delete it;
 	}
-	mCurrentJobs.clear();
+	mAllJobs.clear();
+	mOpenJobs.clear();
 }
 
 void JobManager::createJob(Job* pJob)
 {
 	printf("Create Job!\n");
-	mCurrentJobs.insert(pJob);
+	mAllJobs.insert(pJob);
+	mOpenJobs.insert(pJob);
 }
 
 Job * JobManager::getJob()
 {
-	for (auto it : mCurrentJobs) {
+	for (auto it : mOpenJobs) {
 		return it;
 	}
 	return nullptr;
@@ -33,10 +42,10 @@ Job * JobManager::getJob()
 
 void JobManager::removeJobFromOpen(Job * pJob)
 {
-	mCurrentJobs.erase(pJob);
+	mOpenJobs.erase(pJob);
 }
 
-void JobManager::addJob(Job * pJob)
+void JobManager::addJobToOpen(Job * pJob)
 {
-	mCurrentJobs.insert(pJob);
+	mOpenJobs.insert(pJob);
 }

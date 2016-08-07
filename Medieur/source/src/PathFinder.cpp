@@ -21,6 +21,7 @@ namespace PathFinder {
 			return pTileA->getXY().distanceTo(pTileB->getXY());
 		}
 
+		// Helper function
 		std::vector<Tile*> getNeighbours(Tile* pTile) {
 			std::vector<Tile*> neighbours;
 			int x = pTile->getX();
@@ -81,7 +82,8 @@ namespace PathFinder {
 				break;
 			}
 			if (std::get<1>(openSet.top()) != fScores[current]) {
-				// Extra one
+				// emplace places multiple,
+				// so delete the ones with higher than an already found cost
 				openSet.pop();
 				continue;
 			}

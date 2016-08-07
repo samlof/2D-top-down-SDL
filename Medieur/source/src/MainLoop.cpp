@@ -3,8 +3,6 @@
 #include <SDL_scancode.h>
 #include <SDL_timer.h>
 
-#include <iostream>
-
 #include "Game.h"
 #include "Graphics.h"
 #include "InputHandler.h"
@@ -22,9 +20,6 @@ MainLoop::~MainLoop()
 {
 	Prototypes::clearAll();
 	Graphics::quit();
-	printf("Mainloop::destructor\n");
-	char a;
-	std::cin >> a;
 }
 
 void MainLoop::run()

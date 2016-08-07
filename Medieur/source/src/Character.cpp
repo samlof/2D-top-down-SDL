@@ -7,9 +7,6 @@
 #include "PickableItem.h"
 #include "JobManager.h"
 
-#include <iostream>
-
-
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
 	const int kJobInterval = 100;
@@ -23,11 +20,7 @@ Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, 
 {
 }
 
-Character::~Character() {
-	printf("Character::destructor\n");
-	char a;
-	std::cin >> a;
-}
+Character::~Character() = default;
 
 Character::Character(const int pId)
 	:
@@ -79,9 +72,7 @@ void Character::update()
 	}
 	else {
 		if (mNextTile == nullptr) {
-			mCurrentJob->getFunc()(this);
-			mCurrentJob->cancelJob();
-			mCurrentJob = nullptr;
+			doJob();
 			mGoalTile = nullptr;
 		}
 	}
@@ -133,5 +124,14 @@ void Character::getJob()
 		mCurrentJob->reserve(this);
 		setPathTo(mCurrentJob->getTile());
 		mJobInterval.reset();
+	}
+}
+
+void Character::doJob()
+{
+	if (mCurrentJob != nullptr) {
+		mCurrentJob->getFunc()(this);
+		mCurrentJob->cancelJob();
+		mCurrentJob = nullptr;
 	}
 }
