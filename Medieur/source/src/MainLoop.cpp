@@ -40,5 +40,4 @@ void MainLoop::run()
 		mGame->draw();
 		SDL_Delay(16);
 	}
-	printf("never here!");
 }
