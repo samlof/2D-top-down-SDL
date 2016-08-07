@@ -29,6 +29,12 @@ namespace SpriteManager {
 		spriteMap[pId] = std::unique_ptr<Sprite>(pSprite);
 	}
 
+	void clearAll()
+	{
+		spriteMap.clear();
+		groundEntitySpriteFunctions.clear();
+	}
+
 	void setGroundEntityFunction(const int pId, std::function<Rectangle(GroundEntity*)> pFunction)
 	{
 		groundEntitySpriteFunctions[pId] = pFunction;

@@ -6,16 +6,19 @@
 #include "Game.h"
 #include "Graphics.h"
 #include "InputHandler.h"
+#include "Prototypes.h"
 
 MainLoop::MainLoop()
 	:
 	mQuitting(false)
 {
 	Graphics::init();
+	Prototypes::createPrototypes();
 }
 
 MainLoop::~MainLoop()
 {
+	Prototypes::clearAll();
 	Graphics::quit();
 }
 
@@ -37,4 +40,5 @@ void MainLoop::run()
 		mGame->draw();
 		SDL_Delay(16);
 	}
+	printf("never here!");
 }

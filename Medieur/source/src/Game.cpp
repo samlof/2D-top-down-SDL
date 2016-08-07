@@ -12,7 +12,6 @@
 
 Game::Game()
 	:
-	init(Prototypes::createPrototypes()),
 	mWorld(World::GenerateTestWorld()),
 	mCamera(new Camera(mWorld.get()))
 {

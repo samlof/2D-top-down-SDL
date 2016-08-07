@@ -9,6 +9,14 @@ void JobManager::deleteJob(Job * pJob)
 	delete pJob;
 }
 
+JobManager::~JobManager()
+{
+	for (auto it : mCurrentJobs) {
+		delete it;
+	}
+	mCurrentJobs.clear();
+}
+
 void JobManager::createJob(Job* pJob)
 {
 	printf("Create Job!\n");

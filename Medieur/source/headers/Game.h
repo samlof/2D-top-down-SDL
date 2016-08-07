@@ -17,7 +17,6 @@ public:
 	void handleEvent(InputHandler& pInputHandler);
 
 private:
-	bool init;
 	std::unique_ptr<World> mWorld;
 	std::unique_ptr<Camera> mCamera;
 };
