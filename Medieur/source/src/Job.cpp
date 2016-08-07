@@ -3,6 +3,11 @@
 #include "JobManager.h"
 #include "Character.h"
 
+Job::~Job()
+{
+	clearCharacter();
+}
+
 void Job::reserve(Character * pCharacter)
 {
 	if (isReserved()) throw "Job already reserved!";

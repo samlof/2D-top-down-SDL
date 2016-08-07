@@ -5,17 +5,14 @@
 
 void JobManager::deleteJob(Job * pJob)
 {
-	pJob->clearCharacter();
 	mCurrentJobs.erase(pJob);
 	delete pJob;
 }
 
-Job* JobManager::createJob(Tile* pTargetTile, Job::JobFunc pJobFunc)
+void JobManager::createJob(Job* pJob)
 {
 	printf("Create Job!\n");
-	Job* job = new Job(*this, pTargetTile, pJobFunc);
-	mCurrentJobs.insert(job);
-	return job;
+	mCurrentJobs.insert(pJob);
 }
 
 Job * JobManager::getJob()

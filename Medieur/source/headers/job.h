@@ -13,6 +13,7 @@ public:
 		: mTargetTile(pTargetTile), mJobFunc(pJobFunc),	mManager(pManager),
 		mCharacter(nullptr)
 	{}
+	~Job();
 
 	void reserve(Character* pCharacter);
 	bool isReserved() const { return mCharacter != nullptr; }
