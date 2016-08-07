@@ -30,12 +30,12 @@ public:
 	void clearGroundEntity() { mGroundEntity.reset(); }
 
 	// Character functions
-	std::shared_ptr<Character> getCharacter() { return mCharacter; }
-	bool isReservableForCharacter() { return !mCharacter; }
-	void reserveFor(std::shared_ptr<Character> pCharacter) { if(mCharacterStandingOn == false) mCharacter = pCharacter; }
-	void moveTo() { if(mCharacter) mCharacterStandingOn = true; }
+	Character* getCharacter() { return mCharacter; }
+	bool isReservableForCharacter() { return mCharacter == nullptr; }
+	void reserveFor(Character* pCharacter) { if(isReservableForCharacter()) mCharacter = pCharacter; }
+	void moveTo() { if(mCharacter != nullptr) mCharacterStandingOn = true; }
 	bool isCharacterOn() const { return mCharacterStandingOn; }
-	void clearCharater() { mCharacter.reset(); mCharacterStandingOn = false; }
+	void clearCharater() { mCharacter = nullptr; mCharacterStandingOn = false; }
 
 	// Tile gets and sets
 	bool isWalkable() const;
@@ -58,7 +58,7 @@ private:
 	const int mX, mY;
 	TileType mTileType;
 	std::shared_ptr<GroundEntity> mGroundEntity;
-	std::shared_ptr<Character> mCharacter;
+	Character* mCharacter;
 	bool mCharacterStandingOn;
 	float mMovementCost;
 

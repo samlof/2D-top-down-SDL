@@ -14,8 +14,9 @@ public:
 	void deleteJob(Job* pJob);
 	Job* getJob();
 	void removeJobFromOpen(Job* pJob);
-	void addJob(Job* pJob);
-	bool hasJobs() { return mCurrentJobs.size() > 0; }
+	void addJobToOpen(Job* pJob);
+	bool hasJobs() { return mOpenJobs.size() > 0; }
 private:
-	std::unordered_set<Job*> mCurrentJobs;
+	std::unordered_set<Job*> mAllJobs;
+	std::unordered_set<Job*> mOpenJobs;
 };

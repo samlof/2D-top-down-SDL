@@ -128,7 +128,7 @@ Character* World::createCharacter(int pX, int pY, int pId)
 	std::shared_ptr<Character> tempChar = std::make_shared<Character>(pPrototype, this, tempTile, pX, pY);
 	mCharacters.push_back(tempChar);
 
-	tempTile->reserveFor(tempChar);
+	tempTile->reserveFor(tempChar.get());
 	tempTile->moveTo();
 	return tempChar.get();
 }

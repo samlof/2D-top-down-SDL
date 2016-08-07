@@ -3,10 +3,9 @@
 #include "JobManager.h"
 #include "Character.h"
 
-Job::~Job()
-{
-	clearCharacter();
-}
+#include <iostream>
+
+Job::~Job() = default;
 
 void Job::reserve(Character * pCharacter)
 {
@@ -26,10 +25,11 @@ void Job::clearCharacter()
 void Job::cancelReserve()
 {
 	mCharacter = nullptr;
-	mManager.addJob(this);
+	mManager.addJobToOpen(this);
 }
 
 void Job::cancelJob()
 {
+	clearCharacter();
 	mManager.deleteJob(this);
 }

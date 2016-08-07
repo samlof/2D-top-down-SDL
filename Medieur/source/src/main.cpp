@@ -4,6 +4,7 @@
 
 
 // #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+
  #include "MainLoop.h"
 
 int main(int argc, char *args[]) {

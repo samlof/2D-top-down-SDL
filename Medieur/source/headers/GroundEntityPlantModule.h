@@ -21,7 +21,7 @@ public:
 	}
 	int getGrowth() const { return mGrowth; }
 
-
+	void cleanJobs();
 private:
 	int mGrowth;
 	int mHealth;

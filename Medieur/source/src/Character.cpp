@@ -72,9 +72,7 @@ void Character::update()
 	}
 	else {
 		if (mNextTile == nullptr) {
-			mCurrentJob->getFunc()(this);
-			mCurrentJob->cancelJob();
-			mCurrentJob = nullptr;
+			doJob();
 			mGoalTile = nullptr;
 		}
 	}
@@ -126,5 +124,14 @@ void Character::getJob()
 		mCurrentJob->reserve(this);
 		setPathTo(mCurrentJob->getTile());
 		mJobInterval.reset();
+	}
+}
+
+void Character::doJob()
+{
+	if (mCurrentJob != nullptr) {
+		mCurrentJob->getFunc()(this);
+		mCurrentJob->cancelJob();
+		mCurrentJob = nullptr;
 	}
 }
