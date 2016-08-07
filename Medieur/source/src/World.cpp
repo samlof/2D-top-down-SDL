@@ -65,6 +65,8 @@ World::World(const unsigned int width, const unsigned int height)
 	}
 }
 
+World::~World() = default;
+
 Tile* World::getTile(const int pX, const int pY)
 {
 	if (pX < 0 || pX > getWidth() - 1 || pY < 0 || pY > getHeight() - 1) {
@@ -162,4 +164,9 @@ PickableItem* World::createPickableItem(int pId, const int pAmount)
 	PickableItem* newItem = new PickableItem(pPrototype, pAmount);
 	mItems.insert(ItemMap::value_type(newItem->getId(), std::unique_ptr<PickableItem>(newItem)));
 	return newItem;
+}
+
+JobManager * World::getJobManager()
+{
+	return mJobManager.get();
 }
