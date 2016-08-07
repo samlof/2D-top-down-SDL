@@ -2,7 +2,6 @@
 
 #include <stack>
 
-#include "Point.h"
 #include "CountdownCounter.h"
 
 class Job;

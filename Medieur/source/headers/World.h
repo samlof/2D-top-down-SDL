@@ -5,8 +5,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Point.h"
-
 class Tile;
 class Character;
 class GroundEntity;
