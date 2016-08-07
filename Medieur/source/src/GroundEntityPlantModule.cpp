@@ -28,6 +28,18 @@ GroundEntityPlantModule::GroundEntityPlantModule(
 {
 }
 
+GroundEntityPlantModule::~GroundEntityPlantModule()
+{
+	if (mInteractJob != nullptr) {
+		mInteractJob->cancelJob();
+		mInteractJob = nullptr;
+	}
+	if (mPickupJob != nullptr) {
+		mPickupJob->cancelJob();
+		mPickupJob = nullptr;
+	}
+}
+
 GroundEntityPlantModule::GroundEntityPlantModule(const int pDropItemId)
 	:
 	IGroundEntityModule(nullptr),
@@ -97,13 +109,5 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 
 void GroundEntityPlantModule::rot()
 {
-	if (mInteractJob != nullptr) {
-		mInteractJob->cancelJob();
-		mInteractJob = nullptr;
-	}
-	if (mPickupJob != nullptr) {
-		mPickupJob->cancelJob();
-		mPickupJob = nullptr;
-	}
 	mThisEntity->erase();
 }

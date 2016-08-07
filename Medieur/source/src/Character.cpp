@@ -73,7 +73,7 @@ void Character::update()
 	else {
 		if (mNextTile == nullptr) {
 			mCurrentJob->getFunc()(this);
-			mWorld->getJobManager()->deleteJob(mCurrentJob);
+			mCurrentJob->cancelJob();
 			mCurrentJob = nullptr;
 			mGoalTile = nullptr;
 		}
