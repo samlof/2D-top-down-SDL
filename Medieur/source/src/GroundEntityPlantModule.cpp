@@ -9,6 +9,7 @@
 #include "JobManager.h"
 #include "Character.h"
 
+#define CREATEFUNC(x) std::bind(&GroundEntityPlantModule::##x, this, std::placeholders::_1)
 namespace {
 	const int kMaxGrowth = 5;
 	const int kMaxHealth = 10;
@@ -55,7 +56,7 @@ void GroundEntityPlantModule::update()
 	if (mHealthCounter.expired()) {
 		mHealth--;
 		if (mHealth == 5 && (mInteractJob == nullptr)) {
-			Job::JobFunc func = std::bind(&GroundEntityPlantModule::interact, this, std::placeholders::_1);
+			Job::JobFunc func = CREATEFUNC(interact);
 			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
 			mInteractJob = new Job(*jobManager, mThisEntity->getTile(), func);
 			jobManager->createJob(mInteractJob);
@@ -68,7 +69,7 @@ void GroundEntityPlantModule::update()
 	if (mGrowthCounter.expired()) {
 		mGrowth++;
 		if (mGrowth >= kMaxGrowth - 1 && (mPickupJob == nullptr)) {
-			Job::JobFunc func = std::bind(&GroundEntityPlantModule::pickup, this, std::placeholders::_1);
+			Job::JobFunc func = CREATEFUNC(pickup);
 			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
 			mPickupJob = new Job(*jobManager, mThisEntity->getTile(), func);
 			jobManager->createJob(mPickupJob);
@@ -111,3 +112,5 @@ void GroundEntityPlantModule::rot()
 {
 	mThisEntity->erase();
 }
+
+#undef CREATEFUNC
