@@ -1,18 +1,16 @@
 #pragma once
 
 #include <unordered_map>
-#include <string>
 #include <memory>
 
-#include "IGroundEntityModule.h"
 class Tile;
+class IGroundEntityModule;
 
 class GroundEntity {
 public:
 	// Create from prototype
-	GroundEntity(GroundEntity* pPrototype, Tile* pTilePtr)
-		: mId(pPrototype->mId), mMovementCost(pPrototype->mMovementCost), mTilePtr(pTilePtr) {}
-	
+	GroundEntity(GroundEntity* pPrototype, Tile* pTilePtr);
+	~GroundEntity();
 
 	int getId() const { return mId; }
 	float getMovementCost() const { return mMovementCost; }
@@ -28,8 +26,7 @@ private:
 	float mMovementCost;
 
 	// Only for making prototypes
-	GroundEntity(const int pId, const float pMovCost)
-		: mId(pId), mMovementCost(pMovCost), mTilePtr(nullptr) {}
+	GroundEntity(const int pId, const float pMovCost);
 public:
 	static GroundEntity* createPrototype(const int pId, const float pMovCost) {
 		return new GroundEntity(pId, pMovCost);

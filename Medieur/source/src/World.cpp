@@ -1,21 +1,18 @@
 #include "World.h"
 
-#include <stdexcept>
-
-#include <map>
 #include <string>
 #include <memory>
-#include <boost\algorithm\clamp.hpp>
 #include <iostream>
+#include <stdexcept>
 
 #include "Tile.h"
 #include "units.h"
-#include "GroundEntity.h"
 #include "Character.h"
 #include "Prototypes.h"
-#include "Job.h"
-#include "PickableItem.h"
 #include "JobManager.h"
+#include "GroundEntity.h"
+#include "PickableItem.h"
+#include "IGroundEntityModule.h"
 
 
 using namespace Prototypes;
@@ -64,6 +61,8 @@ World::World(const unsigned int width, const unsigned int height)
 		it.reserve(units::kWorldHeight);
 	}
 }
+
+World::~World() = default;
 
 Tile* World::getTile(const int pX, const int pY)
 {
@@ -138,7 +137,10 @@ GroundEntity* World::createGroundEntity(int pX, int pY, int pId)
 {
 	GroundEntity* pPrototype = Prototypes::getGroundEntityPrototypeById(pId);
 	Tile* tempTile = getTile(pX, pY);
-	if (tempTile->hasGroundEntity()) return nullptr;
+	if (tempTile->hasGroundEntity()) {
+		//throw std::invalid_argument("Tile already reserved by something!");
+		return nullptr;
+	}
 	std::shared_ptr<GroundEntity> newGroundEntity = std::make_shared<GroundEntity>(pPrototype, tempTile);
 	if (pPrototype->mModule) {
 		newGroundEntity->mModule = std::unique_ptr<IGroundEntityModule>(
@@ -162,4 +164,9 @@ PickableItem* World::createPickableItem(int pId, const int pAmount)
 	PickableItem* newItem = new PickableItem(pPrototype, pAmount);
 	mItems.insert(ItemMap::value_type(newItem->getId(), std::unique_ptr<PickableItem>(newItem)));
 	return newItem;
+}
+
+JobManager * World::getJobManager()
+{
+	return mJobManager.get();
 }

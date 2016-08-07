@@ -28,6 +28,18 @@ GroundEntityPlantModule::GroundEntityPlantModule(
 {
 }
 
+GroundEntityPlantModule::~GroundEntityPlantModule()
+{
+	if (mInteractJob != nullptr) {
+		mInteractJob->cancelJob();
+		mInteractJob = nullptr;
+	}
+	if (mPickupJob != nullptr) {
+		mPickupJob->cancelJob();
+		mPickupJob = nullptr;
+	}
+}
+
 GroundEntityPlantModule::GroundEntityPlantModule(const int pDropItemId)
 	:
 	IGroundEntityModule(nullptr),
@@ -44,9 +56,9 @@ void GroundEntityPlantModule::update()
 		mHealth--;
 		if (mHealth == 5 && (mInteractJob == nullptr)) {
 			Job::JobFunc func = std::bind(&GroundEntityPlantModule::interact, this, std::placeholders::_1);
-			mInteractJob = mThisEntity->getTile()->getWorld()->getJobManager()->createJob(
-				mThisEntity->getTile(), func
-			);
+			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
+			mInteractJob = new Job(*jobManager, mThisEntity->getTile(), func);
+			jobManager->createJob(mInteractJob);
 		}
 		else if (mHealth <= 0) {
 			rot();
@@ -57,9 +69,9 @@ void GroundEntityPlantModule::update()
 		mGrowth++;
 		if (mGrowth >= kMaxGrowth - 1 && (mPickupJob == nullptr)) {
 			Job::JobFunc func = std::bind(&GroundEntityPlantModule::pickup, this, std::placeholders::_1);
-			mPickupJob = mThisEntity->getTile()->getWorld()->getJobManager()->createJob(
-				mThisEntity->getTile(), func
-			);
+			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
+			mPickupJob = new Job(*jobManager, mThisEntity->getTile(), func);
+			jobManager->createJob(mPickupJob);
 		}
 		else if (mGrowth > kMaxGrowth + 2) {
 			rot();
@@ -97,13 +109,5 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 
 void GroundEntityPlantModule::rot()
 {
-	if (mInteractJob != nullptr) {
-		mInteractJob->cancelJob();
-		mInteractJob = nullptr;
-	}
-	if (mPickupJob != nullptr) {
-		mPickupJob->cancelJob();
-		mPickupJob = nullptr;
-	}
 	mThisEntity->erase();
 }

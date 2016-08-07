@@ -5,8 +5,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Point.h"
-
 class Tile;
 class Character;
 class GroundEntity;
@@ -20,6 +18,7 @@ public:
 	static World* GenerateTestWorld();
 
 	World(const unsigned int width, const unsigned int height);
+	~World();
 
 	Tile* getTile(const int pX, const int pY);
 
@@ -35,7 +34,7 @@ public:
 	Tile* createTile(int pX, int pY, int pId);
 	PickableItem* createPickableItem(int pId, const int pAmount);
 
-	JobManager* getJobManager() { return mJobManager.get(); }
+	JobManager* getJobManager();
 private:
 	std::vector<std::vector<Tile> > mTiles;
 	std::vector<std::shared_ptr<Character> > mCharacters;

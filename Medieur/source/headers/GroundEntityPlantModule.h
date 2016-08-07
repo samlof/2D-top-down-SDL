@@ -9,6 +9,7 @@ class Job;
 class GroundEntityPlantModule : public IGroundEntityModule {
 public:
 	GroundEntityPlantModule(GroundEntityPlantModule* pPrototype, GroundEntity * pThisEntity);
+	~GroundEntityPlantModule();
 
 	// Inherited via IGroundEntityModule
 	virtual void update() override;

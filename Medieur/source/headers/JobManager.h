@@ -3,14 +3,13 @@
 #include <unordered_set>
 #include <memory>
 
-#include "Job.h"
-
 class Tile;
+class Job;
 
 class JobManager {
 public:
 	JobManager() {}
-	Job* createJob(Tile* pTargetTile, Job::JobFunc pJobFunc);
+	void createJob(Job* pJob);
 	void deleteJob(Job* pJob);
 	Job* getJob();
 	void removeJobFromOpen(Job* pJob);

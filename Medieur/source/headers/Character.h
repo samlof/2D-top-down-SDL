@@ -2,7 +2,6 @@
 
 #include <stack>
 
-#include "Point.h"
 #include "CountdownCounter.h"
 
 class Job;
@@ -13,6 +12,8 @@ class PickableItem;
 class Character {
 public:
 	Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, int pY);
+	~Character();
+
 
 	void setPathTo(Tile* pGoalTile);
 	void cancelPath();

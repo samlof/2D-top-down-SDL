@@ -10,15 +10,6 @@
 #include "InputHandler.h"
 #include "Camera.h"
 
-// Smart pointers need these?
-#include "JobManager.h"
-#include "PickableItem.h"
-#include "Tile.h"
-
-namespace {
-
-	
-}
 
 Game::Game()
 	:
@@ -29,10 +20,7 @@ Game::Game()
 {
 	PathFinder::setWorld(mWorld.get());
 }
-Game::~Game()
-{
-
-}
+Game::~Game() = default;
 
 void Game::update()
 {

@@ -19,6 +19,7 @@ class Tile
 {
 public:
 	Tile(Tile* pPrototype, World* pWorld, int pX, int pY);
+	~Tile();
 
 	TileType getTileType() const { return mTileType; }
 
