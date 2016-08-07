@@ -7,6 +7,9 @@
 #include "PickableItem.h"
 #include "JobManager.h"
 
+#include <iostream>
+
+
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
 	const int kJobInterval = 100;
@@ -22,6 +25,8 @@ Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, 
 
 Character::~Character() {
 	printf("Character::destructor\n");
+	char a;
+	std::cin >> a;
 }
 
 Character::Character(const int pId)

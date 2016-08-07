@@ -22,6 +22,7 @@ MainLoop::~MainLoop()
 {
 	Prototypes::clearAll();
 	Graphics::quit();
+	printf("Mainloop::destructor\n");
 	char a;
 	std::cin >> a;
 }

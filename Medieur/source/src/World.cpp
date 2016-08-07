@@ -62,7 +62,9 @@ World::World(const unsigned int width, const unsigned int height)
 	}
 }
 
-World::~World() = default;
+World::~World() {
+	printf("chars size: %i\n", mCharacters.size());
+}
 
 Tile* World::getTile(const int pX, const int pY)
 {
@@ -128,7 +130,7 @@ Character* World::createCharacter(int pX, int pY, int pId)
 	std::shared_ptr<Character> tempChar = std::make_shared<Character>(pPrototype, this, tempTile, pX, pY);
 	mCharacters.push_back(tempChar);
 
-	tempTile->reserveFor(tempChar);
+	tempTile->reserveFor(tempChar.get());
 	tempTile->moveTo();
 	return tempChar.get();
 }

@@ -31,9 +31,9 @@ public:
 
 	// Character functions
 	Character* getCharacter() { return mCharacter; }
-	bool isReservableForCharacter() { return !mCharacter; }
-	void reserveFor(Character* pCharacter) { if(isReservableForCharacter) mCharacter = pCharacter; }
-	void moveTo() { if(mCharacter) mCharacterStandingOn = true; }
+	bool isReservableForCharacter() { return mCharacter == nullptr; }
+	void reserveFor(Character* pCharacter) { if(isReservableForCharacter()) mCharacter = pCharacter; }
+	void moveTo() { if(mCharacter != nullptr) mCharacterStandingOn = true; }
 	bool isCharacterOn() const { return mCharacterStandingOn; }
 	void clearCharater() { mCharacter = nullptr; mCharacterStandingOn = false; }
 
