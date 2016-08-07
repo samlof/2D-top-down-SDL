@@ -11,9 +11,9 @@ public:
 	~MainLoop();
 
 	void run();
-	static void stop() { mIsQuitting = true; }
+	void stop() { mQuitting = true; }
 
 private:
+	bool mQuitting;
 	std::unique_ptr<Game> mGame;
-	static bool mIsQuitting;
 };

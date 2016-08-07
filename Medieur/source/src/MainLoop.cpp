@@ -1,16 +1,18 @@
 #include "MainLoop.h"
 
+#include <SDL_scancode.h>
+#include <SDL_timer.h>
+
 #include "Game.h"
 #include "Graphics.h"
-
-bool MainLoop::mIsQuitting = false; // static
+#include "InputHandler.h"
 
 MainLoop::MainLoop()
+	:
+	mQuitting(false)
 {
 	Graphics::init();
-	run();
 }
-
 
 MainLoop::~MainLoop()
 {
@@ -19,9 +21,20 @@ MainLoop::~MainLoop()
 
 void MainLoop::run()
 {
+	InputHandler inputhandler;
 	mGame.reset(new Game());
-	while (!mIsQuitting) {
+	while (!mQuitting) {
+
+		inputhandler.checkInput();
+
+		if (inputhandler.shouldQuit() || inputhandler.getKeyPressed(SDL_SCANCODE_ESCAPE)) {
+			mQuitting = true;
+			return;
+		}
+
+		mGame->handleEvent(inputhandler);
 		mGame->update();
-		if (mGame->quitting()) mIsQuitting = true;
+		mGame->draw();
+		SDL_Delay(16);
 	}
 }

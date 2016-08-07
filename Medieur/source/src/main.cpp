@@ -9,6 +9,7 @@
 int main(int argc, char *args[]) {
 	
 	MainLoop mainloop;
+	mainloop.run();
 
 	return 0;
 }
