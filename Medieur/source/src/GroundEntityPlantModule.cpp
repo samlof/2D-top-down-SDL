@@ -71,10 +71,7 @@ void GroundEntityPlantModule::update()
 			Job::JobFunc func = std::bind(&GroundEntityPlantModule::pickup, this, std::placeholders::_1);
 			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
 			mPickupJob = new Job(*jobManager, mThisEntity->getTile(), func);
-			jobManager->createJob(mInteractJob);
-			mThisEntity->getTile()->getWorld()->getJobManager()->createJob(
-				mPickupJob
-			);
+			jobManager->createJob(mPickupJob);
 		}
 		else if (mGrowth > kMaxGrowth + 2) {
 			rot();

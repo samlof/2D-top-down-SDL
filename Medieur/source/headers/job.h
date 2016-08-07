@@ -9,8 +9,12 @@ class JobManager;
 class Job {
 public:
 	using JobFunc = std::function<void(Character*)>;
-	Job(JobManager& pManager, Tile* pTargetTile, JobFunc pJobFunc)
+	Job(JobManager& pManager, Tile* pTargetTile, JobFunc& pJobFunc)
 		: mTargetTile(pTargetTile), mJobFunc(pJobFunc),	mManager(pManager),
+		mCharacter(nullptr)
+	{}
+	Job(JobManager& pManager, Tile* pTargetTile, JobFunc&& pJobFunc)
+		: mTargetTile(pTargetTile), mJobFunc(std::move(pJobFunc)), mManager(pManager),
 		mCharacter(nullptr)
 	{}
 	~Job();
