@@ -9,6 +9,7 @@ class Job;
 class JobManager {
 public:
 	JobManager() {}
+	~JobManager();
 	void createJob(Job* pJob);
 	void deleteJob(Job* pJob);
 	Job* getJob();

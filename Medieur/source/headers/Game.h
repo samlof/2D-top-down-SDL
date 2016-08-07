@@ -4,6 +4,7 @@
 
 class Camera;
 class World;
+class InputHandler;
 
 class Game
 {
@@ -13,12 +14,9 @@ public:
 
 	void update();
 	void draw();
+	void handleEvent(InputHandler& pInputHandler);
 
-	bool quitting() const { return mQuitting; }
-	void quit() { mQuitting = true; }
 private:
-	bool init;
-	bool mQuitting;
 	std::unique_ptr<World> mWorld;
 	std::unique_ptr<Camera> mCamera;
 };

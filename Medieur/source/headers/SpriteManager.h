@@ -13,6 +13,7 @@ class Character;
 
 namespace SpriteManager {
 	void createSprite(const int pId, Sprite* pSprite);
+	void clearAll();
 
 	void setGroundEntityFunction(const int pId, std::function<Rectangle(GroundEntity*)> pFunction);
 	bool hasGroundEntityFunction(const int pId);

@@ -11,6 +11,7 @@ class Character;
 
 namespace Prototypes {
 	bool createPrototypes();
+	void clearAll();
 
 	void createGroundEntityPrototype(const std::string & pName, const float pMovSpeed, Sprite* pSprite);
 	GroundEntity* getGroundEntityPrototypeByName(const std::string& pName);

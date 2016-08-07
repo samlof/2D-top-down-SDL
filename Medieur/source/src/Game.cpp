@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#include <SDL_timer.h>
 #include <SDL_scancode.h>
 
 #include "World.h"
@@ -13,48 +12,17 @@
 
 Game::Game()
 	:
-	mQuitting(false),
-	init(Prototypes::createPrototypes()),
 	mWorld(World::GenerateTestWorld()),
 	mCamera(new Camera(mWorld.get()))
 {
 	PathFinder::setWorld(mWorld.get());
+	mWorld->createCharacter(2, 2, Prototypes::getIdByName("Guy"));
 }
 Game::~Game() = default;
 
 void Game::update()
 {
-	InputHandler inputhandler;
-
-	mWorld->createCharacter(2, 2, Prototypes::getIdByName("Guy"));
-
-	while (!mQuitting) {
-		inputhandler.checkInput();
-		if (inputhandler.shouldQuit() || inputhandler.getKeyPressed(SDL_SCANCODE_ESCAPE)) mQuitting = true;
-
-		if (inputhandler.getKeyPressed(SDL_SCANCODE_UP)) {
-			mCamera->moveUp();
-		}
-		if (inputhandler.getKeyPressed(SDL_SCANCODE_DOWN)) {
-			mCamera->moveDown();
-		}
-		if (inputhandler.getKeyPressed(SDL_SCANCODE_LEFT)) {
-			mCamera->moveLeft();
-		}
-		if (inputhandler.getKeyPressed(SDL_SCANCODE_RIGHT)) {
-			mCamera->moveRight();
-		}
-		if (inputhandler.getKeyPressed(SDL_SCANCODE_A)) {
-			mCamera->moveHigher();
-		}
-		if (inputhandler.getKeyPressed(SDL_SCANCODE_S)) {
-			mCamera->moveLower();
-		}
-		mWorld->update();
-		draw();
-
-		SDL_Delay(16);
-	}
+	mWorld->update();
 }
 
 void Game::draw()
@@ -64,5 +32,27 @@ void Game::draw()
 	mCamera->draw();
 
 	Graphics::renderPresent();
+}
+
+void Game::handleEvent(InputHandler & pInputHandler)
+{
+	if (pInputHandler.getKeyPressed(SDL_SCANCODE_UP)) {
+		mCamera->moveUp();
+	}
+	if (pInputHandler.getKeyPressed(SDL_SCANCODE_DOWN)) {
+		mCamera->moveDown();
+	}
+	if (pInputHandler.getKeyPressed(SDL_SCANCODE_LEFT)) {
+		mCamera->moveLeft();
+	}
+	if (pInputHandler.getKeyPressed(SDL_SCANCODE_RIGHT)) {
+		mCamera->moveRight();
+	}
+	if (pInputHandler.getKeyPressed(SDL_SCANCODE_A)) {
+		mCamera->moveHigher();
+	}
+	if (pInputHandler.getKeyPressed(SDL_SCANCODE_S)) {
+		mCamera->moveLower();
+	}
 }
 

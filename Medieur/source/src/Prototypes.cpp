@@ -61,6 +61,18 @@ namespace Prototypes {
 		return true;
 	}
 
+	void clearAll()
+	{
+		groundEntityPrototypes.clear();
+		pickableItemPrototypes.clear();
+		characterPrototypes.clear();
+		tilePrototypes.clear();
+		idsByName.clear();
+
+		SpriteManager::clearAll();
+		idCount = 0;
+	}
+
 #pragma region GroundEntity
 	void createGroundEntityPrototype(
 		const std::string & pName, const float pMovSpeed, // Entity stuff

@@ -1,27 +1,47 @@
 #include "MainLoop.h"
 
+#include <SDL_scancode.h>
+#include <SDL_timer.h>
+
+#include <iostream>
+
 #include "Game.h"
 #include "Graphics.h"
-
-bool MainLoop::mIsQuitting = false; // static
+#include "InputHandler.h"
+#include "Prototypes.h"
 
 MainLoop::MainLoop()
+	:
+	mQuitting(false)
 {
 	Graphics::init();
-	run();
+	Prototypes::createPrototypes();
 }
-
 
 MainLoop::~MainLoop()
 {
+	Prototypes::clearAll();
 	Graphics::quit();
+	char a;
+	std::cin >> a;
 }
 
 void MainLoop::run()
 {
+	InputHandler inputhandler;
 	mGame.reset(new Game());
-	while (!mIsQuitting) {
+	while (!mQuitting) {
+
+		inputhandler.checkInput();
+
+		if (inputhandler.shouldQuit() || inputhandler.getKeyPressed(SDL_SCANCODE_ESCAPE)) {
+			mQuitting = true;
+			return;
+		}
+
+		mGame->handleEvent(inputhandler);
 		mGame->update();
-		if (mGame->quitting()) mIsQuitting = true;
+		mGame->draw();
+		SDL_Delay(16);
 	}
 }
