@@ -23,11 +23,14 @@ public:
 	bool isReserved() const { return mCharacter != nullptr; }
 	void clearCharacter();
 	void cancelReserve();
+	// Doesn't clear the creator, so only call from it
 	void cancelJob();
+
 	Tile* getTile() { return mTargetTile; }
 	JobFunc getFunc() { return mJobFunc; }
 private:
 	JobManager& mManager;
+	// TODO: use the creator, so if target moves this can adapt
 	Tile* mTargetTile;
 	JobFunc mJobFunc;
 	Character* mCharacter;

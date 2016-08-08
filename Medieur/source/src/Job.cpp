@@ -24,7 +24,7 @@ void Job::clearCharacter()
 
 void Job::cancelReserve()
 {
-	mCharacter = nullptr;
+	clearCharacter();
 	mManager.addJobToOpen(this);
 }
 

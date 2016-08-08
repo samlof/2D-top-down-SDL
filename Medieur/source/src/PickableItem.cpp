@@ -36,4 +36,7 @@ void PickableItem::erase()
 	else if (mCharacter != nullptr) {
 		mCharacter->getWorld()->deleteItem(this);
 	}
+	else {
+		throw "Item isn't owned by anything!";
+	}
 }

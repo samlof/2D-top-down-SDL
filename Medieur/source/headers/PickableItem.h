@@ -32,6 +32,7 @@ public:
 	int getMaxAmount() const { return mMaxAmount; }
 
 	void changeMax(const int pMaxAmount) { mMaxAmount = pMaxAmount; }
+	// Just tries to call world::deleteItem(this). Call that if you can
 	void erase();
 
 	Character* mCharacter;

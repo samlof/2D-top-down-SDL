@@ -15,8 +15,6 @@
 #include "IGroundEntityModule.h"
 
 
-using namespace Prototypes;
-
 // static
 World* World::GenerateTestWorld()
 {
@@ -25,20 +23,20 @@ World* World::GenerateTestWorld()
 
 	for (int i = 0; i < 5; i++)
 	{
-		world->createGroundEntity(5 + i, 5, getIdByName("Wall"));
-		world->createGroundEntity(5, 5 + i, getIdByName("Wall"));
-		world->createGroundEntity(5 + i, 9, getIdByName("Wall"));
-		world->createGroundEntity(9, 5 + i, getIdByName("Wall"));
+		world->createGroundEntity(5 + i, 5, Prototypes::getIdByName("Wall"));
+		world->createGroundEntity(5, 5 + i, Prototypes::getIdByName("Wall"));
+		world->createGroundEntity(5 + i, 9, Prototypes::getIdByName("Wall"));
+		world->createGroundEntity(9, 5 + i, Prototypes::getIdByName("Wall"));
 
 		/*for (int j = 0; j < 5; j++) {
 			world->createGroundEntity(5 + i, 11 + j, getPrototypeByName("Plant"));
 		}*/
 	}
-	world->createGroundEntity(5, 11, getIdByName("Plant"));
-	world->createGroundEntity(6, 11, getIdByName("Plant"));
+	world->createGroundEntity(5, 11, Prototypes::getIdByName("Plant"));
+	world->createGroundEntity(6, 11, Prototypes::getIdByName("Plant"));
 
 	world->getTile(7, 5)->clearGroundEntity();
-	world->createGroundEntity(7, 5, getIdByName("Door"));
+	world->createGroundEntity(7, 5, Prototypes::getIdByName("Door"));
 	return world;
 }
 
@@ -54,7 +52,7 @@ World::World(const int width, const int height)
 		mTiles[x].reserve(height);
 		for (int y = 0; y < height; y++)
 		{
-			Tile tempTile(getTilePrototypeByName("GrassTile"), this, x, y);
+			Tile tempTile(Prototypes::getTilePrototypeByName("GrassTile"), this, x, y);
 			mTiles[x].push_back(std::move(tempTile));
 		}
 	}
@@ -107,7 +105,6 @@ void World::deleteItem(PickableItem * pItem)
 			else if (it->second->mCharacter != nullptr) {
 				it->second->mCharacter->clearItem();
 			}
-			it->second.release();
 			mItems.erase(it);
 			break;
 		}

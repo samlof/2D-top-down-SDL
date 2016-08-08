@@ -45,7 +45,9 @@ void Character::cancelPath()
 void Character::addItem(PickableItem * pItem)
 {
 	if (mItem != nullptr) {
-		mItem->takeFrom(pItem);
+		if (pItem->getId() == mItem->getId()) {
+			mItem->takeFrom(pItem);
+		}
 	}
 	else {
 		pItem->mTile = nullptr;
@@ -131,7 +133,6 @@ void Character::doJob()
 {
 	if (mCurrentJob != nullptr) {
 		mCurrentJob->getFunc()(this);
-		mCurrentJob->cancelJob();
 		mCurrentJob = nullptr;
 	}
 }

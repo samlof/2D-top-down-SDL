@@ -19,6 +19,7 @@ public:
 	void cancelPath();
 
 	void setJob(Job* pJob) { mCurrentJob = pJob; }
+	// Sets current job to nullptr. Should be called from job.clearCharacter()
 	void clearJob() { mCurrentJob = nullptr; }
 
 	void addItem(PickableItem* pItem);

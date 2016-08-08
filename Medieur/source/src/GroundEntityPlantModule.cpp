@@ -8,6 +8,7 @@
 #include "World.h"
 #include "JobManager.h"
 #include "Character.h"
+#include "PickableItem.h"
 
 #define CREATEFUNC(x) std::bind(&GroundEntityPlantModule::##x, this, std::placeholders::_1)
 
@@ -75,7 +76,10 @@ void GroundEntityPlantModule::update()
 
 void GroundEntityPlantModule::interact(Character* pCharacter)
 {
-	mInteractJob = nullptr;
+	if (mInteractJob != nullptr) {
+		mInteractJob->cancelJob();
+		mInteractJob = nullptr;
+	}
 	if (pCharacter == nullptr) return;
 
 	printf("Interact: ");
@@ -86,19 +90,24 @@ void GroundEntityPlantModule::interact(Character* pCharacter)
 
 void GroundEntityPlantModule::pickup(Character* pCharacter)
 {
-	mPickupJob->cancelJob();
-	mPickupJob = nullptr;
+	if (mPickupJob != nullptr) {
+		mPickupJob->cancelJob();
+		mPickupJob = nullptr;
+	}
 	if (pCharacter == nullptr) return;
 
 	if (mGrowth >= kMaxGrowth - 1) {
-	printf("Pickup item: ");
-	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
+		printf("Pickup item: ");
+		printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
 
-	PickableItem* item = mThisEntity->getTile()->getWorld()->createPickableItem(mDropItemId, kHarvestAmount);
+		PickableItem* item = mThisEntity->getTile()->getWorld()->createPickableItem(mDropItemId, kHarvestAmount);
 
-	pCharacter->addItem(item);
-
-	rot();
+		pCharacter->addItem(item);
+		if (item->isEmpty() == false) {
+			mThisEntity->getTile()->addItem(item);
+		}
+		pCharacter->getWorld()->deleteItem(item);
+		rot();
 	}
 	else {
 		rot();

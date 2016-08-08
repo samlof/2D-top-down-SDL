@@ -21,13 +21,10 @@ JobManager::~JobManager()
 	for (auto it : mAllJobs) {
 		delete it;
 	}
-	mAllJobs.clear();
-	mOpenJobs.clear();
 }
 
 void JobManager::createJob(Job* pJob)
 {
-	printf("Create Job!\n");
 	mAllJobs.insert(pJob);
 	mOpenJobs.insert(pJob);
 }

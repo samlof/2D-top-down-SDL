@@ -32,6 +32,7 @@ public:
 	Character* createCharacter(int pX, int pY, int pId);
 	GroundEntity* createGroundEntity(int pX, int pY, int pId);
 	Tile* createTile(int pX, int pY, int pId);
+	// Doesn't assign it to Tile or Character. Do that after calling this.
 	PickableItem* createPickableItem(int pId, const int pAmount);
 
 	JobManager* getJobManager();

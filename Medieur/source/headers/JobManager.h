@@ -11,7 +11,9 @@ public:
 	JobManager() {}
 	~JobManager();
 	void createJob(Job* pJob);
+	// Delete's the memory, be sure to clean pointers to pJob
 	void deleteJob(Job* pJob);
+	// Returns nullptr if no available jobs
 	Job* getJob();
 	void removeJobFromOpen(Job* pJob);
 	void addJobToOpen(Job* pJob);
