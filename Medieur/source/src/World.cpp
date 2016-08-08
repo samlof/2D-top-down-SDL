@@ -149,7 +149,6 @@ GroundEntity* World::createGroundEntity(int pX, int pY, int pId)
 
 Tile* World::createTile(int pX, int pY, int pId)
 {
-	// TODO:
 	return getTile(1, 1);
 }
 
