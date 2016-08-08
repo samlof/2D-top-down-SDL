@@ -6,14 +6,13 @@ enum class ItemType {
 	JOY
 };
 
-class Character;
-class Tile;
+class ItemManager;
 
 class PickableItem {
 public:
-	PickableItem(PickableItem* pPrototype, const int pAmount)
+	PickableItem(PickableItem* pPrototype, ItemManager * pItemManager, const int pAmount)
 		: mId(pPrototype->mId), mMaxAmount(pPrototype->mMaxAmount), mAmount(pAmount),
-		mCharacter(nullptr), mTile(nullptr) {}
+		mItemManager(pItemManager) {}
 
 	void takeAmountFrom(PickableItem* pItem, int pAmount);
 
@@ -32,19 +31,18 @@ public:
 	int getMaxAmount() const { return mMaxAmount; }
 
 	void changeMax(const int pMaxAmount) { mMaxAmount = pMaxAmount; }
-	// Just tries to call world::deleteItem(this). Call that if you can
+
 	void erase();
 
-	Character* mCharacter;
-	Tile* mTile;
 private:
 	const int mId;
 	int mMaxAmount;
 	int mAmount;
+	ItemManager * mItemManager;
 
 	// Prototype
 	PickableItem(const int pId, const int pMaxAmount)
-		: mId(pId), mMaxAmount(pMaxAmount), mAmount(0) {}
+		: mId(pId), mMaxAmount(pMaxAmount), mAmount(0), mItemManager(nullptr) {}
 public:
 	static PickableItem* createPrototype(const int pId, const int pMaxAmount) {
 		return new PickableItem(pId, pMaxAmount);

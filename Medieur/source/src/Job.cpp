@@ -5,6 +5,16 @@
 
 #include <iostream>
 
+
+
+
+Job::Job(JobManager & pManager, Tile * pTargetTile, JobFunc & pJobFunc)
+	: mTargetTile(pTargetTile), mJobFunc(pJobFunc), mManager(pManager),
+	mCharacter(nullptr)
+{
+
+}
+
 Job::~Job() = default;
 
 void Job::reserve(Character * pCharacter)

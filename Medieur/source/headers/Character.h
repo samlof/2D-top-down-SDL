@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stack>
+#include <memory>
 
 #include "CountdownCounter.h"
 
@@ -38,7 +39,7 @@ private:
 	Tile* mTile, *mNextTile, *mGoalTile;
 	Job* mCurrentJob;
 	std::stack<Tile*> mPathTiles;
-	PickableItem* mItem;
+	std::unique_ptr<PickableItem> mItem;
 
 	void getNextTile();
 	void moveTowardsNextTile();

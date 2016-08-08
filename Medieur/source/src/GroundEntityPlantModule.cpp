@@ -6,8 +6,9 @@
 #include "Tile.h"
 #include "Job.h"
 #include "World.h"
-#include "JobManager.h"
 #include "Character.h"
+#include "JobManager.h"
+#include "ItemManager.h"
 #include "PickableItem.h"
 
 #define CREATEFUNC(x) std::bind(&GroundEntityPlantModule::##x, this, std::placeholders::_1)
@@ -65,6 +66,7 @@ void GroundEntityPlantModule::update()
 			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
 			mPickupJob = new Job(*jobManager, mThisEntity->getTile(), func);
 			jobManager->createJob(mPickupJob);
+			mGrowthCounter.pause(); // TODO: fix growth and health counter constants
 		}
 		else if (mGrowth > kMaxGrowth + 2) {
 			rot();
@@ -100,13 +102,15 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 		printf("Pickup item: ");
 		printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
 
-		PickableItem* item = mThisEntity->getTile()->getWorld()->createPickableItem(mDropItemId, kHarvestAmount);
+		PickableItem* item = ItemManager::createLocalPickableItem(
+			mDropItemId, kHarvestAmount
+		);
 
 		pCharacter->addItem(item);
 		if (item->isEmpty() == false) {
 			mThisEntity->getTile()->addItem(item);
 		}
-		pCharacter->getWorld()->deleteItem(item);
+		delete item;
 		rot();
 	}
 	else {
