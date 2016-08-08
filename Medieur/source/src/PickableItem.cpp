@@ -5,6 +5,7 @@
 #include "Tile.h"
 #include "World.h"
 #include "Character.h"
+#include "ItemManager.h"
 
 void PickableItem::takeAmountFrom(PickableItem * pItem, int pAmount)
 {
@@ -28,15 +29,9 @@ void PickableItem::takeAmountFrom(PickableItem * pItem, int pAmount)
 	pItem->mAmount -= pAmount;
 }
 
+
 void PickableItem::erase()
 {
-	if (mTile != nullptr) {
-		mTile->getWorld()->deleteItem(this);
-	}
-	else if (mCharacter != nullptr) {
-		mCharacter->getWorld()->deleteItem(this);
-	}
-	else {
-		throw "Item isn't owned by anything!";
-	}
+	if (mItemManager == nullptr) throw "Item is local!";
+	mItemManager->deleteItem(this);
 }

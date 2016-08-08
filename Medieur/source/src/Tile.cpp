@@ -4,6 +4,7 @@
 #include "PickableItem.h"
 #include "World.h"
 #include "IGroundEntityModule.h"
+#include "ItemManager.h"
 
 Tile::Tile(Tile* pPrototype, World* pWorld, int pX, int pY)
 	:
@@ -27,9 +28,10 @@ bool Tile::isWalkable() const
 }
 void Tile::addItem(PickableItem * pItem)
 {
-	mItems.insert(ItemMap::value_type(pItem->getId(), pItem));
-	pItem->mCharacter = nullptr;
-	pItem->mTile = this;
+	// Create a 'global' item
+	PickableItem* newItem = mWorld->getItemManager()->createPickableItem(pItem->getId(), pItem->getAmount());
+	// TODO: check if can add to existing one, or can't at all
+	mItems.insert(ItemMap::value_type(pItem->getId(), newItem));
 }
 void Tile::clearItem(PickableItem * pItem)
 {

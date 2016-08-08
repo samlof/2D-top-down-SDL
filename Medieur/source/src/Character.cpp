@@ -1,11 +1,12 @@
 #include "Character.h"
 
-#include "PathFinder.h"
 #include "Tile.h"
 #include "World.h"
 #include "Job.h"
-#include "PickableItem.h"
+#include "PathFinder.h"
 #include "JobManager.h"
+#include "ItemManager.h"
+#include "PickableItem.h"
 
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
@@ -20,7 +21,9 @@ Character::Character(Character* pPrototype, World* pWorld, Tile* pTile, int pX, 
 {
 }
 
-Character::~Character() = default;
+Character::~Character() {
+	clearItem();
+}
 
 Character::Character(const int pId)
 	:
@@ -45,21 +48,21 @@ void Character::cancelPath()
 void Character::addItem(PickableItem * pItem)
 {
 	if (mItem != nullptr) {
-		if (pItem->getId() == mItem->getId()) {
+		if (mItem->isSameType(pItem)) {
 			mItem->takeFrom(pItem);
 		}
 	}
 	else {
-		pItem->mTile = nullptr;
-		pItem->mCharacter = this;
-		mItem = pItem;
+		mItem.reset(ItemManager::createLocalPickableItem(mItem->getId(), 0));
+		mItem->takeFrom(pItem);
 	}
 }
 
 void Character::clearItem()
 {
-	mItem->mCharacter = nullptr;
-	mItem = nullptr;
+	if (mItem != nullptr) {
+		mItem.reset(nullptr);
+	}
 }
 
 void Character::update()

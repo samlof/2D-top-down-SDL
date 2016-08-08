@@ -10,8 +10,8 @@
 #include "Character.h"
 #include "Prototypes.h"
 #include "JobManager.h"
+#include "ItemManager.h"
 #include "GroundEntity.h"
-#include "PickableItem.h"
 #include "IGroundEntityModule.h"
 
 
@@ -42,7 +42,7 @@ World* World::GenerateTestWorld()
 
 World::World(const int width, const int height)
 	:
-	mJobManager(new JobManager())
+	mJobManager(new JobManager()), mItemManager(new ItemManager())
 {
 	// Init with grasstiles
 	mTiles.reserve(width);
@@ -93,25 +93,6 @@ void World::update()
 	}
 }
 
-
-void World::deleteItem(PickableItem * pItem)
-{
-	auto iters = mItems.equal_range(pItem->getId());
-	for (auto it = iters.first; it != iters.second; it++) {
-		if (it->second.get() == pItem) {
-			if (it->second->mTile != nullptr) {
-				it->second->mTile->clearItem(pItem);
-			}
-			else if (it->second->mCharacter != nullptr) {
-				it->second->mCharacter->clearItem();
-			}
-			mItems.erase(it);
-			break;
-		}
-	}
-}
-
-
 Character* World::createCharacter(int pX, int pY, int pId)
 {
 	Tile* tempTile = getTile(pX, pY);
@@ -150,17 +131,4 @@ GroundEntity* World::createGroundEntity(int pX, int pY, int pId)
 Tile* World::createTile(int pX, int pY, int pId)
 {
 	return getTile(1, 1);
-}
-
-PickableItem* World::createPickableItem(int pId, const int pAmount)
-{
-	PickableItem* pPrototype = Prototypes::getPickableItemPrototypeById(pId);
-	PickableItem* newItem = new PickableItem(pPrototype, pAmount);
-	mItems.insert(ItemMap::value_type(newItem->getId(), std::unique_ptr<PickableItem>(newItem)));
-	return newItem;
-}
-
-JobManager * World::getJobManager()
-{
-	return mJobManager.get();
 }
