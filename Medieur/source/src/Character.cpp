@@ -53,7 +53,7 @@ void Character::addItem(PickableItem * pItem)
 		}
 	}
 	else {
-		mItem.reset(ItemManager::createLocalPickableItem(mItem->getId(), 0));
+		mItem.reset(ItemManager::createLocalPickableItem(pItem->getId(), 0));
 		mItem->takeFrom(pItem);
 	}
 }
