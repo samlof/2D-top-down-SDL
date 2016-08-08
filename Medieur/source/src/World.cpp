@@ -22,15 +22,6 @@ World* World::GenerateTestWorld()
 {
 	World* world = new World(units::kWorldWidth, units::kWorldHeight);
 
-	for (int x = 0; x < units::kWorldWidth; x++)
-	{
-		world->mTiles.push_back(std::vector<Tile>());
-		for (int y = 0; y < units::kWorldHeight; y++)
-		{
-			Tile tempTile(getTilePrototypeByName("GrassTile"), world, x, y);
-			world->mTiles[x].push_back(tempTile);
-		}
-	}
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -51,14 +42,21 @@ World* World::GenerateTestWorld()
 	return world;
 }
 
-World::World(const unsigned int width, const unsigned int height)
+World::World(const int width, const int height)
 	:
 	mJobManager(new JobManager())
 {
-	// Reserve the memory required
-	mTiles.reserve(units::kWorldWidth);
-	for (auto it : mTiles) {
-		it.reserve(units::kWorldHeight);
+	// Init with grasstiles
+	mTiles.reserve(width);
+	for (int x = 0; x < width; x++)
+	{
+		mTiles.push_back(std::vector<Tile>());
+		mTiles[x].reserve(height);
+		for (int y = 0; y < height; y++)
+		{
+			Tile tempTile(getTilePrototypeByName("GrassTile"), this, x, y);
+			mTiles[x].push_back(std::move(tempTile));
+		}
 	}
 }
 

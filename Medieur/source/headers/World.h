@@ -17,7 +17,7 @@ public:
 	// Statics
 	static World* GenerateTestWorld();
 
-	World(const unsigned int width, const unsigned int height);
+	World(const int width, const int height);
 	~World();
 
 	Tile* getTile(const int pX, const int pY);
