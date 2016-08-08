@@ -66,7 +66,7 @@ void GroundEntityPlantModule::update()
 			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
 			mPickupJob = new Job(*jobManager, mThisEntity->getTile(), func);
 			jobManager->createJob(mPickupJob);
-			mGrowthCounter.pause();
+			mGrowthCounter.pause(); // TODO: fix growth and health counter constants
 		}
 		else if (mGrowth > kMaxGrowth + 2) {
 			rot();
