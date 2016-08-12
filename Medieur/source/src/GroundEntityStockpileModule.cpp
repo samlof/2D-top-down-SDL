@@ -31,6 +31,7 @@ void GroundEntityStockpileModule::createJob()
 	// TODO: function to find items
 	Tile* tileWithItems = mThisEntity->getTile();
 	Job::TargetFunc tfunc = [tileWithItems]() { return tileWithItems; };
+	// TODO pickup command
 	Job::JobFunc jfunc = [tileWithItems](Character* pCharacter) { return; };
 	Job* job = new Job(tfunc, jfunc);
 
