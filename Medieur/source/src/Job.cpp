@@ -65,6 +65,11 @@ void Job::fillRequirement(InventoryItem * pItem)
 	for (auto it : mRequirements) {
 		if (it->isSameType(pItem)) {
 			it->takeFrom(pItem);
+			if (mChangedFunc.empty() == false) {
+				for (auto it : mChangedFunc) {
+					it();
+				}
+			}
 			return;
 		}
 	}

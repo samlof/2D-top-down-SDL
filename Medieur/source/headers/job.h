@@ -32,6 +32,8 @@ public:
 	// Requirements functions
 	bool hasAllMaterials();
 	InventoryItem* getRequirement();
+	std::vector<InventoryItem*>* getRequirements() { return &mRequirements; }
+
 	void fillRequirement(InventoryItem* pItem);
 	void addReq(const int pId, const int pAmount);
 

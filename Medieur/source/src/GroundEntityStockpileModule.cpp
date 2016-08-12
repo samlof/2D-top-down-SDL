@@ -30,15 +30,23 @@ void GroundEntityStockpileModule::createJob()
 	Job::TargetFunc tfunc = [thisTile]() { return thisTile; };
 	Job::JobFunc jfunc = []() { /* update func */ };
 	Job* job = new Job(tfunc, jfunc);
-	
+	job->addChangedFunc(std::bind(&GroundEntityStockpileModule::stockChanged, this));
 	// Add to jobmanager
 	mThisEntity->getTile()->getWorld()->getJobManager()->createJob(job);
-	
+	mJob = job;
+
+}
+
+void GroundEntityStockpileModule::stockChanged()
+{
+	for (auto it : *mJob->getRequirements()) {
+		if (it->isEmpty() == false) {
+			it->changeMax(it->getMaxAmount()-it->getAmount());
+			mThisEntity->getTile()->addItem(it);
+		}
+	}
 }
 
 void GroundEntityStockpileModule::update()
 {
-	for (auto it : mItems) {
-
-	}
 }
