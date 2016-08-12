@@ -37,6 +37,7 @@ void Tile::addItem(InventoryItem * pItem)
 	for (auto it = iters.first; it != iters.second; it++) {
 		it->second->addTo(pItem);
 		found = true;
+		if (pItem->isEmpty()) return;
 	}
 	if (found == false) {
 		// Create a new 'global' item
@@ -53,7 +54,7 @@ void Tile::clearItem(InventoryItem * pItem)
 	for (auto it = iters.first; it != iters.second; it++) {
 		if (it->second == pItem) {
 			mItems.erase(it);
-			break;
+			return;
 		}
 	}
 }

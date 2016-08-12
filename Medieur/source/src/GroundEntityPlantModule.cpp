@@ -11,7 +11,7 @@
 #include "ItemManager.h"
 #include "InventoryItem.h"
 
-#define CREATEFUNC(x) std::bind(&GroundEntityPlantModule::##x, this, std::placeholders::_1)
+#define CREATEJOBFUNC(x) std::bind(&GroundEntityPlantModule::##x, this, std::placeholders::_1)
 
 namespace {
 	const int kMaxGrowth = 5;
@@ -49,7 +49,7 @@ void GroundEntityPlantModule::update()
 	if (mHealthCounter.expired()) {
 		mHealth--;
 		if (mHealth == 5 && (mInteractJob == nullptr)) {
-			Job::JobFunc func = CREATEFUNC(interact);
+			Job::JobFunc func = CREATEJOBFUNC(interact);
 			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
 			mInteractJob = new Job(*jobManager, mThisEntity->getTile(), func);
 			jobManager->createJob(mInteractJob);
@@ -62,7 +62,7 @@ void GroundEntityPlantModule::update()
 	if (mGrowthCounter.expired()) {
 		mGrowth++;
 		if (mGrowth >= kMaxGrowth - 1 && (mPickupJob == nullptr)) {
-			Job::JobFunc func = CREATEFUNC(pickup);
+			Job::JobFunc func = CREATEJOBFUNC(pickup);
 			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
 			mPickupJob = new Job(*jobManager, mThisEntity->getTile(), func);
 			jobManager->createJob(mPickupJob);
@@ -96,7 +96,6 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 		mPickupJob->cancelJob();
 		mPickupJob = nullptr;
 	}
-	if (pCharacter == nullptr) return;
 
 	if (mGrowth >= kMaxGrowth - 1) {
 		printf("Pickup item: ");
@@ -105,8 +104,9 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 		InventoryItem* item = ItemManager::createLocalPickableItem(
 			mDropItemId, kHarvestAmount
 		);
-
-		pCharacter->addItem(item);
+		if (pCharacter != nullptr) {
+			pCharacter->addItem(item);
+		}
 		if (item->isEmpty() == false) {
 			mThisEntity->getTile()->addItem(item);
 		}

@@ -5,7 +5,6 @@ class Character;
 
 class IGroundEntityModule {
 public:
-	IGroundEntityModule(GroundEntity* pThisEntity) : mThisEntity(pThisEntity) {}
 
 	virtual void update() = 0;
 	virtual void interact(Character* pCharacter) = 0;
@@ -16,4 +15,7 @@ public:
 	virtual IGroundEntityModule* clone(IGroundEntityModule* pPrototype, GroundEntity * pThisEntity) = 0;
 protected:
 	GroundEntity * mThisEntity;
+
+	IGroundEntityModule(GroundEntity* pThisEntity) : mThisEntity(pThisEntity) {}
+
 };

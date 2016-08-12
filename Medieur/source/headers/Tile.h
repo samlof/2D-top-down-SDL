@@ -39,6 +39,7 @@ public:
 
 	// Pickable Item stuff
 	void addItem(InventoryItem* pItem);
+	// Just removes the pointer from map. Call from ItemManager
 	void clearItem(InventoryItem* pItem);
 	InventoryItem * getItemOfId(const int pId);
 	bool hasItems() { return mItems.size() > 0; }
