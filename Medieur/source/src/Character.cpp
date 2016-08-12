@@ -74,12 +74,21 @@ void Character::update()
 
 		if (mJobInterval.expired()) {
 			getJob();
+			mJobInterval.reset();
 		}
 	}
 	else {
-		if (mNextTile == nullptr) {
-			doJob();
-			mGoalTile = nullptr;
+		// Does job have all requirements
+		if (mCurrentJob->hasRequirements()) {
+			if (mNextTile == nullptr) {
+				doJob();
+				mGoalTile = nullptr;
+			}
+		}
+		else {
+			// Get requirements
+			InventoryItem* req = mCurrentJob->getRequirement();
+			// TODO: find item for it
 		}
 	}
 	moveTowardsNextTile();
@@ -97,22 +106,24 @@ void Character::getNextTile()
 void Character::moveTowardsNextTile()
 {
 	if (mNextTile == nullptr) return;
-	// FIXME: make nicer
-	if (mNextTile->getCharacter() == mTile->getCharacter()) {
+
+	if (mNextTile->getCharacter() != mTile->getCharacter()) {
+		if (mNextTile->isReservableForCharacter()) {
+			mNextTile->reserveFor(mTile->getCharacter());
+		}
+		else {
+			return; // If reserved by someone else
+		}
 	}
-	else if (mNextTile->isReservableForCharacter()) {
-		mNextTile->reserveFor(mTile->getCharacter());
-	}
-	else return; // If reserved by someone else
 
 	if (mMoveCounter.expired()) {
 		// At next tile, update tiles
 		mTile->clearCharater();
 		mNextTile->moveTo();
-		mTile = mNextTile;
-		getNextTile();
 
 		// Update character
+		mTile = mNextTile;
+		getNextTile();
 		mX = mTile->getX();
 		mY = mTile->getY();
 		mMoveCounter.reset();
@@ -129,15 +140,13 @@ void Character::getJob()
 		mCurrentJob = mWorld->getJobManager()->getJob();
 		mCurrentJob->reserve(this);
 		setPathTo(mCurrentJob->getTile());
-		mJobInterval.reset();
 	}
 }
 
 void Character::doJob()
 {
 	if (mCurrentJob != nullptr) {
-		mCurrentJob->getNextFunc()(this);
-		if (mCurrentJob->popFunc()) {
+		if (mCurrentJob->doWork()) {
 			mCurrentJob->cancelJob();
 			mCurrentJob = nullptr;
 		}

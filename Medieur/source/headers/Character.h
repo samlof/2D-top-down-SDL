@@ -28,6 +28,7 @@ public:
 	void clearItem();
 
 	World* getWorld() { return mWorld; }
+	Tile* getTile() { return mTile; }
 	int getId() const { return mId; }
 	void update();
 private:

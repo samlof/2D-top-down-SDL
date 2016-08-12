@@ -2,31 +2,67 @@
 
 #include "JobManager.h"
 #include "Character.h"
+#include "InventoryItem.h"
 
 #include <iostream>
 
-
-Job::Job(TargetFunc & pTargetFunc, JobFunc & pJobFunc)
-	: mManager(nullptr), mCharacter(nullptr)
-{
-	mTargetTiles.push(pTargetFunc);
-	mJobFuncs.push(pJobFunc);
+namespace {
+	const int kWorkReuiredTime = 10;
 }
 
+Job::Job(TargetFunc & pTargetFunc, JobFunc & pJobFunc,
+	std::vector<InventoryItem*> pRequirements)
+	:
+	mManager(nullptr), mCharacter(nullptr),
+	mJobFunc(pJobFunc), mTargetTile(pTargetFunc), mJobRequiredTime(kWorkReuiredTime), mJobTime(0),
+	mRequirements(pRequirements)
+{
+}
+
+Job::Job(TargetFunc & pTargetFunc, JobFunc & pJobFunc)
+	: mManager(nullptr), mCharacter(nullptr),
+	mJobFunc(pJobFunc), mTargetTile(pTargetFunc), mJobRequiredTime(kWorkReuiredTime), mJobTime(0)
+{
+}
 
 Job::~Job() = default;
 
-void Job::addFunc(TargetFunc & pTargetFunc, JobFunc & pFunc)
-{
-	mTargetTiles.push(pTargetFunc);
-	mJobFuncs.push(pFunc);
-}
 
 void Job::reserve(Character * pCharacter)
 {
 	if (isReserved()) throw "Job already reserved!";
 	mCharacter = pCharacter;
 	mManager->removeJobFromOpen(this);
+}
+
+bool Job::hasRequirements()
+{
+	for (auto it : mRequirements) {
+		if (it->isFull() == false) {
+			return false;
+		}
+	}
+	return true;
+}
+
+InventoryItem * Job::getRequirement()
+{
+	for (auto it : mRequirements) {
+		if (it->isFull() == false) {
+			return it;
+		}
+	}
+	return nullptr;
+}
+
+void Job::fillRequirement(InventoryItem * pItem)
+{
+	for (auto it : mRequirements) {
+		if (it->isSameType(pItem)) {
+			it->takeFrom(pItem);
+			return;
+		}
+	}
 }
 
 void Job::clearCharacter()
@@ -49,14 +85,15 @@ void Job::cancelJob()
 	mManager->deleteJob(this);
 }
 
-bool Job::popFunc()
+bool Job::doWork()
 {
-	mJobFuncs.pop();
-	mTargetTiles.pop();
-	if (mJobFuncs.empty()) {
+	if (mCharacter->getTile() != mTargetTile()) {
+		throw "Character not at target yet!";
+	}
+	mJobTime++;
+	if (mJobTime >= mJobRequiredTime) {
+		mJobFunc(mCharacter);
 		return true;
 	}
-	else {
-		return false;
-	}
+	return false;
 }

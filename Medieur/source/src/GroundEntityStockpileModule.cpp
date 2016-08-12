@@ -26,22 +26,12 @@ GroundEntityStockpileModule::~GroundEntityStockpileModule() = default;
 
 void GroundEntityStockpileModule::createJob()
 {
-	// First create job to pick them up
-
-	// TODO: function to find items
-	Tile* tileWithItems = mThisEntity->getTile();
-	Job::TargetFunc tfunc = [tileWithItems]() { return tileWithItems; };
-	// TODO pickup command
-	Job::JobFunc jfunc = [tileWithItems](Character* pCharacter) { return; };
-	Job* job = new Job(tfunc, jfunc);
-
-	// Second add job to drop item here
 	Tile* thisTile = mThisEntity->getTile();
-	Job::TargetFunc t2func = [thisTile]() { return thisTile; };
+	Job::TargetFunc tfunc = [thisTile]() { return thisTile; };
 	std::function<void(InventoryItem*)> tempFunc = std::bind(&Tile::addItem, thisTile, std::placeholders::_1);
-	Job::JobFunc j2func = [tempFunc](Character* pChar) {
+	Job::JobFunc jfunc = [tempFunc](Character* pChar) {
 		tempFunc(pChar->getItem()); };
-	job->addFunc(t2func, j2func);
+	Job* job = new Job(tfunc, jfunc);
 
 	// Add to jobmanager
 	mThisEntity->getTile()->getWorld()->getJobManager()->createJob(job);
