@@ -3,6 +3,7 @@
 #include "JobManager.h"
 #include "Character.h"
 #include "InventoryItem.h"
+#include "ItemManager.h"
 
 #include <iostream>
 
@@ -39,7 +40,7 @@ void Job::reserve(Character * pCharacter)
 	mManager->removeJobFromOpen(this);
 }
 
-bool Job::hasRequirements()
+bool Job::hasAllMaterials()
 {
 	for (auto it : mRequirements) {
 		if (it->isFull() == false) {
@@ -67,6 +68,12 @@ void Job::fillRequirement(InventoryItem * pItem)
 			return;
 		}
 	}
+}
+
+void Job::addReq(const int pId, const int pAmount)
+{
+	InventoryItem* tempItem = ItemManager::createLocalPickableItem(pId, pAmount);
+	mRequirements.push_back(tempItem);
 }
 
 void Job::clearCharacter()
@@ -97,7 +104,7 @@ bool Job::doWork()
 	}
 	mJobTime++;
 	if (mJobTime >= mJobRequiredTime) {
-		mJobFunc(mCharacter);
+		mJobFunc();
 		return true;
 	}
 	return false;

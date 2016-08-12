@@ -28,11 +28,9 @@ void GroundEntityStockpileModule::createJob()
 {
 	Tile* thisTile = mThisEntity->getTile();
 	Job::TargetFunc tfunc = [thisTile]() { return thisTile; };
-	std::function<void(InventoryItem*)> tempFunc = std::bind(&Tile::addItem, thisTile, std::placeholders::_1);
-	Job::JobFunc jfunc = [tempFunc](Character* pChar) {
-		tempFunc(pChar->getItem()); };
+	Job::JobFunc jfunc = []() { /* update func */ };
 	Job* job = new Job(tfunc, jfunc);
-
+	
 	// Add to jobmanager
 	mThisEntity->getTile()->getWorld()->getJobManager()->createJob(job);
 	
@@ -43,12 +41,4 @@ void GroundEntityStockpileModule::update()
 	for (auto it : mItems) {
 
 	}
-}
-
-void GroundEntityStockpileModule::interact(Character * pCharacter)
-{
-}
-
-void GroundEntityStockpileModule::pickup(Character * pCharacter)
-{
 }

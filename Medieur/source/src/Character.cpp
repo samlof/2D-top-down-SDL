@@ -78,14 +78,15 @@ void Character::update()
 	}
 	else {
 		// Does job have all requirements
-		if (mCurrentJob->hasRequirements()) {
-			if (mTile == mGoalTile) {
+		if (mCurrentJob->hasAllMaterials()) {
+			if (mTile == mCurrentJob->getTile()) {
 				doJob();
 				mGoalTile = nullptr;
 			}
 			else if (mNextTile == nullptr) {
 				mGoalTile = mCurrentJob->getTile();
 				mPathTiles = PathFinder::FindPath(mTile, mGoalTile);
+				getNextTile();
 			}
 		}
 		else if(mItem == nullptr){
@@ -108,12 +109,13 @@ void Character::update()
 				}
 				mPathTiles = PathFinder::FindPathForInventoryWith(mTile, req);
 				mGoalTile = mPathTiles._Get_container().front();
+				getNextTile();
 			}
 		}
 		else {
 			// Have items in hand, bring them to job
 			// FIXME: empty unnecessary items
-			if (mTile == mGoalTile) {
+			if (mTile == mCurrentJob->getTile()) {
 				mCurrentJob->fillRequirement(mItem.get());
 				mItem.reset(nullptr);
 				mGoalTile = nullptr;
@@ -121,6 +123,7 @@ void Character::update()
 			else if (mNextTile == nullptr) {
 				mGoalTile = mCurrentJob->getTile();
 				mPathTiles = PathFinder::FindPath(mTile, mGoalTile);
+				getNextTile();
 			}
 
 		}

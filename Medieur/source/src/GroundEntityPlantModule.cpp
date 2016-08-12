@@ -11,7 +11,7 @@
 #include "ItemManager.h"
 #include "InventoryItem.h"
 
-#define CREATEJOBFUNC(x) std::bind(&GroundEntityPlantModule::##x, this, std::placeholders::_1)
+#define CREATEJOBFUNC(x) std::bind(&GroundEntityPlantModule::##x, this)
 
 namespace {
 	const int kMaxGrowth = 5;
@@ -81,12 +81,11 @@ void GroundEntityPlantModule::update()
 
 }
 
-void GroundEntityPlantModule::interact(Character* pCharacter)
+void GroundEntityPlantModule::interact()
 {
 	if (mInteractJob != nullptr) {
 		mInteractJob = nullptr;
 	}
-	if (pCharacter == nullptr) return;
 
 	printf("Interact: ");
 	printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
@@ -94,7 +93,7 @@ void GroundEntityPlantModule::interact(Character* pCharacter)
 	mHealthCounter.reset();
 }
 
-void GroundEntityPlantModule::pickup(Character* pCharacter)
+void GroundEntityPlantModule::pickup()
 {
 	if (mPickupJob != nullptr) {
 		mPickupJob = nullptr;
@@ -107,9 +106,9 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 		InventoryItem* item = ItemManager::createLocalPickableItem(
 			mDropItemId, kHarvestAmount
 		);
-		if (pCharacter != nullptr) {
-			pCharacter->addItem(item);
-		}
+		//if (pCharacter != nullptr) {
+		//	//pCharacter->addItem(item);
+		//}
 		if (item->isEmpty() == false) {
 			mThisEntity->getTile()->addItem(item);
 		}
