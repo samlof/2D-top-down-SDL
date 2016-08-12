@@ -6,15 +6,6 @@
 #include <iostream>
 
 
-
-
-Job::Job(JobManager* pManager, TargetFunc& pTargetFunc, JobFunc& pJobFunc)
-	: mManager(pManager), mCharacter(nullptr)
-{
-	mTargetTiles.push(pTargetFunc);
-	mJobFuncs.push(pJobFunc);
-}
-
 Job::Job(TargetFunc & pTargetFunc, JobFunc & pJobFunc)
 	: mManager(nullptr), mCharacter(nullptr)
 {
@@ -56,16 +47,6 @@ void Job::cancelJob()
 {
 	clearCharacter();
 	mManager->deleteJob(this);
-}
-
-Tile * Job::getTile()
-{
-	return mTargetTiles.front()();
-}
-
-Job::JobFunc Job::getNextFunc()
-{
-	return mJobFuncs.front();
 }
 
 bool Job::popFunc()

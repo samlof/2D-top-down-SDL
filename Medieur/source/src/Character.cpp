@@ -136,7 +136,10 @@ void Character::getJob()
 void Character::doJob()
 {
 	if (mCurrentJob != nullptr) {
-		mCurrentJob->getFunc()(this);
-		mCurrentJob = nullptr;
+		mCurrentJob->getNextFunc()(this);
+		if (mCurrentJob->popFunc()) {
+			mCurrentJob->cancelJob();
+			mCurrentJob = nullptr;
+		}
 	}
 }

@@ -11,7 +11,6 @@ class Job {
 public:
 	using JobFunc = std::function<void(Character*)>;
 	using TargetFunc = std::function<Tile*(void)>;
-	Job(JobManager* pManager, TargetFunc& pTargetFunc, JobFunc& pJobFunc);
 	Job(TargetFunc& pTargetFunc, JobFunc& pJobFunc);
 	~Job();
 	void setManager(JobManager* pManager) { mManager = pManager; }
@@ -21,11 +20,11 @@ public:
 	bool isReserved() const { return mCharacter != nullptr; }
 	void clearCharacter();
 	void cancelReserve();
-	// Doesn't clear the creator, so only call from it
+	// Doesn't clear the creator, so be sure that one is cleared before
 	void cancelJob();
 
-	Tile* getTile();
-	JobFunc getNextFunc();
+	Tile* getTile() { return mTargetTiles.front()(); }
+	JobFunc getNextFunc() { return mJobFuncs.front(); }
 	// Returns true if job is done, false if more to do
 	bool popFunc();
 private:

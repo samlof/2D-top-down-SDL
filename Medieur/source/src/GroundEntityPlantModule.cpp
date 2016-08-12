@@ -20,6 +20,15 @@ namespace {
 	const int kHealthDropSteps = 3000;
 
 	const int kHarvestAmount = 3;
+
+	Job* createJob(GroundEntityPlantModule* thisModule, Job::JobFunc& func) {
+		Tile* tempTile = thisModule->getEntity()->getTile();
+		Job::TargetFunc tfunc = [tempTile]() {return tempTile; };
+		Job* tempJob = new Job(tfunc, func);
+		JobManager* jobManager = thisModule->getEntity()->getTile()->getWorld()->getJobManager();
+		jobManager->createJob(tempJob);
+		return tempJob;
+	}
 }
 
 GroundEntityPlantModule::GroundEntityPlantModule(
@@ -50,9 +59,7 @@ void GroundEntityPlantModule::update()
 		mHealth--;
 		if (mHealth == 5 && (mInteractJob == nullptr)) {
 			Job::JobFunc func = CREATEJOBFUNC(interact);
-			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
-			mInteractJob = new Job(*jobManager, mThisEntity->getTile(), func);
-			jobManager->createJob(mInteractJob);
+			mInteractJob = createJob(this, func);
 		}
 		else if (mHealth <= 0) {
 			rot();
@@ -63,9 +70,7 @@ void GroundEntityPlantModule::update()
 		mGrowth++;
 		if (mGrowth >= kMaxGrowth - 1 && (mPickupJob == nullptr)) {
 			Job::JobFunc func = CREATEJOBFUNC(pickup);
-			JobManager* jobManager = mThisEntity->getTile()->getWorld()->getJobManager();
-			mPickupJob = new Job(*jobManager, mThisEntity->getTile(), func);
-			jobManager->createJob(mPickupJob);
+			mPickupJob = createJob(this, func);
 			mGrowthCounter.pause(); // TODO: fix growth and health counter constants
 		}
 		else if (mGrowth > kMaxGrowth + 2) {
@@ -79,7 +84,6 @@ void GroundEntityPlantModule::update()
 void GroundEntityPlantModule::interact(Character* pCharacter)
 {
 	if (mInteractJob != nullptr) {
-		mInteractJob->cancelJob();
 		mInteractJob = nullptr;
 	}
 	if (pCharacter == nullptr) return;
@@ -93,7 +97,6 @@ void GroundEntityPlantModule::interact(Character* pCharacter)
 void GroundEntityPlantModule::pickup(Character* pCharacter)
 {
 	if (mPickupJob != nullptr) {
-		mPickupJob->cancelJob();
 		mPickupJob = nullptr;
 	}
 
