@@ -30,6 +30,7 @@ public:
 	int getId() const { return mId; }
 	int getAmount() const { return mAmount; }
 	int getMaxAmount() const { return mMaxAmount; }
+	int getToMaxAmount() const { return mMaxAmount - mAmount; }
 
 	void changeMax(const int pMaxAmount) { mMaxAmount = pMaxAmount; }
 

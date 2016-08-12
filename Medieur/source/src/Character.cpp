@@ -34,7 +34,6 @@ Character::Character(const int pId)
 void Character::setPathTo(Tile * pGoalTile)
 {
 	mGoalTile = pGoalTile;
-	mPathTiles = PathFinder::FindPath(mTile, pGoalTile);
 	getNextTile();
 }
 
@@ -85,13 +84,45 @@ void Character::update()
 				mGoalTile = nullptr;
 			}
 			else if (mNextTile == nullptr) {
-				setPathTo(mGoalTile);
+				mGoalTile = mCurrentJob->getTile();
+				mPathTiles = PathFinder::FindPath(mTile, mGoalTile);
+			}
+		}
+		else if(mItem == nullptr){
+			// mItem is empty, so find items required
+			if (mTile == mGoalTile) {
+				InventoryItem* req = mCurrentJob->getRequirement();
+				mItem.reset(ItemManager::createLocalPickableItem(req->getId(), 0));
+				mItem->changeMax(req->getToMaxAmount());
+				mGoalTile->fillItem(mItem.get());
+				mGoalTile = nullptr;
+			}
+			else if (mNextTile == nullptr) {
+				// Get requirements
+				InventoryItem* req = mCurrentJob->getRequirement();
+				if (mWorld->getItemManager()->hasItemOfId(req->getId()) == false) {
+					// No items of req type exist. Cancel reservation
+					printf("Trying to find items that don't exist");
+					mCurrentJob->cancelReserve();
+					mCurrentJob = nullptr;
+				}
+				mPathTiles = PathFinder::FindPathForInventoryWith(mTile, req);
+				mGoalTile = mPathTiles._Get_container().front();
 			}
 		}
 		else {
-			// Get requirements
-			InventoryItem* req = mCurrentJob->getRequirement();
-			PathFinder::FindPathForInventoryWith(mTile, req);
+			// Have items in hand, bring them to job
+			// FIXME: empty unnecessary items
+			if (mTile == mGoalTile) {
+				mCurrentJob->fillRequirement(mItem.get());
+				mItem.reset(nullptr);
+				mGoalTile = nullptr;
+			}
+			else if (mNextTile == nullptr) {
+				mGoalTile = mCurrentJob->getTile();
+				mPathTiles = PathFinder::FindPath(mTile, mGoalTile);
+			}
+
 		}
 	}
 	moveTowardsNextTile();

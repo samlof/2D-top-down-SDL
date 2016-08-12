@@ -57,6 +57,7 @@ void Tile::fillItem(InventoryItem * pItem)
 			getWorld()->getItemManager()->deleteItem(it->second);
 			mItems.erase(it);
 		}
+		if (pItem->isFull()) return;
 	}
 }
 

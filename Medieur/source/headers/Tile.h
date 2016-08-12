@@ -39,6 +39,7 @@ public:
 
 	// Pickable Item stuff
 	void addItem(InventoryItem* pItem);
+	// Fills parameter from tile
 	void fillItem(InventoryItem* pItem);
 	void clearItem(InventoryItem* pItem);
 	int getItemCountOfId(const int pId) const;
