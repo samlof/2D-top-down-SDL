@@ -25,7 +25,11 @@ Job::Job(TargetFunc & pTargetFunc, JobFunc & pJobFunc)
 {
 }
 
-Job::~Job() = default;
+Job::~Job() {
+	for (auto it : mRequirements) {
+		delete it;
+	}
+}
 
 
 void Job::reserve(Character * pCharacter)
@@ -81,6 +85,7 @@ void Job::cancelReserve()
 
 void Job::cancelJob()
 {
+	// TODO: Drop items to ground?
 	clearCharacter();
 	mManager->deleteJob(this);
 }

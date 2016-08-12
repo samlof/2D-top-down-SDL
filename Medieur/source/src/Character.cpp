@@ -80,15 +80,18 @@ void Character::update()
 	else {
 		// Does job have all requirements
 		if (mCurrentJob->hasRequirements()) {
-			if (mNextTile == nullptr) {
+			if (mTile == mGoalTile) {
 				doJob();
 				mGoalTile = nullptr;
+			}
+			else if (mNextTile == nullptr) {
+				setPathTo(mGoalTile);
 			}
 		}
 		else {
 			// Get requirements
 			InventoryItem* req = mCurrentJob->getRequirement();
-			// TODO: find item for it
+			PathFinder::FindPathForInventoryWith(mTile, req);
 		}
 	}
 	moveTowardsNextTile();
