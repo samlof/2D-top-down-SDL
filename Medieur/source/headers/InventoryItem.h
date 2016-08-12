@@ -14,6 +14,7 @@ public:
 		: mId(pPrototype->mId), mMaxAmount(pPrototype->mMaxAmount), mAmount(pAmount),
 		mItemManager(pItemManager) {}
 
+	// Adds to this and removes from pItem
 	void takeAmountFrom(InventoryItem* pItem, int pAmount);
 
 	// Helper methods

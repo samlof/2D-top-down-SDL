@@ -26,13 +26,27 @@ bool Tile::isWalkable() const
 	}
 	return walkable;
 }
+
 void Tile::addItem(InventoryItem * pItem)
 {
-	// Create a 'global' item
-	InventoryItem* newItem = mWorld->getItemManager()->createPickableItem(pItem->getId(), pItem->getAmount());
-	// TODO: check if can add to existing one, or can't at all
-	mItems.insert(ItemMap::value_type(pItem->getId(), newItem));
+	const int id = pItem->getId();
+
+	// Find if there is an existing inventoryitem
+	bool found = false;
+	auto iters = mItems.equal_range(id);
+	for (auto it = iters.first; it != iters.second; it++) {
+		it->second->addTo(pItem);
+		found = true;
+	}
+	if (found == false) {
+		// Create a new 'global' item
+		InventoryItem* newItem = mWorld->getItemManager()->createPickableItem(id, 0);
+		newItem->takeFrom(pItem);
+		mItems.insert(ItemMap::value_type(id, newItem));
+	}
+
 }
+
 void Tile::clearItem(InventoryItem * pItem)
 {
 	auto iters = mItems.equal_range(pItem->getId());
