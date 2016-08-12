@@ -4,7 +4,7 @@
 #include "Tile.h"
 #include "Character.h"
 #include "Prototypes.h"
-#include "PickableItem.h"
+#include "InventoryItem.h"
 
 ItemManager::ItemManager()
 {
@@ -12,23 +12,23 @@ ItemManager::ItemManager()
 
 ItemManager::~ItemManager() = default;
 
-PickableItem* ItemManager::createPickableItem(int pId, const int pAmount)
+InventoryItem* ItemManager::createPickableItem(int pId, const int pAmount)
 {
-	PickableItem* pPrototype = Prototypes::getPickableItemPrototypeById(pId);
-	PickableItem* newItem = new PickableItem(pPrototype, this, pAmount);
-	mItems.insert(ItemMap::value_type(newItem->getId(), std::unique_ptr<PickableItem>(newItem)));
+	InventoryItem* pPrototype = Prototypes::getPickableItemPrototypeById(pId);
+	InventoryItem* newItem = new InventoryItem(pPrototype, this, pAmount);
+	mItems.insert(ItemMap::value_type(newItem->getId(), std::unique_ptr<InventoryItem>(newItem)));
 	return newItem;
 }
 
-PickableItem * ItemManager::createLocalPickableItem(int pId, const int pAmount)
+InventoryItem * ItemManager::createLocalPickableItem(int pId, const int pAmount)
 {
-	PickableItem* pPrototype = Prototypes::getPickableItemPrototypeById(pId);
-	PickableItem* newItem = new PickableItem(pPrototype, nullptr, pAmount);
+	InventoryItem* pPrototype = Prototypes::getPickableItemPrototypeById(pId);
+	InventoryItem* newItem = new InventoryItem(pPrototype, nullptr, pAmount);
 	return newItem;
 }
 
 
-void ItemManager::deleteItem(PickableItem * pItem)
+void ItemManager::deleteItem(InventoryItem * pItem)
 {
 	auto iters = mItems.equal_range(pItem->getId());
 	for (auto it = iters.first; it != iters.second; it++) {

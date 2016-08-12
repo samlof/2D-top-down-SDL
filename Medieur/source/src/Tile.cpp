@@ -1,7 +1,7 @@
 #include "Tile.h"
 
 #include "GroundEntity.h"
-#include "PickableItem.h"
+#include "InventoryItem.h"
 #include "World.h"
 #include "IGroundEntityModule.h"
 #include "ItemManager.h"
@@ -26,14 +26,14 @@ bool Tile::isWalkable() const
 	}
 	return walkable;
 }
-void Tile::addItem(PickableItem * pItem)
+void Tile::addItem(InventoryItem * pItem)
 {
 	// Create a 'global' item
-	PickableItem* newItem = mWorld->getItemManager()->createPickableItem(pItem->getId(), pItem->getAmount());
+	InventoryItem* newItem = mWorld->getItemManager()->createPickableItem(pItem->getId(), pItem->getAmount());
 	// TODO: check if can add to existing one, or can't at all
 	mItems.insert(ItemMap::value_type(pItem->getId(), newItem));
 }
-void Tile::clearItem(PickableItem * pItem)
+void Tile::clearItem(InventoryItem * pItem)
 {
 	auto iters = mItems.equal_range(pItem->getId());
 	for (auto it = iters.first; it != iters.second; it++) {
@@ -44,7 +44,7 @@ void Tile::clearItem(PickableItem * pItem)
 	}
 }
 
-PickableItem * Tile::getItemOfId(const int pId)
+InventoryItem * Tile::getItemOfId(const int pId)
 {
 	auto iters = mItems.equal_range(pId);
 	for (auto it = iters.first; it != iters.second; it++) {

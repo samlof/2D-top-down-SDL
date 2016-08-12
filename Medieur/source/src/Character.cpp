@@ -6,7 +6,7 @@
 #include "PathFinder.h"
 #include "JobManager.h"
 #include "ItemManager.h"
-#include "PickableItem.h"
+#include "InventoryItem.h"
 
 namespace {
 	const int kWalkSpeed = 100; // 100 frames for 1 tile
@@ -45,7 +45,7 @@ void Character::cancelPath()
 	}
 }
 
-void Character::addItem(PickableItem * pItem)
+void Character::addItem(InventoryItem * pItem)
 {
 	if (mItem != nullptr) {
 		if (mItem->isSameType(pItem)) {

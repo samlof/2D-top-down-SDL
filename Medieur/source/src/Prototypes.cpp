@@ -8,14 +8,14 @@
 #include "units.h"
 #include "GroundEntityPlantModule.h"
 #include "Sprite.h"
-#include "PickableItem.h"
+#include "InventoryItem.h"
 #include "Tile.h"
 #include "Character.h"
 
 namespace Prototypes {
 	namespace {
 		std::map<int, std::unique_ptr<GroundEntity> > groundEntityPrototypes;
-		std::map<int, std::unique_ptr<PickableItem> > pickableItemPrototypes;
+		std::map<int, std::unique_ptr<InventoryItem> > pickableItemPrototypes;
 		std::map<int, std::unique_ptr<Character> > characterPrototypes;
 		std::map<int, std::unique_ptr<Tile> > tilePrototypes;
 		std::map<std::string, int> idsByName;
@@ -102,18 +102,18 @@ namespace Prototypes {
 	{
 		int id = getNextId();
 		SpriteManager::createSprite(id, pSprite);
-		pickableItemPrototypes[id] = std::unique_ptr<PickableItem>(
-			PickableItem::createPrototype(id, pMaxAmount)
+		pickableItemPrototypes[id] = std::unique_ptr<InventoryItem>(
+			InventoryItem::createPrototype(id, pMaxAmount)
 			);
 		idsByName[pName] = id;
 	}
 
-	PickableItem * getPickableItemPrototypeByName(const std::string & pName)
+	InventoryItem * getPickableItemPrototypeByName(const std::string & pName)
 	{
 		return getPickableItemPrototypeById(idsByName[pName]);
 	}
 
-	PickableItem * getPickableItemPrototypeById(const int pId)
+	InventoryItem * getPickableItemPrototypeById(const int pId)
 	{
 		return pickableItemPrototypes.at(pId).get();
 	}

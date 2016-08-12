@@ -4,7 +4,7 @@
 #include <string>
 
 class GroundEntity;
-class PickableItem;
+class InventoryItem;
 class Sprite;
 class Tile;
 class Character;
@@ -18,8 +18,8 @@ namespace Prototypes {
 	GroundEntity* getGroundEntityPrototypeById(const int pId);
 
 	void createPickableItemPrototype(const std::string & pName, const int pMovSpeed, Sprite* pSprite);
-	PickableItem* getPickableItemPrototypeByName(const std::string& pName);
-	PickableItem* getPickableItemPrototypeById(const int pId);
+	InventoryItem* getPickableItemPrototypeByName(const std::string& pName);
+	InventoryItem* getPickableItemPrototypeById(const int pId);
 
 	void createTilePrototype(const std::string & pName, const float pMovSpeed, Sprite* pSprite);
 	Tile* getTilePrototypeByName(const std::string& pName);

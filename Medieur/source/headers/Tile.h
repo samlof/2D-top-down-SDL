@@ -6,7 +6,7 @@
 #include "Point.h"
 
 class GroundEntity;
-class PickableItem;
+class InventoryItem;
 class Character;
 class World;
 
@@ -46,9 +46,9 @@ public:
 	int getId() const { return mId; }
 
 	// Pickable Item stuff
-	void addItem(PickableItem* pItem);
-	void clearItem(PickableItem* pItem);
-	PickableItem * getItemOfId(const int pId);
+	void addItem(InventoryItem* pItem);
+	void clearItem(InventoryItem* pItem);
+	InventoryItem * getItemOfId(const int pId);
 	bool hasItems() { return mItems.size() > 0; }
 	int getItemId();
 
@@ -62,7 +62,7 @@ private:
 	bool mCharacterStandingOn;
 	float mMovementCost;
 
-	using ItemMap = std::unordered_multimap<int, PickableItem*>;
+	using ItemMap = std::unordered_multimap<int, InventoryItem*>;
 	ItemMap mItems;
 
 

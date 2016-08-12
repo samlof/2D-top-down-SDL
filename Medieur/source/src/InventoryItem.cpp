@@ -1,4 +1,4 @@
-#include "PickableItem.h"
+#include "InventoryItem.h"
 
 #include <stdexcept>
 
@@ -7,7 +7,7 @@
 #include "Character.h"
 #include "ItemManager.h"
 
-void PickableItem::takeAmountFrom(PickableItem * pItem, int pAmount)
+void InventoryItem::takeAmountFrom(InventoryItem * pItem, int pAmount)
 {
 	if (isSameType(pItem) == false) {
 		throw std::invalid_argument("Trying to take items from different type item!");
@@ -30,7 +30,7 @@ void PickableItem::takeAmountFrom(PickableItem * pItem, int pAmount)
 }
 
 
-void PickableItem::erase()
+void InventoryItem::erase()
 {
 	if (mItemManager == nullptr) throw "Item is local!";
 	mItemManager->deleteItem(this);

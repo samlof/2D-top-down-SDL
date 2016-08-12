@@ -8,7 +8,7 @@
 class Tile;
 class Character;
 class GroundEntity;
-class PickableItem;
+class InventoryItem;
 class JobManager;
 class ItemManager;
 

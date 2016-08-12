@@ -8,7 +8,7 @@
 class Job;
 class Tile;
 class World;
-class PickableItem;
+class InventoryItem;
 
 class Character {
 public:
@@ -23,7 +23,7 @@ public:
 	// Sets current job to nullptr. Should be called from job.clearCharacter()
 	void clearJob() { mCurrentJob = nullptr; }
 
-	void addItem(PickableItem* pItem);
+	void addItem(InventoryItem* pItem);
 	void clearItem();
 
 	World* getWorld() { return mWorld; }
@@ -39,7 +39,7 @@ private:
 	Tile* mTile, *mNextTile, *mGoalTile;
 	Job* mCurrentJob;
 	std::stack<Tile*> mPathTiles;
-	std::unique_ptr<PickableItem> mItem;
+	std::unique_ptr<InventoryItem> mItem;
 
 	void getNextTile();
 	void moveTowardsNextTile();

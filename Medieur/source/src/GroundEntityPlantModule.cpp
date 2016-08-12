@@ -9,7 +9,7 @@
 #include "Character.h"
 #include "JobManager.h"
 #include "ItemManager.h"
-#include "PickableItem.h"
+#include "InventoryItem.h"
 
 #define CREATEFUNC(x) std::bind(&GroundEntityPlantModule::##x, this, std::placeholders::_1)
 
@@ -102,7 +102,7 @@ void GroundEntityPlantModule::pickup(Character* pCharacter)
 		printf("Pickup item: ");
 		printf("x: %i, y: %i\n", mThisEntity->getTile()->getX(), mThisEntity->getTile()->getY());
 
-		PickableItem* item = ItemManager::createLocalPickableItem(
+		InventoryItem* item = ItemManager::createLocalPickableItem(
 			mDropItemId, kHarvestAmount
 		);
 
