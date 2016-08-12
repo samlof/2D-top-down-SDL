@@ -39,10 +39,12 @@ public:
 
 	// Pickable Item stuff
 	void addItem(InventoryItem* pItem);
-	// Just removes the pointer from map. Call from ItemManager
+	void fillItem(InventoryItem* pItem);
 	void clearItem(InventoryItem* pItem);
-	InventoryItem * getItemOfId(const int pId);
+	int getItemCountOfId(const int pId) const;
+	int getItemMaxCount(const int pId) const;
 	bool hasItems() { return mItems.size() > 0; }
+	bool hasItemId(const int pId) const;
 	int getItemId();
 
 	// Tile gets and sets

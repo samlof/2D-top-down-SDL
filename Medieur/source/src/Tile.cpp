@@ -39,7 +39,7 @@ void Tile::addItem(InventoryItem * pItem)
 		found = true;
 		if (pItem->isEmpty()) return;
 	}
-	if (found == false) {
+	if (pItem->isEmpty() == false) {
 		// Create a new 'global' item
 		InventoryItem* newItem = mWorld->getItemManager()->createPickableItem(id, 0);
 		newItem->takeFrom(pItem);
@@ -48,24 +48,59 @@ void Tile::addItem(InventoryItem * pItem)
 
 }
 
+void Tile::fillItem(InventoryItem * pItem)
+{
+	auto iters = mItems.equal_range(pItem->getId());
+	for (auto it = iters.first; it != iters.second; it++) {
+		pItem->addTo(it->second);
+		if (it->second->isEmpty()) {
+			getWorld()->getItemManager()->deleteItem(it->second);
+			mItems.erase(it);
+		}
+	}
+}
+
 void Tile::clearItem(InventoryItem * pItem)
 {
 	auto iters = mItems.equal_range(pItem->getId());
 	for (auto it = iters.first; it != iters.second; it++) {
 		if (it->second == pItem) {
+			getWorld()->getItemManager()->deleteItem(it->second);
 			mItems.erase(it);
 			return;
 		}
 	}
 }
 
-InventoryItem * Tile::getItemOfId(const int pId)
+int Tile::getItemCountOfId(const int pId) const
+{
+	int count = 0;
+	auto iters = mItems.equal_range(pId);
+	for (auto it = iters.first; it != iters.second; it++) {
+		count += it->second->getAmount();
+		count++;
+	}
+	return count;
+}
+
+int Tile::getItemMaxCount(const int pId) const
+{
+	int count = 0;
+	auto iters = mItems.equal_range(pId);
+	for (auto it = iters.first; it != iters.second; it++) {
+		count += it->second->getMaxAmount();
+		count++;
+	}
+	return count;
+}
+
+bool Tile::hasItemId(const int pId) const
 {
 	auto iters = mItems.equal_range(pId);
 	for (auto it = iters.first; it != iters.second; it++) {
-		return it->second;
+		return true;
 	}
-	return nullptr;
+	return false;
 }
 int Tile::getItemId()
 {

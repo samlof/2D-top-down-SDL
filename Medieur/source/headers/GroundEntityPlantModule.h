@@ -8,7 +8,6 @@ class Job;
 
 class GroundEntityPlantModule : public IGroundEntityModule {
 public:
-	GroundEntityPlantModule(GroundEntityPlantModule* pPrototype, GroundEntity * pThisEntity);
 	~GroundEntityPlantModule();
 
 	// Inherited via IGroundEntityModule
@@ -33,6 +32,7 @@ private:
 	int mDropItemId;
 	void rot();
 
+	GroundEntityPlantModule(GroundEntityPlantModule* pPrototype, GroundEntity * pThisEntity);
 	GroundEntityPlantModule(const int pDropItemId);
 public:
 	static GroundEntityPlantModule* createPrototype(const int pDropItemId) {

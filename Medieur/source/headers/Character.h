@@ -24,6 +24,7 @@ public:
 	void clearJob() { mCurrentJob = nullptr; }
 
 	void addItem(InventoryItem* pItem);
+	InventoryItem* getItem() { return mItem.get(); }
 	void clearItem();
 
 	World* getWorld() { return mWorld; }

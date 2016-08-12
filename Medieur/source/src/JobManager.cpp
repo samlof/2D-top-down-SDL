@@ -25,6 +25,7 @@ JobManager::~JobManager()
 
 void JobManager::createJob(Job* pJob)
 {
+	pJob->setManager(this);
 	mAllJobs.insert(pJob);
 	mOpenJobs.insert(pJob);
 }

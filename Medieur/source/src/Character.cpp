@@ -58,6 +58,7 @@ void Character::addItem(InventoryItem * pItem)
 	}
 }
 
+
 void Character::clearItem()
 {
 	if (mItem != nullptr) {
