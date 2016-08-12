@@ -23,7 +23,7 @@ public:
 
 private:
 	GroundEntityStockpileModule(GroundEntityStockpileModule* pPrototype, GroundEntity * pThisEntity);
-	GroundEntityStockpileModule(const int pDropItemId);
+	GroundEntityStockpileModule();
 
 	std::vector<int> mItems;
 	Job* mJob;
@@ -31,8 +31,8 @@ private:
 	void createJob();
 	void stockChanged();
 public:
-	static GroundEntityStockpileModule* createPrototype(const int pDropItemId) {
-		return new GroundEntityStockpileModule(pDropItemId);
+	static GroundEntityStockpileModule* createPrototype() {
+		return new GroundEntityStockpileModule();
 	}
 };
 

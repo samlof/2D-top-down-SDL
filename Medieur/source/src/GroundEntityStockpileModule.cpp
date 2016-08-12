@@ -12,11 +12,11 @@
 
 GroundEntityStockpileModule::GroundEntityStockpileModule(GroundEntityStockpileModule * pPrototype, GroundEntity * pThisEntity)
 	:
-	IGroundEntityModule(pThisEntity)
+	IGroundEntityModule(pThisEntity), mItems(pPrototype->mItems)
 {
 }
 
-GroundEntityStockpileModule::GroundEntityStockpileModule(const int pDropItemId)
+GroundEntityStockpileModule::GroundEntityStockpileModule()
 	:
 	IGroundEntityModule(nullptr)
 {
@@ -41,12 +41,14 @@ void GroundEntityStockpileModule::stockChanged()
 {
 	for (auto it : *mJob->getRequirements()) {
 		if (it->isEmpty() == false) {
-			it->changeMax(it->getMaxAmount()-it->getAmount());
+			const int amount = it->getAmount();
 			mThisEntity->getTile()->addItem(it);
+			it->changeMax(it->getMaxAmount()-amount);
 		}
 	}
 }
 
 void GroundEntityStockpileModule::update()
 {
+
 }
