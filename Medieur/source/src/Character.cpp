@@ -92,6 +92,7 @@ void Character::update()
 		else if(mItem == nullptr){
 			// mItem is empty, so find items required
 			if (mTile == mGoalTile) {
+				printf("Pickup items for another job\n");
 				InventoryItem* req = mCurrentJob->getRequirement();
 				mItem.reset(ItemManager::createLocalPickableItem(req->getId(), 0));
 				mItem->changeMax(req->getToMaxAmount());
@@ -103,11 +104,13 @@ void Character::update()
 				InventoryItem* req = mCurrentJob->getRequirement();
 				if (mWorld->getItemManager()->hasItemOfId(req->getId()) == false) {
 					// No items of req type exist. Cancel reservation
-					printf("Trying to find items that don't exist");
+					printf("Trying to find items that don't exist\n");
 					mCurrentJob->cancelReserve();
 					mCurrentJob = nullptr;
+					return;
 				}
 				mPathTiles = PathFinder::FindPathForInventoryWith(mTile, req);
+				printf("path size: %i\n", mPathTiles.size());
 				mGoalTile = mPathTiles._Get_container().front();
 				getNextTile();
 			}
@@ -143,7 +146,10 @@ void Character::getNextTile()
 void Character::moveTowardsNextTile()
 {
 	if (mNextTile == nullptr) return;
-
+	if (mNextTile == mTile) {
+		mNextTile = nullptr;
+		return;
+	}
 	if (mNextTile->getCharacter() != mTile->getCharacter()) {
 		if (mNextTile->isReservableForCharacter()) {
 			mNextTile->reserveFor(mTile->getCharacter());

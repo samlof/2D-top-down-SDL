@@ -185,6 +185,10 @@ namespace PathFinder {
 		}
 		std::stack<Tile*> tiles;
 		Tile* next = endTile;
+		if (next == pStartTile) {
+			tiles.push(next);
+			return tiles;
+		}
 		while (next != pStartTile) {
 			tiles.push(next);
 			next = cameFrom[next];
