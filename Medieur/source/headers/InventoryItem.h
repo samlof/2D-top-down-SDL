@@ -18,9 +18,9 @@ public:
 	void takeAmountFrom(InventoryItem* pItem, int pAmount);
 
 	// Helper methods
-	void AddAmountTo(InventoryItem* pItem, int pAmount) { pItem->takeAmountFrom(this, pAmount); }
+	void takeFrom(InventoryItem* pItem) { takeAmountFrom(pItem, pItem->getAmount()); }
 	void addTo(InventoryItem* pItem) { AddAmountTo(pItem, mAmount); }
-	void takeFrom(InventoryItem* pItem) { takeAmountFrom(pItem, pItem->mAmount); }
+	void AddAmountTo(InventoryItem* pItem, int pAmount) { pItem->takeAmountFrom(this, pAmount); }
 
 	bool isFull() const { return mAmount == mMaxAmount; }
 	bool isEmpty() const { return mAmount == 0; }

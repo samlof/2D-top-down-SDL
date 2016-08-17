@@ -35,7 +35,7 @@ void Tile::addItem(InventoryItem * pItem)
 	bool found = false;
 	auto iters = mItems.equal_range(id);
 	for (auto it = iters.first; it != iters.second; it++) {
-		it->second->addTo(pItem);
+		it->second->takeFrom(pItem);
 		found = true;
 		if (pItem->isEmpty()) return;
 	}
@@ -51,11 +51,17 @@ void Tile::addItem(InventoryItem * pItem)
 void Tile::fillItem(InventoryItem * pItem)
 {
 	auto iters = mItems.equal_range(pItem->getId());
-	for (auto it = iters.first; it != iters.second; it++) {
-		pItem->addTo(it->second);
+	for (auto it = iters.first; it != iters.second;) {
+		printf("Amount in hand before %i\n", pItem->getAmount());
+		pItem->takeFrom(it->second);
+		printf("Amount in hand after %i\n", pItem->getAmount());
+		printf("Amount in tile left: %i\n", it->second->getAmount());
 		if (it->second->isEmpty()) {
 			getWorld()->getItemManager()->deleteItem(it->second);
-			mItems.erase(it);
+			it = mItems.erase(it);
+		}
+		else {
+			it++;
 		}
 		if (pItem->isFull()) return;
 	}
