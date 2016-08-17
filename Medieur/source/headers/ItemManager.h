@@ -16,10 +16,13 @@ public:
 	static InventoryItem* createLocalPickableItem(int pId, const int pAmount);
 	// Just erases from global map and deletes pointer. Clear other pointers
 	void deleteItem(InventoryItem* pItem);
-	bool hasItemOfId(const int pId) { return mItems.count(pId) > 0; }
+	void moveToStockpile(InventoryItem* pItem);
+	bool hasItemOfId(const int pId) { return mItems.count(pId) > 0 || mStockpiledItems.count(pId) > 0; }
+	bool hasItemOfIdOutsideStockpile(const int pId) { return mItems.count(pId) > 0; }
 
 private:
 
 	using ItemMap = std::unordered_multimap<int, std::unique_ptr<InventoryItem> >;
 	ItemMap mItems;
+	ItemMap mStockpiledItems;
 };

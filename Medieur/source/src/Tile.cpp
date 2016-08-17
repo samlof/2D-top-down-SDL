@@ -32,11 +32,9 @@ void Tile::addItem(InventoryItem * pItem)
 	const int id = pItem->getId();
 
 	// Find if there is an existing inventoryitem
-	bool found = false;
 	auto iters = mItems.equal_range(id);
 	for (auto it = iters.first; it != iters.second; it++) {
 		it->second->takeFrom(pItem);
-		found = true;
 		if (pItem->isEmpty()) return;
 	}
 	if (pItem->isEmpty() == false) {
@@ -45,7 +43,6 @@ void Tile::addItem(InventoryItem * pItem)
 		newItem->takeFrom(pItem);
 		mItems.insert(ItemMap::value_type(id, newItem));
 	}
-
 }
 
 void Tile::fillItem(InventoryItem * pItem)
