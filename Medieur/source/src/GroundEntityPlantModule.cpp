@@ -43,10 +43,10 @@ GroundEntityPlantModule::GroundEntityPlantModule(
 
 GroundEntityPlantModule::~GroundEntityPlantModule() = default;
 
-GroundEntityPlantModule::GroundEntityPlantModule(const int pDropItemId)
+GroundEntityPlantModule::GroundEntityPlantModule()
 	:
 	IGroundEntityModule(nullptr),
-	mHealth(kMaxHealth), mGrowth(1), mDropItemId(pDropItemId),
+	mHealth(kMaxHealth), mGrowth(1), mDropItemId(-1),
 	mHealthCounter(kHealthDropSteps), mGrowthCounter(kGrowthSteps)
 {}
 

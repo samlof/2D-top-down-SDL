@@ -19,6 +19,7 @@ public:
 		return new GroundEntityPlantModule(static_cast<GroundEntityPlantModule*>(pPrototype), pThisEntity);
 	}
 	int getGrowth() const { return mGrowth; }
+	void setDropItem(const int pId) { mDropItemId = pId; }
 
 	void cleanJobs();
 private:
@@ -33,9 +34,9 @@ private:
 	void rot();
 
 	GroundEntityPlantModule(GroundEntityPlantModule* pPrototype, GroundEntity * pThisEntity);
-	GroundEntityPlantModule(const int pDropItemId);
+	GroundEntityPlantModule();
 public:
-	static GroundEntityPlantModule* createPrototype(const int pDropItemId) {
-		return new GroundEntityPlantModule(pDropItemId);
+	static GroundEntityPlantModule* createPrototype() {
+		return new GroundEntityPlantModule();
 	}
 };
