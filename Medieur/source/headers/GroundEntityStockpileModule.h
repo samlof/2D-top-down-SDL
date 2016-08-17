@@ -14,7 +14,7 @@ public:
 
 	void addItem(int pId) { mItems.push_back(pId); }
 	// Inherited via IGroundEntityModule
-	virtual void update() override;
+	virtual void update() override { createJob(); }
 	virtual void interact() override {}
 	virtual void pickup() override {}
 	virtual GroundEntityStockpileModule * clone(IGroundEntityModule * pPrototype, GroundEntity * pThisEntity) override {
