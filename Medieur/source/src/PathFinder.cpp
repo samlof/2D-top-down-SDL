@@ -13,6 +13,8 @@
 #include "Tile.h"
 #include "units.h"
 #include "InventoryItem.h"
+#include "Prototypes.h"
+#include "GroundEntity.h"
 
 namespace PathFinder {
 	namespace {
@@ -22,6 +24,16 @@ namespace PathFinder {
 			return pTileA->getXY().distanceTo(pTileB->getXY());
 		}
 
+		// FIXME: should this be here?
+		bool hasStockpile(Tile* pTile) {
+			if (pTile->hasGroundEntity()) {
+				if (pTile->getGroundEntity()->getId() ==
+					Prototypes::getIdByName("Stockpile")) {
+					return true;
+				}
+			}
+			return false;
+		}
 		// Helper function
 		std::vector<Tile*> getNeighbours(Tile* pTile) {
 			std::vector<Tile*> neighbours;
@@ -128,7 +140,9 @@ namespace PathFinder {
 		return tiles;
 	}
 
-	std::stack<Tile*> FindPathForInventoryWith(Tile * pStartTile, InventoryItem * pItem)
+	std::stack<Tile*> FindPathForInventoryWith(
+		Tile * pStartTile, InventoryItem * pItem, bool canTakeFromStockpile
+	)
 	{
 		// Init arrays
 		using opensetTuple = std::tuple<Tile*, int>;
@@ -151,10 +165,21 @@ namespace PathFinder {
 			// Check next tile
 			Tile* current = std::get<0>(openSet.top());
 			if (current->hasItemId(pItem->getId())) {
-				// Goal
-				endTile = current;
-				printf("Inventory found!\n");
-				break;
+
+				if (canTakeFromStockpile == false) {
+					if (hasStockpile(current) == false) {
+						// Goal
+						endTile = current;
+						printf("Inventory found!\n");
+						break;
+					}
+				}
+				else {
+					// Goal
+					endTile = current;
+					printf("Inventory found!\n");
+					break;
+				}
 			}
 
 			openSet.pop();

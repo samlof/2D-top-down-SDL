@@ -109,7 +109,7 @@ void Character::update()
 					mCurrentJob = nullptr;
 					return;
 				}
-				mPathTiles = PathFinder::FindPathForInventoryWith(mTile, req);
+				mPathTiles = PathFinder::FindPathForInventoryWith(mTile, req, false);
 				printf("path size: %i\n", mPathTiles.size());
 				mGoalTile = mPathTiles._Get_container().front();
 				getNextTile();
