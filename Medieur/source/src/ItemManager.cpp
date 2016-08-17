@@ -28,28 +28,11 @@ InventoryItem * ItemManager::createLocalPickableItem(int pId, const int pAmount)
 }
 
 
-
 void ItemManager::deleteItem(InventoryItem * pItem)
 {
 	auto iters = mItems.equal_range(pItem->getId());
 	for (auto it = iters.first; it != iters.second; it++) {
 		if (it->second.get() == pItem) {
-			mItems.erase(it);
-			break;
-		}
-	}
-}
-
-void ItemManager::moveToStockpile(InventoryItem * pItem)
-{
-	mStockpiledItems.insert(ItemMap::value_type(
-		pItem->getId(), pItem
-	));
-
-	auto iters = mItems.equal_range(pItem->getId());
-	for (auto it = iters.first; it != iters.second; it++) {
-		if (it->second.get() == pItem) {
-			it->second.release();
 			mItems.erase(it);
 			break;
 		}
