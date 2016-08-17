@@ -37,6 +37,17 @@ public:
 	bool isCharacterOn() const { return mCharacterStandingOn; }
 	void clearCharater() { mCharacter = nullptr; mCharacterStandingOn = false; }
 
+	// Pickable Item stuff
+	void addItem(InventoryItem* pItem);
+	// Fills parameter from tile
+	void fillItem(InventoryItem* pItem);
+	void clearItem(InventoryItem* pItem);
+	int getItemCountOfId(const int pId) const;
+	int getItemMaxCount(const int pId) const;
+	bool hasItems() { return mItems.size() > 0; }
+	bool hasItemId(const int pId) const;
+	int getItemId();
+
 	// Tile gets and sets
 	bool isWalkable() const;
 	int getX() const { return mX; }
@@ -45,12 +56,6 @@ public:
 	Point getXY() const { return Point{ mX, mY }; }
 	int getId() const { return mId; }
 
-	// Pickable Item stuff
-	void addItem(InventoryItem* pItem);
-	void clearItem(InventoryItem* pItem);
-	InventoryItem * getItemOfId(const int pId);
-	bool hasItems() { return mItems.size() > 0; }
-	int getItemId();
 
 private:
 	World* mWorld;

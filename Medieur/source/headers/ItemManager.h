@@ -14,7 +14,10 @@ public:
 	InventoryItem* createPickableItem(int pId, const int pAmount);
 	// Doesn't assign to ItemMap. Deletion is on caller to handle
 	static InventoryItem* createLocalPickableItem(int pId, const int pAmount);
+	// Just erases from global map and deletes pointer. Clear other pointers
 	void deleteItem(InventoryItem* pItem);
+	bool hasItemOfId(const int pId) { return mItems.count(pId) > 0; }
+
 private:
 
 	using ItemMap = std::unordered_multimap<int, std::unique_ptr<InventoryItem> >;

@@ -21,6 +21,7 @@ public:
 
 	std::unique_ptr<IGroundEntityModule> mModule;
 private:
+	friend class IGroundEntityModule;
 	int mId;
 	Tile* const mTilePtr;
 	float mMovementCost;

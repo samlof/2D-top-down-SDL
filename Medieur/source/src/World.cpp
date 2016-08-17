@@ -32,6 +32,7 @@ World* World::GenerateTestWorld()
 			world->createGroundEntity(5 + i, 11 + j, getPrototypeByName("Plant"));
 		}*/
 	}
+	world->createGroundEntity(7, 8, Prototypes::getIdByName("Stockpile"));
 	world->createGroundEntity(5, 11, Prototypes::getIdByName("Plant"));
 	world->createGroundEntity(6, 11, Prototypes::getIdByName("Plant"));
 

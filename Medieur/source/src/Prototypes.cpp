@@ -7,6 +7,7 @@
 #include "Rectangle.h"
 #include "units.h"
 #include "GroundEntityPlantModule.h"
+#include "GroundEntityStockpileModule.h"
 #include "Sprite.h"
 #include "InventoryItem.h"
 #include "Tile.h"
@@ -28,6 +29,7 @@ namespace Prototypes {
 		const Rectangle kPlantItemSource(units::kTileSize * 6, 5 * 64, units::kTileSize, 64);
 		const Rectangle kGrassSource(0, 0, 512, 512);
 		const Rectangle kCharacterSource(0, 0, 32, 32);
+		const Rectangle kStockpileSource(0, 0, 32, 32);
 	}
 
 	bool createPrototypes() {
@@ -35,6 +37,7 @@ namespace Prototypes {
 		createGroundEntityPrototype("Door", 1, new Sprite("bad_door.png", kDoorSource));
 		createGroundEntityPrototype("Wall", 0, new Sprite("walls1.png", kWallSource));
 		createGroundEntityPrototype("Plant", 1, new Sprite("plants.png", kPlantSource));
+		createGroundEntityPrototype("Stockpile", 1, new Sprite("stockpile.png", kStockpileSource));
 
 		// Tile prototype
 		createTilePrototype("GrassTile", 1, new Sprite("grass00.png", kGrassSource));
@@ -46,9 +49,10 @@ namespace Prototypes {
 		createPickableItemPrototype("Item_Wheat", 20, new Sprite("plants.png", kPlantItemSource));
 
 		// Ground entity modules and functions
-
+		GroundEntityPlantModule* plantProto = GroundEntityPlantModule::createPrototype();
+		plantProto->setDropItem(getIdByName("Item_Wheat"));
 		getGroundEntityPrototypeByName("Plant")->mModule = std::unique_ptr<GroundEntityPlantModule>(
-			GroundEntityPlantModule::createPrototype(getIdByName("Item_Wheat"))
+			plantProto
 			);
 
 		SpriteManager::setGroundEntityFunction(getIdByName("Plant"),
@@ -58,6 +62,11 @@ namespace Prototypes {
 			newRect.addY((growth - 1) * 64);
 			return newRect;
 		});
+		
+		GroundEntityStockpileModule* stockProto = GroundEntityStockpileModule::createPrototype();
+		stockProto->addItem(getIdByName("Item_Wheat"));
+		getGroundEntityPrototypeByName("Stockpile")->mModule = std::unique_ptr<GroundEntityStockpileModule>(stockProto);
+
 		return true;
 	}
 

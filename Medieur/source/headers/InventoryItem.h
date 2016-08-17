@@ -14,12 +14,13 @@ public:
 		: mId(pPrototype->mId), mMaxAmount(pPrototype->mMaxAmount), mAmount(pAmount),
 		mItemManager(pItemManager) {}
 
+	// Adds to this and removes from pItem
 	void takeAmountFrom(InventoryItem* pItem, int pAmount);
 
 	// Helper methods
-	void AddAmountTo(InventoryItem* pItem, int pAmount) { pItem->takeAmountFrom(this, pAmount); }
+	void takeFrom(InventoryItem* pItem) { takeAmountFrom(pItem, pItem->getAmount()); }
 	void addTo(InventoryItem* pItem) { AddAmountTo(pItem, mAmount); }
-	void takeFrom(InventoryItem* pItem) { takeAmountFrom(pItem, pItem->mAmount); }
+	void AddAmountTo(InventoryItem* pItem, int pAmount) { pItem->takeAmountFrom(this, pAmount); }
 
 	bool isFull() const { return mAmount == mMaxAmount; }
 	bool isEmpty() const { return mAmount == 0; }
@@ -29,6 +30,7 @@ public:
 	int getId() const { return mId; }
 	int getAmount() const { return mAmount; }
 	int getMaxAmount() const { return mMaxAmount; }
+	int getToMaxAmount() const { return mMaxAmount - mAmount; }
 
 	void changeMax(const int pMaxAmount) { mMaxAmount = pMaxAmount; }
 

@@ -9,7 +9,7 @@
 #include "InventoryItem.h"
 
 namespace {
-	const int kWalkSpeed = 100; // 100 frames for 1 tile
+	const int kWalkSpeed = 50; // 50 frames for 1 tile
 	const int kJobInterval = 100;
 }
 
@@ -34,7 +34,6 @@ Character::Character(const int pId)
 void Character::setPathTo(Tile * pGoalTile)
 {
 	mGoalTile = pGoalTile;
-	mPathTiles = PathFinder::FindPath(mTile, pGoalTile);
 	getNextTile();
 }
 
@@ -58,6 +57,7 @@ void Character::addItem(InventoryItem * pItem)
 	}
 }
 
+
 void Character::clearItem()
 {
 	if (mItem != nullptr) {
@@ -73,12 +73,64 @@ void Character::update()
 
 		if (mJobInterval.expired()) {
 			getJob();
+			mJobInterval.reset();
 		}
 	}
 	else {
-		if (mNextTile == nullptr) {
-			doJob();
-			mGoalTile = nullptr;
+		// Does job have all requirements
+		if (mCurrentJob->hasAllMaterials()) {
+			if (mTile == mCurrentJob->getTile()) {
+				doJob();
+				mGoalTile = nullptr;
+			}
+			else if (mNextTile == nullptr) {
+				mGoalTile = mCurrentJob->getTile();
+				mPathTiles = PathFinder::FindPath(mTile, mGoalTile);
+				getNextTile();
+			}
+		}
+		else if (mItem == nullptr) {
+			// mItem is empty, so find items required
+			if (mTile == mGoalTile) {
+				InventoryItem* req = mCurrentJob->getRequirement();
+				mItem.reset(ItemManager::createLocalPickableItem(req->getId(), 0));
+				mItem->changeMax(req->getToMaxAmount());
+				mGoalTile->fillItem(mItem.get());
+				mGoalTile = nullptr;
+			}
+			else if (mNextTile == nullptr) {
+				// Get requirements
+				InventoryItem* req = mCurrentJob->getRequirement();
+				if (mWorld->getItemManager()->hasItemOfId(req->getId()) == false) {
+					// No items of req type exist. Cancel reservation
+					mCurrentJob->cancelReserve();
+					mCurrentJob = nullptr;
+					return;
+				}
+				mPathTiles = PathFinder::FindPathForInventoryWith(mTile, req, false);
+				if (mPathTiles.size() < 1) {
+					mCurrentJob->cancelReserve();
+					mCurrentJob = nullptr;
+					return;
+				}
+				mGoalTile = mPathTiles._Get_container().front();
+				getNextTile();
+			}
+		}
+		else {
+			// Have items in hand, bring them to job
+			// FIXME: empty unnecessary items
+			if (mTile == mCurrentJob->getTile()) {
+				mCurrentJob->fillRequirement(mItem.get());
+				mItem.reset(nullptr);
+				mGoalTile = nullptr;
+			}
+			else if (mNextTile == nullptr) {
+				mGoalTile = mCurrentJob->getTile();
+				mPathTiles = PathFinder::FindPath(mTile, mGoalTile);
+				getNextTile();
+			}
+
 		}
 	}
 	moveTowardsNextTile();
@@ -96,22 +148,27 @@ void Character::getNextTile()
 void Character::moveTowardsNextTile()
 {
 	if (mNextTile == nullptr) return;
-	// FIXME: make nicer
-	if (mNextTile->getCharacter() == mTile->getCharacter()) {
+	if (mNextTile == mTile) {
+		mNextTile = nullptr;
+		return;
 	}
-	else if (mNextTile->isReservableForCharacter()) {
-		mNextTile->reserveFor(mTile->getCharacter());
+	if (mNextTile->getCharacter() != mTile->getCharacter()) {
+		if (mNextTile->isReservableForCharacter()) {
+			mNextTile->reserveFor(mTile->getCharacter());
+		}
+		else {
+			return; // If reserved by someone else
+		}
 	}
-	else return; // If reserved by someone else
 
 	if (mMoveCounter.expired()) {
 		// At next tile, update tiles
 		mTile->clearCharater();
 		mNextTile->moveTo();
-		mTile = mNextTile;
-		getNextTile();
 
 		// Update character
+		mTile = mNextTile;
+		getNextTile();
 		mX = mTile->getX();
 		mY = mTile->getY();
 		mMoveCounter.reset();
@@ -128,14 +185,15 @@ void Character::getJob()
 		mCurrentJob = mWorld->getJobManager()->getJob();
 		mCurrentJob->reserve(this);
 		setPathTo(mCurrentJob->getTile());
-		mJobInterval.reset();
 	}
 }
 
 void Character::doJob()
 {
 	if (mCurrentJob != nullptr) {
-		mCurrentJob->getFunc()(this);
-		mCurrentJob = nullptr;
+		if (mCurrentJob->doWork()) {
+			mCurrentJob->cancelJob();
+			mCurrentJob = nullptr;
+		}
 	}
 }

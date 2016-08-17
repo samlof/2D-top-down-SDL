@@ -84,6 +84,9 @@
     <ClInclude Include="source\headers\InventoryItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\headers\GroundEntityStockpileModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\src\MainLoop.cpp">
@@ -152,6 +155,9 @@
     <ClCompile Include="source\src\InventoryItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\src\GroundEntityStockpileModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\sprites\Ukko.png">
@@ -173,6 +179,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="content\sprites\walls1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="content\sprites\selected.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="content\sprites\stockpile.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

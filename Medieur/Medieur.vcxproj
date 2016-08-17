@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\headers\GroundEntityStockpileModule.h" />
     <ClInclude Include="source\headers\Camera.h" />
     <ClInclude Include="source\headers\Character.h" />
     <ClInclude Include="source\headers\CountdownCounter.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="source\headers\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\src\GroundEntityStockpileModule.cpp" />
     <ClCompile Include="source\src\ItemManager.cpp" />
     <ClCompile Include="source\src\Job.cpp" />
     <ClCompile Include="source\src\Camera.cpp" />
@@ -193,8 +195,10 @@
     <Image Include="content\sprites\bad_door.png" />
     <Image Include="content\sprites\grass00.png" />
     <Image Include="content\sprites\plants.png" />
+    <Image Include="content\sprites\selected.png" />
     <Image Include="content\sprites\simple_wall.png" />
     <Image Include="content\sprites\simple_wall_rotated.png" />
+    <Image Include="content\sprites\stockpile.png" />
     <Image Include="content\sprites\Ukko.png" />
     <Image Include="content\sprites\walls1.png" />
   </ItemGroup>
