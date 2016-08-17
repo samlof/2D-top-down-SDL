@@ -52,10 +52,7 @@ void Tile::fillItem(InventoryItem * pItem)
 {
 	auto iters = mItems.equal_range(pItem->getId());
 	for (auto it = iters.first; it != iters.second;) {
-		printf("Amount in hand before %i\n", pItem->getAmount());
 		pItem->takeFrom(it->second);
-		printf("Amount in hand after %i\n", pItem->getAmount());
-		printf("Amount in tile left: %i\n", it->second->getAmount());
 		if (it->second->isEmpty()) {
 			getWorld()->getItemManager()->deleteItem(it->second);
 			it = mItems.erase(it);

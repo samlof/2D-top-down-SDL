@@ -24,6 +24,10 @@ namespace PathFinder {
 			return pTileA->getXY().distanceTo(pTileB->getXY());
 		}
 
+		int moveCost(Tile* pTileA, Tile* pTileB) {
+			return pTileA->getXY().distanceTo(pTileB->getXY());
+		}
+
 		// FIXME: should this be here?
 		bool hasStockpile(Tile* pTile) {
 			if (pTile->hasGroundEntity()) {
@@ -110,7 +114,7 @@ namespace PathFinder {
 				if (closedSet.find(child) != closedSet.end() || child->isWalkable() == false) {
 					continue;
 				}
-				int tempGScore = gScores[current] + 1;
+				int tempGScore = gScores[current] + moveCost(current, child);
 				if (openSetTiles.find(child) == openSetTiles.end()) {
 					// New tile
 					openSetTiles.insert(child);

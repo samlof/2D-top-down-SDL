@@ -9,7 +9,7 @@
 #include "InventoryItem.h"
 
 namespace {
-	const int kWalkSpeed = 100; // 100 frames for 1 tile
+	const int kWalkSpeed = 50; // 50 frames for 1 tile
 	const int kJobInterval = 100;
 }
 
@@ -89,10 +89,9 @@ void Character::update()
 				getNextTile();
 			}
 		}
-		else if(mItem == nullptr){
+		else if (mItem == nullptr) {
 			// mItem is empty, so find items required
 			if (mTile == mGoalTile) {
-				printf("Pickup items for another job\n");
 				InventoryItem* req = mCurrentJob->getRequirement();
 				mItem.reset(ItemManager::createLocalPickableItem(req->getId(), 0));
 				mItem->changeMax(req->getToMaxAmount());
@@ -104,13 +103,16 @@ void Character::update()
 				InventoryItem* req = mCurrentJob->getRequirement();
 				if (mWorld->getItemManager()->hasItemOfId(req->getId()) == false) {
 					// No items of req type exist. Cancel reservation
-					printf("Trying to find items that don't exist\n");
 					mCurrentJob->cancelReserve();
 					mCurrentJob = nullptr;
 					return;
 				}
 				mPathTiles = PathFinder::FindPathForInventoryWith(mTile, req, false);
-				printf("path size: %i\n", mPathTiles.size());
+				if (mPathTiles.size() < 1) {
+					mCurrentJob->cancelReserve();
+					mCurrentJob = nullptr;
+					return;
+				}
 				mGoalTile = mPathTiles._Get_container().front();
 				getNextTile();
 			}
