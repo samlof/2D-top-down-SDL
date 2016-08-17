@@ -181,5 +181,11 @@
     <Image Include="content\sprites\walls1.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="content\sprites\selected.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="content\sprites\stockpile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

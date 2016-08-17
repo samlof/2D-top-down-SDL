@@ -195,8 +195,10 @@
     <Image Include="content\sprites\bad_door.png" />
     <Image Include="content\sprites\grass00.png" />
     <Image Include="content\sprites\plants.png" />
+    <Image Include="content\sprites\selected.png" />
     <Image Include="content\sprites\simple_wall.png" />
     <Image Include="content\sprites\simple_wall_rotated.png" />
+    <Image Include="content\sprites\stockpile.png" />
     <Image Include="content\sprites\Ukko.png" />
     <Image Include="content\sprites\walls1.png" />
   </ItemGroup>
