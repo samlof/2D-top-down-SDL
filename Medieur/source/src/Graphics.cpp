@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-#include <stdio.h>
+#include <iostream>
 #include <map>
 #include <algorithm>
 
@@ -56,16 +56,20 @@ namespace Graphics {
 		mainWindow = SDL_CreateWindow("Medieur", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			kWindowWidth, kWindowHeight, 0);
 
-		mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
 
 		if (mainWindow == nullptr) {
-			printf("mainWindow is null!\n");
+			printf("mainWindow is null! SDL_Error: %s\n", SDL_GetError());
+			std::cin.get();
 		}
+
+		mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
 
 		if (mainRenderer == nullptr) {
-			printf("mainRenderer is null!\n");
+			printf("mainRenderer is null! SDL_Error: %s\n", SDL_GetError());
+			std::cin.get();
 		}
 
+		SDL_RenderSetLogicalSize(mainRenderer, kWindowWidth + emptyArea, kWindowHeight);
 		SDL_ShowWindow(mainWindow);
 
 		printf("Window and Renderer initialized!\n");
