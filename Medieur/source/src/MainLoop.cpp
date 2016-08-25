@@ -54,9 +54,7 @@ void MainLoop::run()
 void MainLoop::testRun()
 {
 	InputHandler inputhandler;
-	Graphics::GLSLProgram shader;
-	
-	SDL_Window* _window = Graphics::getwindow();
+
 	mSprite = new Graphics::Sprite("Ukko.png", 1, 1, 1, 1);
 	mSprite->init();
 	while (!mQuitting) {
@@ -68,20 +66,13 @@ void MainLoop::testRun()
 			return;
 		}
 
-		//Set the base depth to 1.0
-		glClearDepth(1.0);
-		//Clear the color and depth buffer
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		shader.use();
+		Graphics::clear();
 
 		//Draw our sprite!
 		mSprite->draw(1, 1);
 
-		shader.unuse();
+		Graphics::flip();
 
-		//Swap our buffer and draw everything to the screen!
-		SDL_GL_SwapWindow(_window);
 		SDL_Delay(16);
 	}
 }

@@ -84,7 +84,7 @@ namespace Graphics {
 	{
 		GLint location = glGetUniformLocation(mProgramId, pUniformName.c_str());
 		if (location == GL_INVALID_INDEX) {
-			printf("Uniform \"%s\" location not found!", pUniformName.c_str());
+			printf("Uniform \"%s\" location not found!\n", pUniformName.c_str());
 		}
 		return location;
 	}

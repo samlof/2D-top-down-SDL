@@ -115,9 +115,10 @@ namespace Graphics {
 
 	void flip()
 	{
-		defaultShaderProgram.unuse();
+		graphicsTime += 0.1f;
 		GLuint timeUniformLoc = defaultShaderProgram.getUniformLocation("time");
 		glUniform1f(timeUniformLoc, graphicsTime);
+		defaultShaderProgram.unuse();
 		SDL_GL_SwapWindow(mainWindow);
 	}
 
