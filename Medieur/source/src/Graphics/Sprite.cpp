@@ -6,9 +6,7 @@
 
 
 Sprite::Sprite(const std::string& pFilepath, int pX, int pY, int pWidth, int pHeight)
-	:
-	mSourceRectangle(pX, pY, pWidth, pHeight),
-	mSpriteSheet(Graphics::loadImage(pFilepath))
+	: Sprite(pFilepath, Rectangle{pX, pY, pWidth, pHeight})
 {
 
 }
@@ -16,8 +14,7 @@ Sprite::Sprite(const std::string& pFilepath, int pX, int pY, int pWidth, int pHe
 Sprite::Sprite(const std::string & pFilepath, const Rectangle & pRectangle)
 	:
 
-	mSourceRectangle(pRectangle),
-	mSpriteSheet(Graphics::loadImage(pFilepath))
+	mSourceRectangle(pRectangle), mVbo(0)
 {
 }
 

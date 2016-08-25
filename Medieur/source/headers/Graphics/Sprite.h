@@ -2,11 +2,9 @@
 
 #include <string>
 
+#include <GL/glew.h>
+
 #include "Rectangle.h"
-
-struct SDL_Texture;
-
-class GroundEntity;
 
 class Sprite
 {
@@ -21,6 +19,6 @@ public:
 
 protected:
 	Rectangle mSourceRectangle;
-	SDL_Texture* mSpriteSheet;
+	GLuint mVbo;
 };
 

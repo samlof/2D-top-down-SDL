@@ -22,8 +22,6 @@ namespace Graphics {
 		const int kWindowWidth = units::kScreenWidth * units::kTileSize;
 		const int kWindowHeight = units::kScreenHeight * units::kTileSize;
 
-		// SDL render variables
-		SDL_Renderer* mainRenderer = nullptr;
 		SDL_Window* mainWindow = nullptr;
 
 		std::map<std::string, SDL_Texture*> textureMap;
@@ -64,17 +62,22 @@ namespace Graphics {
 			std::cin.get();
 		}
 
-		mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_TARGETTEXTURE);
-
-		if (mainRenderer == nullptr) {
-			printf("mainRenderer is null! SDL_Error: %s\n", SDL_GetError());
+		SDL_GLContext glContext = SDL_GL_CreateContext(mainWindow);
+		if (glContext == nullptr) {
+			printf("SDL_GLContext is null! SDL_Error: %s\n", SDL_GetError());
 			std::cin.get();
 		}
 
-		SDL_RenderSetLogicalSize(mainRenderer, kWindowWidth, kWindowHeight);
-		SDL_ShowWindow(mainWindow);
+		GLenum error = glewInit();
+		if (error != GLEW_OK) {
+			printf("Could not init glew!\n");
+			std::cin.get();
+		}
 
-		printf("Window and Renderer initialized!\n");
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+		glClearColor(0.0f, 0.0f, 0.0f, 1);
+
+		printf("Window and OpenGL initialized!\n");
 	}
 
 	void renderTexture(SDL_Texture * pTexture,
@@ -92,12 +95,13 @@ namespace Graphics {
 
 	void clear()
 	{
-		SDL_RenderClear(mainRenderer);
+		glClearDepth(1.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void renderPresent()
 	{
-		SDL_RenderPresent(mainRenderer);
+		SDL_GL_SwapWindow(mainWindow);
 	}
 
 	void targetWorldTexture()
