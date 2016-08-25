@@ -166,6 +166,7 @@
     <ClInclude Include="source\headers\Tile.h" />
     <ClInclude Include="source\headers\units.h" />
     <ClInclude Include="source\headers\World.h" />
+    <ClInclude Include="source\headers\Graphics\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\src\Graphics\GLSLProgram.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="source\src\Tile.cpp" />
     <ClCompile Include="source\src\units.cpp" />
     <ClCompile Include="source\src\World.cpp" />
+    <ClCompile Include="source\src\Graphics\Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\sprites\bad_door.png" />
