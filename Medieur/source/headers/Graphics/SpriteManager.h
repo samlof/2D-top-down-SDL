@@ -6,19 +6,23 @@
 
 #include "Rectangle.h"
 
-class Sprite;
 class Tile;
 class GroundEntity;
 class Character;
 
-namespace SpriteManager {
-	void createSprite(const int pId, Sprite* pSprite);
-	void clearAll();
+namespace Graphics {
 
-	void setGroundEntityFunction(const int pId, std::function<Rectangle(GroundEntity*)> pFunction);
-	bool hasGroundEntityFunction(const int pId);
-	std::function<Rectangle(GroundEntity*) > getEntityFunction(const int pId);
+	class Sprite;
 
-	Sprite* getSpriteByName(const std::string & pFurnName);
-	Sprite* getSpriteById(const unsigned int pId);
+	namespace SpriteManager {
+		void createSprite(const int pId, Sprite* pSprite);
+		void clearAll();
+
+		void setGroundEntityFunction(const int pId, std::function<Rectangle(GroundEntity*)> pFunction);
+		bool hasGroundEntityFunction(const int pId);
+		std::function<Rectangle(GroundEntity*) > getEntityFunction(const int pId);
+
+		Sprite* getSpriteByName(const std::string & pFurnName);
+		Sprite* getSpriteById(const unsigned int pId);
+	}
 }

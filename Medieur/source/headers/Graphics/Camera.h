@@ -4,32 +4,32 @@
 
 class World;
 
-class Camera
-{
-public:
-	Camera(World* pWorld);
-	~Camera();
+namespace Graphics {
+	class Camera
+	{
+	public:
+		Camera(World* pWorld);
+		~Camera();
 
+		void moveUp();
+		void moveDown();
+		void moveLeft();
+		void moveRight();
+		void moveHigher();
+		void moveLower();
 
-	void moveUp();
-	void moveDown();
-	void moveLeft();
-	void moveRight();
-	void moveHigher();
-	void moveLower();
+		int getY() const { return mRectangle.getY(); }
+		int getX() const { return mRectangle.getX(); }
+		Rectangle getRectangle() const { return mRectangle; }
 
-	int getY() const { return mRectangle.getY(); }
-	int getX() const { return mRectangle.getX(); }
-	Rectangle getRectangle() const { return mRectangle; }
-	
-	void draw();
+		void draw();
 
-private:
-	float mZoomAmount;
-	bool mChangeTexture;
-	Rectangle mRectangle;
-	World* mWorld;
-	
-	void drawTile(const int x, const int y);
-};
+	private:
+		float mZoomAmount;
+		bool mChangeTexture;
+		Rectangle mRectangle;
+		World* mWorld;
 
+		void drawTile(const int x, const int y);
+	};
+}
