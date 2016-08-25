@@ -19,8 +19,8 @@ namespace Graphics {
 
 		Rectangle getRectangle() const { return mSourceRectangle; }
 
-	private:
 		void init();
+	private:
 		Rectangle mSourceRectangle;
 		GLuint mVboId;
 	};

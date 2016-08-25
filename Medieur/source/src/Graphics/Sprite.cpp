@@ -2,6 +2,8 @@
 
 #include <cstddef>
 
+#include <GL\glew.h>
+
 #include "Graphics\Graphics.h"
 #include "Graphics\Vertex.h"
 
@@ -31,13 +33,26 @@ namespace Graphics {
 		}
 
 		Vertex vertexData[6];
+		float x = -1.0f, y = -1.0f, width = 2.0f, height = 2.0f;
+		//First Triangle
+		vertexData[0].position.x = x + width;
+		vertexData[0].position.y = y + height;
 
-		vertexData[0].position = Position{ 0, 1 };
-		vertexData[1].position = Position{ 1, 1 };
-		vertexData[2].position = Position{ -1, 1 };
-		vertexData[3].position = Position{ 1, 1 };
-		vertexData[4].position = Position{ 0, 1 };
-		vertexData[5].position = Position{1, 1};
+		vertexData[1].position.x = x;
+		vertexData[1].position.y = y + height;
+
+		vertexData[2].position.x = x;
+		vertexData[2].position.y = y;
+
+		//Second Triangle
+		vertexData[3].position.x = x;
+		vertexData[3].position.y = y;
+
+		vertexData[4].position.x = x + width;
+		vertexData[4].position.y = y;
+
+		vertexData[5].position.x = x + width;
+		vertexData[5].position.y = y + height;
 
 		for (size_t i = 0; i < 6; i++)
 		{
@@ -46,7 +61,7 @@ namespace Graphics {
 
 		glBindBuffer(GL_ARRAY_BUFFER, mVboId);
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), &vertexData[0], GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
 		// Unbind the buffer
 		glBindBuffer(GL_ARRAY_BUFFER, 0);

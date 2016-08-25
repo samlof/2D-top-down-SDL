@@ -174,7 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dependency\picoPNG.cpp" />
-    <ClCompile Include="source\shaders\IOManager.cpp" />
+    <ClCompile Include="source\src\IOManager.cpp" />
     <ClCompile Include="source\src\Graphics\GLSLProgram.cpp" />
     <ClCompile Include="source\src\Graphics\ImageLoader.cpp" />
     <ClCompile Include="source\src\GroundEntityStockpileModule.cpp" />

@@ -7,6 +7,7 @@ struct SDL_Texture;
 
 class Rectangle;
 class World;
+struct SDL_Window;
 
 namespace Graphics {
 	GLTexture loadImage(const std::string& pFilepath);
@@ -17,11 +18,13 @@ namespace Graphics {
 		const Rectangle & pDestinationRectangle);
 
 	void clear();
-	void renderPresent();
+	void flip();
 
 	void targetWorldTexture();
 	void changeWorldTexture(int pWidth, int pHeight);
 	void resetTarget();
 
 	void quit();
+
+	SDL_Window* getwindow();
 }

@@ -45,16 +45,21 @@ namespace Graphics {
 	} // Anonymous namespace
 	void initShaders();
 
+	SDL_Window* getwindow() { return mainWindow; }
+
+
 	GLTexture loadImage(const std::string& pFilepath)
 	{
+		printf("Loaded: %s!\n", pFilepath.c_str());
 		return ImageLoader::loadPNG(pFilepath);
 	}
 
 	void init()
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
+		Uint32 windowflags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 		mainWindow = SDL_CreateWindow("Medieur", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			kWindowWidth, kWindowHeight, 0);
+			kWindowWidth, kWindowHeight, windowflags);
 
 		if (mainWindow == nullptr) {
 			printf("mainWindow is null! SDL_Error: %s\n", SDL_GetError());
@@ -67,9 +72,11 @@ namespace Graphics {
 			std::cin.get();
 		}
 
+		glewExperimental = GL_TRUE;
 		GLenum error = glewInit();
 		if (error != GLEW_OK) {
-			printf("Could not init glew!\n");
+			// Problem: glewInit failed, something is seriously wrong.
+			std::cout << "glewInit failed: " << glewGetErrorString(error) << std::endl;
 			std::cin.get();
 		}
 
@@ -83,7 +90,10 @@ namespace Graphics {
 
 	void initShaders()
 	{
-		defaultShaderProgram.compileShaders("source/shaders/defaultShader.vert", "source/shaders/defaultShader.frag");
+		defaultShaderProgram.compileShaders(
+			"source/shaders/defaultShader.vert", 
+			"source/shaders/defaultShader.frag"
+		);
 		defaultShaderProgram.addAttribute("vertexPosition");
 		defaultShaderProgram.addAttribute("vertexColor");
 		defaultShaderProgram.linkShaders();
@@ -93,20 +103,19 @@ namespace Graphics {
 		const Rectangle & pSourceRectangle,
 		const Rectangle & pDestinationRectangle)
 	{
-		defaultShaderProgram.use();
 
-
-		defaultShaderProgram.unuse();
 	}
 
 	void clear()
 	{
 		glClearDepth(1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		defaultShaderProgram.use();
 	}
 
-	void renderPresent()
+	void flip()
 	{
+		defaultShaderProgram.unuse();
 		GLuint timeUniformLoc = defaultShaderProgram.getUniformLocation("time");
 		glUniform1f(timeUniformLoc, graphicsTime);
 		SDL_GL_SwapWindow(mainWindow);

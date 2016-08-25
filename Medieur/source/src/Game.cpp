@@ -32,7 +32,7 @@ void Game::draw()
 
 	mCamera->draw();
 
-	Graphics::renderPresent();
+	Graphics::flip();
 }
 
 void Game::handleEvent(InputHandler & pInputHandler)

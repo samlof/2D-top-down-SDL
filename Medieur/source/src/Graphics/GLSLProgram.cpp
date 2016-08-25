@@ -23,7 +23,7 @@ namespace Graphics {
 		if (mVertexShaderId == 0) {
 			printf("Vertex shader creation failed!\n");
 		}
-		mFragmentShaderId = glCreateShader(GL_VERTEX_SHADER);
+		mFragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 		if (mFragmentShaderId == 0) {
 			printf("mFragmentShaderId creation failed!\n");
 		}
@@ -54,16 +54,15 @@ namespace Graphics {
 			std::vector<char> errorLog(maxLength);
 			glGetProgramInfoLog(mProgramId, maxLength, &maxLength, &errorLog[0]);
 
-			printf("Error in linking shaders\n");
-			printf(&("%s\n", errorLog[0]));
-
 			//We don't need the program anymore.
 			glDeleteProgram(mProgramId);
 			//Don't leak shaders either.
 			glDeleteShader(mVertexShaderId);
 			glDeleteShader(mFragmentShaderId);
 
-			//Use the infoLog as you see fit.
+			//Use the errorLog as you see fit.
+			printf("Error in linking shaders\n");
+			printf(&("%s\n", errorLog[0]));
 
 			//In this simple program, we'll just leave
 			return;
