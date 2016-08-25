@@ -10,10 +10,12 @@
 #include <SDL_opengl.h>
 #include <gl\glu.h>
 
+#include "Graphics\Sprite.h"
+#include "Graphics\GLSLProgram.h"
+
 #include "Rectangle.h"
 #include "World.h"
 #include "units.h"
-#include "Graphics\Sprite.h"
 #include "Tile.h"
 
 namespace Graphics {
@@ -23,6 +25,7 @@ namespace Graphics {
 		const int kWindowHeight = units::kScreenHeight * units::kTileSize;
 
 		SDL_Window* mainWindow = nullptr;
+		GLSLProgram defaultShaderProgram;
 
 		std::map<std::string, SDL_Texture*> textureMap;
 		SDL_Texture* worldTexture;
@@ -78,19 +81,29 @@ namespace Graphics {
 		glClearColor(0.0f, 0.0f, 0.0f, 1);
 
 		printf("Window and OpenGL initialized!\n");
+
+		initShaders();
+	}
+
+	void initShaders()
+	{
+		defaultShaderProgram.compileShaders("source/shaders/defaultShader.vert", "source/shaders/defaultShader.frag");
+		defaultShaderProgram.addAttribute("vertexPosition");
+		defaultShaderProgram.linkShaders();
 	}
 
 	void renderTexture(SDL_Texture * pTexture,
 		const Rectangle & pSourceRectangle,
 		const Rectangle & pDestinationRectangle)
 	{
+		defaultShaderProgram.use();
 
 		if (SDL_RenderCopy(mainRenderer, pTexture,
 			&(RectangleToSDL_Rect(pSourceRectangle)),
 			&(RectangleToSDL_Rect(pDestinationRectangle))
 		) == -1) printf("Error on rendering\n");
 
-		
+		defaultShaderProgram.unuse();
 	}
 
 	void clear()
