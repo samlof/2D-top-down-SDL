@@ -167,9 +167,6 @@
     <ClCompile Include="source\src\Graphics\GLSLProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\src\Graphics\Vertex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\sprites\Ukko.png">

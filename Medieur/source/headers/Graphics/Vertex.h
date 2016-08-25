@@ -1,8 +1,8 @@
 #pragma once
-class Vertex
-{
-public:
-	Vertex();
-	~Vertex();
+
+#include <GL\glew.h>
+
+struct Vertex {
+
 };
 
