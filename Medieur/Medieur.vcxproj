@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dependency\lodePNG.h" />
     <ClInclude Include="source\headers\IOManager.h" />
     <ClInclude Include="source\headers\Graphics\GLSLProgram.h" />
     <ClInclude Include="source\headers\GroundEntityStockpileModule.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="source\headers\Graphics\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dependency\lodePNG.cpp" />
     <ClCompile Include="source\shaders\IOManager.cpp" />
     <ClCompile Include="source\src\Graphics\GLSLProgram.cpp" />
     <ClCompile Include="source\src\GroundEntityStockpileModule.cpp" />
