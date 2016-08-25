@@ -32,7 +32,12 @@ namespace Graphics {
 
 		Vertex vertexData[6];
 
-		vertexData[1].position = Position{ mSourceRectangle.getX(), mSourceRectangle.getY() };
+		vertexData[0].position = Position{ 0, 1 };
+		vertexData[1].position = Position{ 1, 1 };
+		vertexData[2].position = Position{ -1, 1 };
+		vertexData[3].position = Position{ 1, 1 };
+		vertexData[4].position = Position{ 0, 1 };
+		vertexData[5].position = Position{1, 1};
 
 		for (size_t i = 0; i < 6; i++)
 		{

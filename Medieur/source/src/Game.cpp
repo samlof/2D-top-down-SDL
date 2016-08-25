@@ -14,7 +14,7 @@
 Game::Game()
 	:
 	mWorld(World::GenerateTestWorld()),
-	mCamera(new Camera(mWorld.get()))
+	mCamera(new Graphics::Camera(mWorld.get()))
 {
 	PathFinder::setWorld(mWorld.get());
 	mWorld->createCharacter(2, 2, Prototypes::getIdByName("Guy"));

@@ -32,6 +32,7 @@ namespace Prototypes {
 		const Rectangle kCharacterSource(0, 0, 32, 32);
 		const Rectangle kStockpileSource(0, 0, 32, 32);
 	}
+	using Graphics::Sprite;
 
 	bool createPrototypes() {
 		// Ground entity prototypes
@@ -44,7 +45,7 @@ namespace Prototypes {
 		createTilePrototype("GrassTile", 1, new Sprite("grass00.png", kGrassSource));
 
 		// Character prototype
-		createCharacterPrototype("Guy", 1, new Sprite("Ukko.png", kCharacterSource));
+		createCharacterPrototype("Guy", 1, new Sprite("character.png", kCharacterSource));
 
 		// Pickable item prototypes
 		createPickableItemPrototype("Item_Wheat", 20, new Sprite("plants.png", kPlantItemSource));
@@ -56,7 +57,7 @@ namespace Prototypes {
 			plantProto
 			);
 
-		SpriteManager::setGroundEntityFunction(getIdByName("Plant"),
+		Graphics::SpriteManager::setGroundEntityFunction(getIdByName("Plant"),
 			[](GroundEntity* pGrEntity) {
 			int growth = static_cast<GroundEntityPlantModule*>(pGrEntity->mModule.get())->getGrowth();
 			Rectangle newRect = kPlantSource;
@@ -79,7 +80,7 @@ namespace Prototypes {
 		tilePrototypes.clear();
 		idsByName.clear();
 
-		SpriteManager::clearAll();
+		Graphics::SpriteManager::clearAll();
 		idCount = 0;
 	}
 
@@ -89,7 +90,7 @@ namespace Prototypes {
 		Sprite* pSprite)
 	{
 		int id = getNextId();
-		SpriteManager::createSprite(id, pSprite);
+		Graphics::SpriteManager::createSprite(id, pSprite);
 		groundEntityPrototypes[id] = std::unique_ptr<GroundEntity>(
 			GroundEntity::createPrototype(id, pMovSpeed)
 			);
@@ -111,7 +112,7 @@ namespace Prototypes {
 	void createPickableItemPrototype(const std::string & pName, const int pMaxAmount, Sprite * pSprite)
 	{
 		int id = getNextId();
-		SpriteManager::createSprite(id, pSprite);
+		Graphics::SpriteManager::createSprite(id, pSprite);
 		pickableItemPrototypes[id] = std::unique_ptr<InventoryItem>(
 			InventoryItem::createPrototype(id, pMaxAmount)
 			);
@@ -133,7 +134,7 @@ namespace Prototypes {
 	void createTilePrototype(const std::string & pName, const float pMovSpeed, Sprite * pSprite)
 	{
 		int id = getNextId();
-		SpriteManager::createSprite(id, pSprite);
+		Graphics::SpriteManager::createSprite(id, pSprite);
 		tilePrototypes[id] = std::unique_ptr<Tile>(
 			Tile::createPrototype(id, TileType::GRASS)
 			);
@@ -155,7 +156,7 @@ namespace Prototypes {
 	void createCharacterPrototype(const std::string & pName, const float pMovSpeed, Sprite * pSprite)
 	{
 		int id = getNextId();
-		SpriteManager::createSprite(id, pSprite);
+		Graphics::SpriteManager::createSprite(id, pSprite);
 		characterPrototypes[id] = std::unique_ptr<Character>(
 			Character::createPrototype(id)
 			);

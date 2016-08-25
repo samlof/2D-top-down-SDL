@@ -5,14 +5,16 @@
 
 class GroundEntity;
 class InventoryItem;
-class Sprite;
 class Tile;
 class Character;
+namespace Graphics {
+	class Sprite;
+}
 
 namespace Prototypes {
 	bool createPrototypes();
 	void clearAll();
-
+	using Graphics::Sprite;
 	void createGroundEntityPrototype(const std::string & pName, const float pMovSpeed, Sprite* pSprite);
 	GroundEntity* getGroundEntityPrototypeByName(const std::string& pName);
 	GroundEntity* getGroundEntityPrototypeById(const int pId);

@@ -2,9 +2,12 @@
 
 #include <memory>
 
-class Camera;
 class World;
 class InputHandler;
+
+namespace Graphics {
+	class Camera;
+}
 
 class Game
 {
@@ -18,5 +21,5 @@ public:
 
 private:
 	std::unique_ptr<World> mWorld;
-	std::unique_ptr<Camera> mCamera;
+	std::unique_ptr<Graphics::Camera> mCamera;
 };

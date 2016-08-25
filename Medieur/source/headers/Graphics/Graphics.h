@@ -2,13 +2,14 @@
 
 #include<string>
 
+#include "Graphics\GLTexture.h"
 struct SDL_Texture;
 
 class Rectangle;
 class World;
 
 namespace Graphics {
-	SDL_Texture* loadImage(const std::string& pFilename);
+	GLTexture loadImage(const std::string& pFilepath);
 	void init();
 
 	void renderTexture(SDL_Texture * pTexture,

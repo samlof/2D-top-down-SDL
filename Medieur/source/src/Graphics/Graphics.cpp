@@ -10,9 +10,14 @@
 #include <SDL_opengl.h>
 #include <gl\glu.h>
 
+#include "../../dependency/picoPNG.h"
+
 #include "Graphics\Sprite.h"
 #include "Graphics\GLSLProgram.h"
+#include "Graphics\GLTexture.h"
+#include "Graphics\ImageLoader.h"
 
+#include "IOManager.h"
 #include "Rectangle.h"
 #include "World.h"
 #include "units.h"
@@ -40,20 +45,9 @@ namespace Graphics {
 	} // Anonymous namespace
 	void initShaders();
 
-	SDL_Texture * loadImage(const std::string& filename)
+	GLTexture loadImage(const std::string& pFilepath)
 	{
-		const std::string filepath = "content\\sprites\\" + filename;
-		if (textureMap[filepath] == false) {
-			SDL_Texture* tempTexture = ::IMG_LoadTexture(mainRenderer, filepath.c_str());
-			if (tempTexture == nullptr) {
-				printf("Couldn't load: %s\n", filepath.c_str());
-			}
-			else {
-				printf("Loaded: %s!\n", filepath.c_str());
-			}
-			textureMap[filepath] = tempTexture;
-		}
-		return textureMap[filepath];
+		return ImageLoader::loadPNG(pFilepath);
 	}
 
 	void init()
@@ -119,27 +113,26 @@ namespace Graphics {
 	}
 
 	void targetWorldTexture()
-	{
+	{/*
 		SDL_SetRenderTarget(mainRenderer, worldTexture);
-		SDL_RenderClear(mainRenderer);
+		SDL_RenderClear(mainRenderer);*/
 	}
 
-	void changeWorldTexture(int pWidth, int pHeight) {
+	void changeWorldTexture(int pWidth, int pHeight) {/*
 		SDL_DestroyTexture(worldTexture);
 		worldTexture = SDL_CreateTexture(mainRenderer, SDL_PIXELFORMAT_RGBA8888,
-			SDL_TEXTUREACCESS_TARGET, pWidth, pHeight);
+			SDL_TEXTUREACCESS_TARGET, pWidth, pHeight);*/
 	}
 
 	void resetTarget()
-	{
+	{/*
 		SDL_SetRenderTarget(mainRenderer, NULL);
-		SDL_RenderCopy(mainRenderer, worldTexture, NULL, NULL);
+		SDL_RenderCopy(mainRenderer, worldTexture, NULL, NULL);*/
 	}
 
 
 	void quit()
 	{
-		SDL_DestroyRenderer(mainRenderer);
 		SDL_DestroyWindow(mainWindow);
 		SDL_Quit();
 	}

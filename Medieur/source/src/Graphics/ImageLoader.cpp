@@ -1,5 +1,7 @@
 #include "Graphics\ImageLoader.h"
 
+#include <GL\glew.h>
+
 #include "../../dependency/picoPNG.h"
 
 #include "IOManager.h"
