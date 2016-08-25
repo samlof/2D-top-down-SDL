@@ -142,6 +142,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="dependency\picoPNG.h" />
+    <ClInclude Include="source\headers\Graphics\GLTexture.h" />
+    <ClInclude Include="source\headers\Graphics\ImageLoader.h" />
     <ClInclude Include="source\headers\IOManager.h" />
     <ClInclude Include="source\headers\Graphics\GLSLProgram.h" />
     <ClInclude Include="source\headers\GroundEntityStockpileModule.h" />
@@ -174,6 +176,7 @@
     <ClCompile Include="dependency\picoPNG.cpp" />
     <ClCompile Include="source\shaders\IOManager.cpp" />
     <ClCompile Include="source\src\Graphics\GLSLProgram.cpp" />
+    <ClCompile Include="source\src\Graphics\ImageLoader.cpp" />
     <ClCompile Include="source\src\GroundEntityStockpileModule.cpp" />
     <ClCompile Include="source\src\ItemManager.cpp" />
     <ClCompile Include="source\src\Job.cpp" />
