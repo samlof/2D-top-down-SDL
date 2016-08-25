@@ -56,7 +56,6 @@ namespace Graphics {
 		mainWindow = SDL_CreateWindow("Medieur", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			kWindowWidth, kWindowHeight, 0);
 
-
 		if (mainWindow == nullptr) {
 			printf("mainWindow is null! SDL_Error: %s\n", SDL_GetError());
 			std::cin.get();
@@ -69,7 +68,7 @@ namespace Graphics {
 			std::cin.get();
 		}
 
-		SDL_RenderSetLogicalSize(mainRenderer, kWindowWidth + emptyArea, kWindowHeight);
+		SDL_RenderSetLogicalSize(mainRenderer, kWindowWidth, kWindowHeight);
 		SDL_ShowWindow(mainWindow);
 
 		printf("Window and Renderer initialized!\n");
