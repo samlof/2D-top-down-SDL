@@ -96,7 +96,7 @@
     <ClInclude Include="source\headers\IOManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dependency\lodePNG.h">
+    <ClInclude Include="dependency\picoPNG.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -176,7 +176,7 @@
     <ClCompile Include="source\shaders\IOManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dependency\lodePNG.cpp">
+    <ClCompile Include="dependency\picoPNG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
