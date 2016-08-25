@@ -142,11 +142,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="source\headers\GroundEntityStockpileModule.h" />
-    <ClInclude Include="source\headers\Camera.h" />
+    <ClInclude Include="source\headers\Graphics\Camera.h" />
     <ClInclude Include="source\headers\Character.h" />
     <ClInclude Include="source\headers\CountdownCounter.h" />
     <ClInclude Include="source\headers\Game.h" />
-    <ClInclude Include="source\headers\Graphics.h" />
+    <ClInclude Include="source\headers\Graphics\Graphics.h" />
     <ClInclude Include="source\headers\GroundEntity.h" />
     <ClInclude Include="source\headers\GroundEntityPlantModule.h" />
     <ClInclude Include="source\headers\IGroundEntityModule.h" />
@@ -160,8 +160,8 @@
     <ClInclude Include="source\headers\Point.h" />
     <ClInclude Include="source\headers\Prototypes.h" />
     <ClInclude Include="source\headers\Rectangle.h" />
-    <ClInclude Include="source\headers\Sprite.h" />
-    <ClInclude Include="source\headers\SpriteManager.h" />
+    <ClInclude Include="source\headers\Graphics\Sprite.h" />
+    <ClInclude Include="source\headers\Graphics\SpriteManager.h" />
     <ClInclude Include="source\headers\Tile.h" />
     <ClInclude Include="source\headers\units.h" />
     <ClInclude Include="source\headers\World.h" />
@@ -170,10 +170,10 @@
     <ClCompile Include="source\src\GroundEntityStockpileModule.cpp" />
     <ClCompile Include="source\src\ItemManager.cpp" />
     <ClCompile Include="source\src\Job.cpp" />
-    <ClCompile Include="source\src\Camera.cpp" />
+    <ClCompile Include="source\src\Graphics\Camera.cpp" />
     <ClCompile Include="source\src\Character.cpp" />
     <ClCompile Include="source\src\Game.cpp" />
-    <ClCompile Include="source\src\Graphics.cpp" />
+    <ClCompile Include="source\src\Graphics\Graphics.cpp" />
     <ClCompile Include="source\src\GroundEntity.cpp" />
     <ClCompile Include="source\src\GroundEntityPlantModule.cpp" />
     <ClCompile Include="source\src\InputHandler.cpp" />
@@ -185,8 +185,8 @@
     <ClCompile Include="source\src\Point.cpp" />
     <ClCompile Include="source\src\Prototypes.cpp" />
     <ClCompile Include="source\src\Rectangle.cpp" />
-    <ClCompile Include="source\src\Sprite.cpp" />
-    <ClCompile Include="source\src\SpriteManager.cpp" />
+    <ClCompile Include="source\src\Graphics\Sprite.cpp" />
+    <ClCompile Include="source\src\Graphics\SpriteManager.cpp" />
     <ClCompile Include="source\src\Tile.cpp" />
     <ClCompile Include="source\src\units.cpp" />
     <ClCompile Include="source\src\World.cpp" />

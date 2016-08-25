@@ -1,15 +1,16 @@
-#include "Camera.h"
+#include "Graphics\Camera.h"
 
 #include <algorithm>
 #include <iostream>
 
+#include "Graphics\Graphics.h"
+#include "Graphics\SpriteManager.h"
+#include "Graphics\Sprite.h"
+
 #include "units.h"
 #include "World.h"
 #include "Tile.h"
-#include "Graphics.h"
-#include "SpriteManager.h"
 #include "GroundEntity.h"
-#include "Sprite.h"
 #include "Character.h"
 
 namespace {

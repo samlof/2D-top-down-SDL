@@ -1,6 +1,7 @@
-#include "Sprite.h"
+#include "Graphics\Sprite.h"
 
-#include "Graphics.h"
+#include "Graphics\Graphics.h"
+
 #include "units.h"
 
 

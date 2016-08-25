@@ -3,8 +3,9 @@
 #include <SDL_scancode.h>
 #include <SDL_timer.h>
 
+#include "Graphics\Graphics.h"
+
 #include "Game.h"
-#include "Graphics.h"
 #include "InputHandler.h"
 #include "Prototypes.h"
 

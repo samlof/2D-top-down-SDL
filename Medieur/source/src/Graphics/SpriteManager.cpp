@@ -1,11 +1,12 @@
-#include "SpriteManager.h"
+#include "Graphics\SpriteManager.h"
 
 #include <unordered_map>
 #include <string>
 #include <functional>
 #include <memory>
 
-#include "Sprite.h"
+#include "Graphics\Sprite.h"
+
 #include "Tile.h"
 #include "Rectangle.h"
 #include "Character.h"

@@ -2,12 +2,13 @@
 
 #include <SDL_scancode.h>
 
+#include "Graphics\Graphics.h"
+#include "Graphics\Camera.h"
+
 #include "World.h"
-#include "Graphics.h"
 #include "PathFinder.h"
 #include "Prototypes.h"
 #include "InputHandler.h"
-#include "Camera.h"
 
 
 Game::Game()

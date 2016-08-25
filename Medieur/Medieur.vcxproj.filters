@@ -21,9 +21,6 @@
     <ClInclude Include="source\headers\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\headers\Graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\headers\InputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -34,12 +31,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\headers\Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\headers\Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\headers\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\headers\units.h">
@@ -69,9 +60,6 @@
     <ClInclude Include="source\headers\Prototypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\headers\SpriteManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\headers\job.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,6 +75,18 @@
     <ClInclude Include="source\headers\GroundEntityStockpileModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\headers\Graphics\Graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\headers\Graphics\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\headers\Graphics\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\headers\Graphics\SpriteManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\src\MainLoop.cpp">
@@ -96,9 +96,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\src\Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\src\InputHandler.cpp">
@@ -111,12 +108,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\src\Tile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\src\Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\src\units.cpp">
@@ -140,9 +131,6 @@
     <ClCompile Include="source\src\Prototypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\src\SpriteManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\src\JobManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -156,6 +144,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\src\GroundEntityStockpileModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\src\Graphics\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\src\Graphics\Graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\src\Graphics\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\src\Graphics\SpriteManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

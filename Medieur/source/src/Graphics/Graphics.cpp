@@ -1,4 +1,4 @@
-#include "Graphics.h"
+#include "Graphics\Graphics.h"
 
 #include <iostream>
 #include <map>
@@ -13,7 +13,7 @@
 #include "Rectangle.h"
 #include "World.h"
 #include "units.h"
-#include "Sprite.h"
+#include "Graphics\Sprite.h"
 #include "Tile.h"
 
 namespace Graphics {

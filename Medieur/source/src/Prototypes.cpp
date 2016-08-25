@@ -2,13 +2,14 @@
 
 #include <map>
 
-#include "SpriteManager.h"
+#include "Graphics\Sprite.h"
+#include "Graphics\SpriteManager.h"
+
 #include "GroundEntity.h"
 #include "Rectangle.h"
 #include "units.h"
 #include "GroundEntityPlantModule.h"
 #include "GroundEntityStockpileModule.h"
-#include "Sprite.h"
 #include "InventoryItem.h"
 #include "Tile.h"
 #include "Character.h"
