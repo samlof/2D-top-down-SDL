@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\headers\Graphics\GLSLProgram.h" />
     <ClInclude Include="source\headers\GroundEntityStockpileModule.h" />
     <ClInclude Include="source\headers\Graphics\Camera.h" />
     <ClInclude Include="source\headers\Character.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="source\headers\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\src\Graphics\GLSLProgram.cpp" />
     <ClCompile Include="source\src\GroundEntityStockpileModule.cpp" />
     <ClCompile Include="source\src\ItemManager.cpp" />
     <ClCompile Include="source\src\Job.cpp" />
@@ -201,6 +203,10 @@
     <Image Include="content\sprites\stockpile.png" />
     <Image Include="content\sprites\Ukko.png" />
     <Image Include="content\sprites\walls1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\shaders\defaultShader.frag" />
+    <None Include="source\shaders\defaultShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

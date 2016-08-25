@@ -87,6 +87,9 @@
     <ClInclude Include="source\headers\Graphics\SpriteManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\headers\Graphics\GLSLProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\src\MainLoop.cpp">
@@ -158,6 +161,9 @@
     <ClCompile Include="source\src\Graphics\SpriteManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\src\Graphics\GLSLProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\sprites\Ukko.png">
@@ -187,5 +193,9 @@
     <Image Include="content\sprites\stockpile.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\shaders\defaultShader.frag" />
+    <None Include="source\shaders\defaultShader.vert" />
   </ItemGroup>
 </Project>
