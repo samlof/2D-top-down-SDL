@@ -26,6 +26,7 @@ namespace Graphics {
 
 		SDL_Window* mainWindow = nullptr;
 		GLSLProgram defaultShaderProgram;
+		float graphicsTime = 0;
 
 		std::map<std::string, SDL_Texture*> textureMap;
 		SDL_Texture* worldTexture;
@@ -36,7 +37,8 @@ namespace Graphics {
 		SDL_Rect RectangleToSDL_Rect(const Rectangle & pRectangle) {
 			return SDL_Rect{ pRectangle.getX(), pRectangle.getY() , pRectangle.getWidth(), pRectangle.getHeight() };
 		}
-	}
+	} // Anonymous namespace
+	void initShaders();
 
 	SDL_Texture * loadImage(const std::string& filename)
 	{
@@ -99,10 +101,6 @@ namespace Graphics {
 	{
 		defaultShaderProgram.use();
 
-		if (SDL_RenderCopy(mainRenderer, pTexture,
-			&(RectangleToSDL_Rect(pSourceRectangle)),
-			&(RectangleToSDL_Rect(pDestinationRectangle))
-		) == -1) printf("Error on rendering\n");
 
 		defaultShaderProgram.unuse();
 	}
@@ -115,6 +113,8 @@ namespace Graphics {
 
 	void renderPresent()
 	{
+		GLuint timeUniformLoc = defaultShaderProgram.getUniformLocation("time");
+		glUniform1f(timeUniformLoc, graphicsTime);
 		SDL_GL_SwapWindow(mainWindow);
 	}
 
