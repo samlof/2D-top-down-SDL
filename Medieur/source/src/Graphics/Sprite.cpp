@@ -1,7 +1,9 @@
 #include "Graphics\Sprite.h"
 
 #include "Graphics\Graphics.h"
+#include "Graphics\Vertex.h"
 
+#include "Rectangle.h"
 #include "units.h"
 
 Sprite::Sprite(const std::string & pFilepath, const Rectangle & pRectangle)
@@ -25,7 +27,14 @@ void Sprite::init()
 		glGenBuffers(1, &mVboId);
 	}
 
-	float vertexData[12];
+	Vertex vertexData[6];
+
+	vertexData[1].position = { mSourceRectangle.getX(), mSourceRectangle.getY() };
+
+	for (size_t i = 0; i < 6; i++)
+	{
+		vertexData[i].color = { 255, 0, 0, 1 };
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, mVboId);
 
@@ -40,6 +49,7 @@ void Sprite::draw(const int pX, const int pY)
 	glBindBuffer(GL_ARRAY_BUFFER, mVboId);
 	glEnableVertexAttribArray(0);
 
+	// Position attribute pointer
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -50,9 +60,11 @@ void Sprite::draw(const int pX, const int pY)
 
 void Sprite::draw(const int pX, const int pY, const Rectangle & pSourceRect)
 {
+	/*
 	Graphics::renderTexture(
 		mSpriteSheet,
 		pSourceRect,
 		Rectangle(pX, pY, units::kTileSize, units::kTileSize)
 	);
+	*/
 }
