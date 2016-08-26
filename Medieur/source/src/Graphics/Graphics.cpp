@@ -118,13 +118,19 @@ namespace Graphics {
 		glClearDepth(1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		defaultShaderProgram.use();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, playerTexture.id);
+		GLint textureLoc = defaultShaderProgram.getUniformLocation("mySampler");
+		glUniform1i(textureLoc, 0);
 	}
 
 	void flip()
 	{
 		graphicsTime += 0.1f;
-		GLuint timeUniformLoc = defaultShaderProgram.getUniformLocation("time");
+		GLint timeUniformLoc = defaultShaderProgram.getUniformLocation("time");
 		glUniform1f(timeUniformLoc, graphicsTime);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		defaultShaderProgram.unuse();
 		SDL_GL_SwapWindow(mainWindow);
 	}

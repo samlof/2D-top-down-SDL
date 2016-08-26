@@ -51,7 +51,7 @@ namespace Graphics {
 
 		for (size_t i = 0; i < 6; i++)
 		{
-			vertexData[i].setColor(255, 0, 0, 255);
+			vertexData[i].setColor(255, 255, 255, 255);
 		}
 
 		glBindBuffer(GL_ARRAY_BUFFER, mVboId);
@@ -70,6 +70,7 @@ namespace Graphics {
 		// Position attribute pointer
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 		glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
 
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
