@@ -203,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\sprites\bad_door.png" />
+    <Image Include="content\sprites\character.png" />
     <Image Include="content\sprites\grass00.png" />
     <Image Include="content\sprites\plants.png" />
     <Image Include="content\sprites\selected.png" />

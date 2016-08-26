@@ -4,9 +4,11 @@
 //input data from the VBO. Each vertex is 2 floats
 in vec2 vertexPosition;
 in vec4 vertexColor;
+in vec2 vertexUV;
 
 out vec2 fragmentPosition;
 out vec4 fragmentColor;
+out vec2 fragmentUV;
 
 void main() {
     //Set the x,y position on the screen
@@ -18,6 +20,6 @@ void main() {
     gl_Position.w = 1.0;
     
     fragmentPosition = vertexPosition;
-    
     fragmentColor = vertexColor;
+	fragmentUV = vertexUV;
 }

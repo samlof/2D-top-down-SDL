@@ -33,6 +33,10 @@ namespace Graphics {
 		GLSLProgram defaultShaderProgram;
 		float graphicsTime = 0;
 
+		GLTexture playerTexture;
+
+
+
 		std::map<std::string, SDL_Texture*> textureMap;
 		SDL_Texture* worldTexture;
 
@@ -86,6 +90,8 @@ namespace Graphics {
 		printf("Window and OpenGL initialized!\n");
 
 		initShaders();
+
+		playerTexture = loadImage("content/sprites/character.png");
 	}
 
 	void initShaders()
@@ -96,6 +102,7 @@ namespace Graphics {
 		);
 		defaultShaderProgram.addAttribute("vertexPosition");
 		defaultShaderProgram.addAttribute("vertexColor");
+		defaultShaderProgram.addAttribute("vertexUV");
 		defaultShaderProgram.linkShaders();
 	}
 

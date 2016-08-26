@@ -56,7 +56,8 @@ void MainLoop::testRun()
 	InputHandler inputhandler;
 
 	mSprite = new Graphics::Sprite("Ukko.png", 1, 1, 1, 1);
-	mSprite->init();
+
+	mSprite->init(-1.0f, -1.0f, 2.0f, 2.0f);
 	while (!mQuitting) {
 
 		inputhandler.checkInput();
