@@ -19,4 +19,7 @@ public:
 private:
 	bool mQuitting;
 	std::unique_ptr<Game> mGame;
+	float mFps;
+	uint32_t mFrametime;
+	void calculateFPS();
 };

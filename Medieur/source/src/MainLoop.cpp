@@ -9,6 +9,12 @@
 #include "InputHandler.h"
 #include "Prototypes.h"
 
+
+namespace {
+	float msToFPS(Uint32 pMs) {
+		return 1000.0f / pMs;
+	}
+}
 MainLoop::MainLoop()
 	:
 	mQuitting(false)
@@ -49,7 +55,6 @@ void MainLoop::run()
 void MainLoop::testRun()
 {
 	InputHandler inputhandler;
-
 	std::unique_ptr<Graphics::Sprite> mSprite;
 	std::unique_ptr<Graphics::Sprite> mSprite2;
 
@@ -61,7 +66,6 @@ void MainLoop::testRun()
 	));
 
 	while (!mQuitting) {
-
 		inputhandler.checkInput();
 
 		if (inputhandler.shouldQuit() || inputhandler.getKeyPressed(SDL_SCANCODE_ESCAPE)) {
@@ -77,6 +81,48 @@ void MainLoop::testRun()
 
 		Graphics::flip();
 
+		calculateFPS();
+
 		SDL_Delay(16);
 	}
+}
+
+void MainLoop::calculateFPS()
+{
+	static const int NUM_SAMPLES = 8;
+	static Uint32 frameTimes[NUM_SAMPLES];
+	static int currentFrame = 1;
+
+	static Uint32 prevTicks = SDL_GetTicks();
+
+	Uint32 currentTicks;
+	currentTicks = SDL_GetTicks();
+
+	mFrametime = currentTicks - prevTicks;
+	frameTimes[currentFrame % NUM_SAMPLES] = mFrametime;
+
+	int count;
+	if (currentFrame < NUM_SAMPLES) {
+		count = currentFrame;
+	}
+	else {
+		count = NUM_SAMPLES;
+	}
+
+	Uint32 frameTimeAverage = 0;
+	for (int i = 0; i < count; i++)
+	{
+		frameTimeAverage += frameTimes[i];
+	}
+	frameTimeAverage /= count;
+
+	if (frameTimeAverage > 0) {
+		mFps = msToFPS(frameTimeAverage);
+	}
+	else {
+		mFps = 60;
+	}
+	currentFrame++;
+	prevTicks = SDL_GetTicks();
+	printf("fps: %f\n", mFps);
 }
