@@ -11,6 +11,8 @@
 
 
 namespace {
+	const int kMaxFps = 60;
+
 	float msToFPS(Uint32 pMs) {
 		return 1000.0f / pMs;
 	}
@@ -61,7 +63,7 @@ void MainLoop::testRun()
 	mSprite.reset(new Graphics::Sprite("content/sprites/character.png",
 		-1.0f, -1.0f, 1.0f, 1.0f
 	));
-	mSprite2.reset(new Graphics::Sprite("content/sprites/character.png" , 
+	mSprite2.reset(new Graphics::Sprite("content/sprites/character.png",
 		0.0f, 0.0f, 1.0f, 1.0f
 	));
 
@@ -83,7 +85,16 @@ void MainLoop::testRun()
 
 		calculateFPS();
 
-		SDL_Delay(16);
+		static int printFPS = 0;
+		if (++printFPS == 10) {
+			printf("FPS: %f\n", mFps);
+			printFPS = 0;
+		}
+
+		int timeToDelay = (1000.0f / kMaxFps) - mFrametime;
+		if (timeToDelay > 5) {
+			SDL_Delay(timeToDelay);
+		}
 	}
 }
 
@@ -100,6 +111,8 @@ void MainLoop::calculateFPS()
 
 	mFrametime = currentTicks - prevTicks;
 	frameTimes[currentFrame % NUM_SAMPLES] = mFrametime;
+	prevTicks = currentTicks;
+	currentFrame++;
 
 	int count;
 	if (currentFrame < NUM_SAMPLES) {
@@ -122,7 +135,4 @@ void MainLoop::calculateFPS()
 	else {
 		mFps = 60;
 	}
-	currentFrame++;
-	prevTicks = SDL_GetTicks();
-	printf("fps: %f\n", mFps);
 }
