@@ -19,7 +19,4 @@ public:
 private:
 	bool mQuitting;
 	std::unique_ptr<Game> mGame;
-
-
-	Graphics::Sprite* mSprite;
 };

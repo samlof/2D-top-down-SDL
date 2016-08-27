@@ -10,6 +10,8 @@ namespace Graphics {
 	namespace ImageLoader {
 		GLTexture loadPNG(const std::string & pFilepath)
 		{
+			printf("Loaded Image: %s!\n", pFilepath.c_str());
+
 			GLTexture texture = {};
 
 			std::vector<unsigned char> out;
@@ -18,11 +20,12 @@ namespace Graphics {
 			bool fileReadsuccess = IOManager::readFileToBinaryBuffer(pFilepath, in);
 			if (!fileReadsuccess) {
 				printf("Failed to read png file!\n");
-				return GLTexture();
+				return texture;
 			}
 			int errorcode = decodePNG(out, width, height, &(in[0]), in.size(), true);
 			if (errorcode != 0) {
 				printf("Error in decodePNG with code: %i\n", errorcode);
+				return texture;
 			}
 			texture.width = width;
 			texture.height = height;

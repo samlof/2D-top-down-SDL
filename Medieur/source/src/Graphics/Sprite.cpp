@@ -9,13 +9,15 @@
 
 #include "Rectangle.h"
 #include "units.h"
+#include "ResourceManager.h"
 
 namespace Graphics {
-	Sprite::Sprite(const std::string & pFilepath, const Rectangle & pRectangle)
+	Sprite::Sprite(const std::string & pFilepath,
+		const float pX, const float pY, const float pWidth, const float pHeight)
 		:
-		mSourceRectangle(pRectangle), mVboId(0)
+		mX(pX), mY(pY), mWidth(pWidth), mHeight(pHeight), mVboId(0)
 	{
-
+		init(pFilepath);
 	}
 
 	Sprite::~Sprite()
@@ -26,27 +28,30 @@ namespace Graphics {
 		}
 	}
 
-	void Sprite::init(float x, float y, float width, float height)
+	void Sprite::init(const std::string& pFilepath)
 	{
+		mTexture = ResourceManager::getTexture(pFilepath);
+
+
 		if (mVboId == 0) {
 			glGenBuffers(1, &mVboId);
 		}
 
 		Vertex vertexData[6];
 		//First Triangle
-		vertexData[0].setPosition(x + width, y + height);
+		vertexData[0].setPosition(mX + mWidth, mY + mHeight);
 		vertexData[0].setUV(1.0f, 1.0f);
-		vertexData[1].setPosition(x, y + height);
+		vertexData[1].setPosition(mX, mY + mHeight);
 		vertexData[1].setUV(0.0f, 1.0f);
-		vertexData[2].setPosition(x, y);
+		vertexData[2].setPosition(mX, mY);
 		vertexData[2].setUV(0.0f, 0.0f);
 
 		//Second Triangle
-		vertexData[3].setPosition(x, y);
+		vertexData[3].setPosition(mX, mY);
 		vertexData[3].setUV(0.0f, 0.0f);
-		vertexData[4].setPosition(x + width, y);
+		vertexData[4].setPosition(mX + mWidth, mY);
 		vertexData[4].setUV(1.0f, 0.0f);
-		vertexData[5].setPosition(x + width, y + height);
+		vertexData[5].setPosition(mX + mWidth, mY + mHeight);
 		vertexData[5].setUV(1.0f, 1.0f);
 
 		for (size_t i = 0; i < 6; i++)
@@ -64,6 +69,8 @@ namespace Graphics {
 
 	void Sprite::draw(const int pX, const int pY)
 	{
+		glBindTexture(GL_TEXTURE_2D, mTexture.id);
+
 		glBindBuffer(GL_ARRAY_BUFFER, mVboId);
 		glEnableVertexAttribArray(0);
 

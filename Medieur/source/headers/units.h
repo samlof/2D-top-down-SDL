@@ -8,5 +8,5 @@ namespace units {
 	const int kWorldWidth = 40;
 	const int kWorldHeight = 30;
 
-	const int kTileSize = 32;
+	const int kTileSize = 32;	
 }

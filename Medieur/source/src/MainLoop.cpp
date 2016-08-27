@@ -55,9 +55,16 @@ void MainLoop::testRun()
 {
 	InputHandler inputhandler;
 
-	mSprite = new Graphics::Sprite("Ukko.png", 1, 1, 1, 1);
+	std::unique_ptr<Graphics::Sprite> mSprite;
+	std::unique_ptr<Graphics::Sprite> mSprite2;
 
-	mSprite->init(-1.0f, -1.0f, 2.0f, 2.0f);
+	mSprite.reset(new Graphics::Sprite("content/sprites/character.png",
+		-1.0f, -1.0f, 1.0f, 1.0f
+	));
+	mSprite2.reset(new Graphics::Sprite("content/sprites/character.png" , 
+		0.0f, 0.0f, 1.0f, 1.0f
+	));
+
 	while (!mQuitting) {
 
 		inputhandler.checkInput();
@@ -71,6 +78,7 @@ void MainLoop::testRun()
 
 		//Draw our sprite!
 		mSprite->draw(1, 1);
+		mSprite2->draw(1, 1);
 
 		Graphics::flip();
 

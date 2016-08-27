@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="dependency\picoPNG.h" />
+    <ClInclude Include="source\headers\ResourceManager.h" />
     <ClInclude Include="source\headers\Graphics\GLTexture.h" />
     <ClInclude Include="source\headers\Graphics\ImageLoader.h" />
     <ClInclude Include="source\headers\IOManager.h" />
@@ -171,9 +172,11 @@
     <ClInclude Include="source\headers\units.h" />
     <ClInclude Include="source\headers\World.h" />
     <ClInclude Include="source\headers\Graphics\Vertex.h" />
+    <ClInclude Include="source\headers\TextureCache.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dependency\picoPNG.cpp" />
+    <ClCompile Include="source\src\ResourceManager.cpp" />
     <ClCompile Include="source\src\IOManager.cpp" />
     <ClCompile Include="source\src\Graphics\GLSLProgram.cpp" />
     <ClCompile Include="source\src\Graphics\ImageLoader.cpp" />
@@ -200,6 +203,7 @@
     <ClCompile Include="source\src\Tile.cpp" />
     <ClCompile Include="source\src\units.cpp" />
     <ClCompile Include="source\src\World.cpp" />
+    <ClCompile Include="source\src\TextureCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\sprites\bad_door.png" />

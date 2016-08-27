@@ -33,11 +33,6 @@ namespace Graphics {
 		GLSLProgram defaultShaderProgram;
 		float graphicsTime = 0;
 
-		GLTexture playerTexture;
-
-
-
-		std::map<std::string, SDL_Texture*> textureMap;
 		SDL_Texture* worldTexture;
 
 		Sprite* grassSprite;
@@ -50,13 +45,6 @@ namespace Graphics {
 	void initShaders();
 
 	SDL_Window* getwindow() { return mainWindow; }
-
-
-	GLTexture loadImage(const std::string& pFilepath)
-	{
-		printf("Loaded: %s!\n", pFilepath.c_str());
-		return ImageLoader::loadPNG(pFilepath);
-	}
 
 	void init()
 	{
@@ -91,7 +79,6 @@ namespace Graphics {
 
 		initShaders();
 
-		playerTexture = loadImage("content/sprites/character.png");
 	}
 
 	void initShaders()
@@ -120,7 +107,6 @@ namespace Graphics {
 		defaultShaderProgram.use();
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, playerTexture.id);
 		GLint textureLoc = defaultShaderProgram.getUniformLocation("mySampler");
 		glUniform1i(textureLoc, 0);
 	}
