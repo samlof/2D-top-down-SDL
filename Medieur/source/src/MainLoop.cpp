@@ -45,11 +45,6 @@ void MainLoop::run()
 	}
 }
 
-#include <GL\glew.h>
-#include <SDL_opengl.h>
-#include <SDL.h>
-
-#include "Graphics\GLSLProgram.h"
 
 void MainLoop::testRun()
 {
