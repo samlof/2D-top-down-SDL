@@ -15,9 +15,10 @@ namespace Graphics {
 	Sprite::Sprite(const std::string & pFilepath,
 		const float pX, const float pY, const float pWidth, const float pHeight)
 		:
-		mX(pX), mY(pY), mWidth(pWidth), mHeight(pHeight), mVboId(0)
+		mX(pX), mY(pY), mWidth(pWidth), mHeight(pHeight), mVboId(0),
+		mTexture(ResourceManager::getTexture(pFilepath))
 	{
-		init(pFilepath);
+		init();
 	}
 
 	Sprite::~Sprite()
@@ -28,11 +29,8 @@ namespace Graphics {
 		}
 	}
 
-	void Sprite::init(const std::string& pFilepath)
+	void Sprite::init()
 	{
-		mTexture = ResourceManager::getTexture(pFilepath);
-
-
 		if (mVboId == 0) {
 			glGenBuffers(1, &mVboId);
 		}

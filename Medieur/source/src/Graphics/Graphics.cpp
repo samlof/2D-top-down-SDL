@@ -87,9 +87,6 @@ namespace Graphics {
 			"source/shaders/defaultShader.vert", 
 			"source/shaders/defaultShader.frag"
 		);
-		defaultShaderProgram.addAttribute("vertexPosition");
-		defaultShaderProgram.addAttribute("vertexColor");
-		defaultShaderProgram.addAttribute("vertexUV");
 		defaultShaderProgram.linkShaders();
 	}
 

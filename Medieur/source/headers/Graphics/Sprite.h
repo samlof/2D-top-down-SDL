@@ -19,7 +19,7 @@ namespace Graphics {
 
 	private:
 		Rectangle mSourceRectangle;
-		void init(const std::string& pFilepath);
+		void init();
 
 		float mX, mY, mWidth, mHeight;
 		GLuint mVboId;

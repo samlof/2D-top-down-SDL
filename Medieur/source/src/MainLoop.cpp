@@ -124,5 +124,5 @@ void MainLoop::calculateFPS()
 	}
 	currentFrame++;
 	prevTicks = SDL_GetTicks();
-	printf("fps: %f\n", mFps);
+	//printf("fps: %f\n", mFps);
 }
