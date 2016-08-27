@@ -11,6 +11,7 @@ namespace Graphics {
 
 		void compileShaders(const std::string & pVertexShaderFilePath, const std::string & pFragmentShaderFilePath);
 		void linkShaders();
+		void addAttribute(const std::string& pAttributeName);
 		GLint getUniformLocation(const std::string& pUniformName);
 		void use();
 		void unuse();
@@ -20,5 +21,6 @@ namespace Graphics {
 		void compileShader(const std::string & pFilePath, GLuint pShaderId);
 		GLuint mProgramId;
 		GLuint mVertexShaderId, mFragmentShaderId;
+		int mNumAttributes;
 	};
 }

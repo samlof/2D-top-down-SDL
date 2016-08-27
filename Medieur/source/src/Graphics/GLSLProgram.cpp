@@ -7,7 +7,7 @@
 namespace Graphics {
 	GLSLProgram::GLSLProgram()
 		:
-		mProgramId(0), mVertexShaderId(0), mFragmentShaderId(0)
+		mProgramId(0), mVertexShaderId(0), mFragmentShaderId(0), mNumAttributes(0)
 	{
 	}
 
@@ -75,6 +75,11 @@ namespace Graphics {
 		glDeleteShader(mFragmentShaderId);
 	}
 
+	void GLSLProgram::addAttribute(const std::string & pAttributeName)
+	{
+		glBindAttribLocation(mProgramId, mNumAttributes++, pAttributeName.c_str());
+	}
+
 	GLint Graphics::GLSLProgram::getUniformLocation(const std::string & pUniformName)
 	{
 		GLint location = glGetUniformLocation(mProgramId, pUniformName.c_str());
@@ -87,11 +92,19 @@ namespace Graphics {
 	void GLSLProgram::use()
 	{
 		glUseProgram(mProgramId);
+		for (int i = 0; i < mNumAttributes; i++)
+		{
+			glEnableVertexAttribArray(i);
+		}
 	}
 
 	void GLSLProgram::unuse()
 	{
 		glUseProgram(0);
+		for (int i = 0; i < mNumAttributes; i++)
+		{
+			glDisableVertexAttribArray(i);
+		}
 	}
 
 	void GLSLProgram::compileShader(const std::string & pFilePath, GLuint pShaderId)
